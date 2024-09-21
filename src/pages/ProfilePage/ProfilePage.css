@@ -1,0 +1,141 @@
+.profile-wrapp {
+    display: flex;
+    gap: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-left {
+    width: 40%;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.profile-right {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-user {
+    h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    span {
+        font-weight: 600;
+    }
+}
+
+.profile-edit-btn {
+    margin-top: auto;
+    margin-left: auto;
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #de5900e7;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 4px 12px;
+
+    &:hover {
+        background-color: #de5900e7;
+        color: #ffffff;
+    }
+}
+
+.profile-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+
+    input {
+        height: 32px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 0 20px;
+    }
+
+    select {
+        height: 32px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 0 20px;
+        cursor: pointer;
+    }
+}
+
+.profile-upload-button {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    height: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    &:hover {
+        color: #de5900e7;
+    }
+}
+
+.profile-buttons {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+}
+
+.profile-btn-cancel {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    background-color: #de5900e7;
+    padding: 4px 12px;
+
+    &:hover {
+        background-color: #ffffff;
+        color: #de5900e7;
+    }
+}
+
+.profile-btn-save {
+    font-size: 16px;
+    font-weight: 600;
+    color: #de5900e7;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 4px 12px;
+
+    &:hover {
+        background-color: #de5900e7;
+        color: #ffffff;
+    }
+}

@@ -1,0 +1,84 @@
+.details {
+    padding-bottom: 12px;
+}
+
+.details-wrapp {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.details-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #00000052;
+}
+
+.details-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.details-nickname {
+    font-weight: 600;
+}
+
+.details-date {
+    font-size: 12px;
+}
+
+.details-content {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #00000052;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.details-img {
+
+    img {
+        width: 100%;
+        max-width: 1920px;
+        height: auto;
+    }
+
+    video {
+        width: 100%;
+        /* Убедитесь, что видео не имеет нулевой ширины */
+        height: auto;
+        /* Высота автоматически подстраивается */
+    }
+}
+
+.details-quiz {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #00000052;
+}
+
+.details-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #00000052;
+}
+
+.details-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    span {
+        font-size: 20px;
+        font-weight: 600;
+    }
+}

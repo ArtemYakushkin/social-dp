@@ -1,0 +1,43 @@
+.comments-section {
+    padding: 0 12px;
+}
+
+.comments-form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.comments-textarea {
+    width: 100%;
+    resize: none;
+    height: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 12px;
+}
+
+.comments-submit-btn {
+    font-size: 16px;
+    font-weight: 600;
+    color: #de5900e7;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 6px 12px;
+
+    &:hover {
+        background-color: #de5900e7;
+        color: #ffffff;
+    }
+}
+
+.comments-error {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    font-size: 12px;
+    color: #ff0000;
+}

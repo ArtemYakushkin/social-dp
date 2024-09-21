@@ -1,0 +1,117 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid #00000052;
+    width: 100%;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+}
+
+.post-avarar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.post-author {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.post-date {
+    font-weight: 300;
+}
+
+.post-center {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.post-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.post-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.post-img {
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        max-width: 1920px;
+        height: auto;
+    }
+
+    video {
+        width: 100%;
+        /* Убедитесь, что видео не имеет нулевой ширины */
+        height: auto;
+        /* Высота автоматически подстраивается */
+    }
+}
+
+.post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.post-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.post-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    span {
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.post-more-btn {
+    transition: all 0.25s;
+
+    &:hover {
+        color: #de5900e7;
+        transform: scale(1.2);
+    }
+}
+
+.swiper-pagination {
+    bottom: 10px;
+    left: 50%;
+}
+
+.swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+}
+
+.swiper-pagination-bullet-active {
+    background: #de5900e7;
+}

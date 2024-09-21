@@ -1,0 +1,28 @@
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stats-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    span {
+        font-style: 20px;
+        font-weight: 600;
+    }
+}
+
+.stats-like,
+.stats-eye,
+.stats-comment {
+    width: 20px;
+    height: 20px;
+}
+
+.stats-like.liked {
+    cursor: pointer;
+    color: #de5900e7;
+}

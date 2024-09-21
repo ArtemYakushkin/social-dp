@@ -1,0 +1,103 @@
+.navbar {
+    padding: 4px 0;
+    border-bottom: 1px solid #00000052;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-logo {
+    h1 {
+        font-weight: 600;
+        color: #de5900e7;
+    }
+
+    span {
+        font-size: 12px;
+    }
+}
+
+.navbar-link {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.navbar-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-register {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    background-color: #de5900e7;
+    padding: 4px 12px;
+
+    &:hover {
+        background-color: #ffffff;
+        color: #de5900e7;
+    }
+}
+
+.navbar-login {
+    font-size: 16px;
+    font-weight: 600;
+    color: #de5900e7;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 4px 12px;
+
+    &:hover {
+        background-color: #de5900e7;
+        color: #ffffff;
+    }
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.navbar-nickname {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.navbar-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navbar-logout {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+    &:hover {
+        color: #de5900e7;
+    }
+}

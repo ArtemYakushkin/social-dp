@@ -1,0 +1,217 @@
+.create-form {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 16px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.create-input {
+    height: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 12px;
+}
+
+.create-textarea {
+    resize: none;
+    height: 100px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 12px;
+}
+
+.create-select {
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* Для позиционирования псевдоэлемента */
+    /* border-bottom: 1px solid #00000052; */
+}
+
+.create-select::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    /* Толщина бордера */
+    width: 100%;
+    /* Длина бордера */
+    background-color: #00000052;
+    z-index: 1;
+    /* Псевдоэлемент должен быть под кнопками */
+}
+
+.create-select-btn-activ {
+    font-weight: 600;
+    padding: 4px 12px;
+    width: 100px;
+    border-top: 1px solid #00000052;
+    border-left: 1px solid #00000052;
+    border-right: 1px solid #00000052;
+    border-bottom: none;
+    /* Убираем нижний бордер */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: relative;
+    /* Для псевдоэлемента под кнопкой */
+    z-index: 2;
+    /* Псевдоэлемент кнопки выше псевдоэлемента контейнера */
+}
+
+.create-select-btn {
+    font-weight: 600;
+    padding: 4px 12px;
+    width: 100px;
+    border: none;
+    /* border-bottom: 1px solid #00000052; */
+    /* Добавляем бордер только снизу */
+    position: relative;
+    z-index: 2;
+}
+
+/* Убираем бордер только у активной кнопки */
+.create-select-btn-activ::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    /* Немного смещаем вниз, чтобы перекрыть бордер контейнера */
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #ffffff;
+    /* Цвет фона контейнера */
+    z-index: 3;
+    /* Выше кнопки и псевдоэлемента контейнера */
+}
+
+.create-quiz {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #00000052;
+}
+
+.create-quiz-btn {
+    color: #de5900e7;
+    font-weight: 600;
+    padding: 4px 12px;
+    border: 1px solid #de5900e7;
+    border-radius: 8px;
+}
+
+.create-quiz-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.create-quiz-input-text {
+    height: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 12px;
+    width: 300px;
+}
+
+.create-poll {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #00000052;
+}
+
+.create-poll-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+.create-group-add {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.create-input-add {
+    display: none;
+    /* Скрываем стандартный input */
+}
+
+.create-label-add {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    color: #de5900e7;
+    padding: 10px 20px;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 12px;
+
+    &:hover {
+        border: 1px solid #de5900e7;
+        background-color: #de5900e7;
+        color: #ffffff;
+    }
+}
+
+.create-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.create-image-preview {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.create-submit-btn {
+    background-color: #de5900e7;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #de5900e7;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 12px;
+
+    &:hover {
+        border: 1px solid #de5900e7;
+        background-color: transparent;
+        color: #de5900e7;
+    }
+}

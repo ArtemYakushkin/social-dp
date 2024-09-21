@@ -1,0 +1,35 @@
+.reply-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reply-list-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reply-list-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.reply-list-nickname {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.reply-list-date {
+    font-size: 12px;
+}
+
+.reply-list-text {
+    padding-left: 36px;
+}

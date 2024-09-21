@@ -1,0 +1,76 @@
+.comments-list {
+    margin: 0 12px;
+    padding: 0 12px;
+    border-left: 1px solid #00000052;
+}
+
+.comment-list-wrapp {
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.comment-list-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.comment-list-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.comment-list-nikname {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.comment-list-date {
+    font-size: 12px;
+}
+
+.comment-list-text {
+    padding-left: 36px;
+}
+
+.comment-list-bottom-section {
+    padding-left: 36px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.comment-list-icon {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+
+    span {
+        font-size: 16px;
+        font-weight: 600;
+    }
+}
+
+.comment-list-reply {
+    font-size: 12px;
+    font-weight: 600;
+    color: #de5900e7;
+}
+
+.comment-list-reply-container {
+    margin-left: 36px;
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-left: 1px solid #00000052;
+}
