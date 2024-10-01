@@ -1,12 +1,5 @@
 .navbar {
-    padding: 4px 0;
-    border-bottom: 1px solid #00000052;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    background-color: #ffffff;
-    margin-bottom: 12px;
+    padding: 29px 0 26px 0;
 }
 
 .navbar-content {
@@ -16,54 +9,64 @@
 }
 
 .navbar-logo {
-    h1 {
-        font-weight: 600;
-        color: #de5900e7;
-    }
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
-    span {
-        font-size: 12px;
+    h2 {
+        font-family: "Rubik", sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--accent-blue-color);
     }
 }
 
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
 .navbar-link {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--text-grey-dark);
 }
 
 .navbar-buttons {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
 }
 
 .navbar-register {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
-    color: #ffffff;
-    border: 1px solid #de5900e7;
-    border-radius: 4px;
-    background-color: #de5900e7;
-    padding: 4px 12px;
+    line-height: 24px;
+    color: var(--accent-blue-color);
+    border: 1px solid var(--accent-blue-color);
+    border-radius: 30px;
+    padding: 14px 36px;
+    transition: all 0.25s ease;
 
     &:hover {
-        background-color: #ffffff;
-        color: #de5900e7;
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
     }
 }
 
 .navbar-login {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
-    color: #de5900e7;
-    border: 1px solid #de5900e7;
-    border-radius: 4px;
-    background-color: #ffffff;
-    padding: 4px 12px;
+    line-height: 24px;
+    color: var(--text-white);
+    background-color: var(--accent-blue-color);
+    border-radius: 30px;
+    padding: 14px 36px;
+    transition: all 0.25s ease;
 
     &:hover {
-        background-color: #de5900e7;
-        color: #ffffff;
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
     }
 }
 

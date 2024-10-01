@@ -9,12 +9,14 @@ import {
   startAfter,
 } from "firebase/firestore";
 import PostCard from "../../components/PostCard/PostCard";
+import Loader from "../../components/Loader/Loader";
 import "./HomePage.css";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]); // Состояние для хранения списка постов
   const [lastVisible, setLastVisible] = useState(null); // Состояние для хранения последнего загруженного поста
   const [hasMorePosts, setHasMorePosts] = useState(true); // Состояние для отслеживания наличия следующих постов
+  const [expandedPostId, setExpandedPostId] = useState(null);
   const POSTS_PER_PAGE = 5; // Количество постов на одной странице
 
   // Функция для загрузки первой порции постов
@@ -80,14 +82,25 @@ const HomePage = () => {
     fetchPosts();
   }, []);
 
+  const handleExpand = (postId) => {
+    setExpandedPostId(postId === expandedPostId ? null : postId);
+  };
+
   return (
     <div className="home">
       <div className="container">
         <div className="home-list">
           {posts.length > 0 ? (
-            posts.map((post) => <PostCard key={post.id} post={post} />)
+            posts.map((post) => (
+              <PostCard
+                key={post.id}
+                post={post}
+                isExpanded={expandedPostId === post.id}
+                onExpand={() => handleExpand(post.id)}
+              />
+            ))
           ) : (
-            <p>No posts available</p>
+            <Loader />
           )}
         </div>
 

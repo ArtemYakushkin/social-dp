@@ -1,5 +1,8 @@
 .comments-section {
-    padding: 0 12px;
+    /* padding: 0 12px; */
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 .comments-form {

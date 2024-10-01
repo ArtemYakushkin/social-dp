@@ -14,23 +14,61 @@
 
 .poll-answers {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.poll-answer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .poll-answer-button {
-    padding: 10px 20px;
+    padding: 8px 20px;
     border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid #de5900e7;
+    color: #484848;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 80px;
+
+    &:hover {
+        background-color: #de5900e7;
+    }
+
+    &.selected {
+        background-color: #de5900e7;
+    }
 }
 
-.poll-answer-button:hover {
-    background-color: #0056b3;
+.poll-votes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
 }
 
-.poll-answer-button.selected {
-    background-color: #28a745;
+.poll-progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 8px;
+    position: relative;
+}
+
+.poll-progress {
+    height: 100%;
+    background-color: #de5900e7;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.poll-progress-text {
+    font-size: 14px;
+    font-weight: bold;
 }

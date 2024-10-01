@@ -1,6 +1,17 @@
 .register {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    min-height: 100vh;
+    background: var(--bg-blue);
+    opacity: 85%;
+    /* Полупрозрачный черный фон */
     display: flex;
     justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Отображение над всеми элементами */
 }
 
 .register-form {

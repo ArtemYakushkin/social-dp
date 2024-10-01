@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/Loader/Loader";
 import "./RegisterPage.css";
 
-const RegisterPage = () => {
+const RegisterPage = ({ onClose }) => {
   const [nickname, setNickname] = useState("");
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
@@ -131,12 +131,20 @@ const RegisterPage = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    if (onClose) onClose();
+  };
+
   return (
-    <div className="register">
+    <div className="register" onClick={handleCloseModal}>
       {loading ? (
         <Loader />
       ) : (
-        <form className="register-form" onSubmit={handleSubmit}>
+        <form
+          className="register-form"
+          onSubmit={handleSubmit}
+          onClick={(e) => e.stopPropagation()}
+        >
           <h2 className="register-title">Register</h2>
           <div className="register-block">
             <div className="register-left">

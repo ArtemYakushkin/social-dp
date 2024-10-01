@@ -9,7 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 // import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import CreatePostPage from "./pages/CreatePostPage/CreatePostPage";
-import PostDetails from "./pages/PostDetails/PostDetails";
+// import PostDetails from "./pages/PostDetails/PostDetails";
 
 // const secretCode = process.env.REACT_APP_DASHBOARD_CODE;
 
@@ -22,7 +22,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/posts/:postId" element={<PostDetails />} />
+        {/* <Route path="/posts/:postId" element={<PostDetails />} /> */}
         <Route path='/create-post' element={<CreatePostPage />} />
 
         {/* <Route path={`/dashboard/${secretCode}`} element={<DashboardPage />} /> */}
