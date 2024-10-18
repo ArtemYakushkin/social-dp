@@ -8,6 +8,7 @@ import {
   limit,
   startAfter,
 } from "firebase/firestore";
+import Hero from "../../components/Hero/Hero";
 import PostCard from "../../components/PostCard/PostCard";
 import Loader from "../../components/Loader/Loader";
 import "./HomePage.css";
@@ -89,6 +90,8 @@ const HomePage = () => {
   return (
     <div className="home">
       <div className="container">
+        <Hero />
+
         <div className="home-list">
           {posts.length > 0 ? (
             posts.map((post) => (
