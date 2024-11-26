@@ -1,0 +1,130 @@
+.post {
+    display: flex;
+    width: 100%;
+    border-radius: 30px;
+    background-color: var(--bg-white);
+    box-shadow: 0px 4px 16px 0px #2F7BF626;
+    overflow: hidden;
+    transition: max-height 1.5s ease-in-out;
+}
+
+.post-left {
+    width: 282px;
+    height: 217px;
+    flex-shrink: 0;
+
+    img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    video {
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.post-right {
+    flex-grow: 1;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 23px 40px 23px 21px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 11px;
+}
+
+.post-avarar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.post-author {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.post-date {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-placeholder-focus);
+}
+
+.post-center {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 11px;
+}
+
+.post-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-black);
+}
+
+.post-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.post-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    background-color: var(--bg-input-inactive);
+
+    span {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16.59px;
+        color: var(--text-black);
+    }
+}
+
+.post-more-btn {
+    background-color: var(--bg-input-inactive);
+    padding: 6px;
+    border-radius: 5px;
+    transition: all 0.25s;
+
+    &:hover {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

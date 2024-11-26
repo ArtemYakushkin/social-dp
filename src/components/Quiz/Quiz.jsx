@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { BsEmojiSunglasses, BsEmojiTear } from "react-icons/bs";
 import QuizModal from "../QuizModal/QuizModal";
+import SadRobot from "../../assets/robot-sad.png";
+import HappyRobot from "../../assets/robot-happy.png";
+import HandRobot from "../../assets/robot-hand.png";
+import Star from "../../assets/star.png";
 import "./Quiz.css";
 
 const Quiz = ({ quizData }) => {
@@ -12,46 +15,40 @@ const Quiz = ({ quizData }) => {
     setSelectedAnswer(index);
     if (index === quizData.correctAnswer) {
       setModalMessage(
-        <div>
-          <BsEmojiSunglasses
-            style={{
-              width: "50px",
-              height: "50px",
-              color: "#48ff00",
-              marginBottom: "20px",
-            }}
-          />
-          <p
-            style={{
-              fontSize: "20px",
-              fontWeight: "600",
-              marginBottom: "20px",
-            }}
-          >
-            Congratulations, correct answer!
-          </p>
+        <div className="quiz-happy-wrapp">
+          <div className="quiz-happy-img-box">
+            <img
+              className="quiz-happy-img-robot"
+              src={HappyRobot}
+              alt="robot"
+            />
+          </div>
+          <div className="quiz-happy-content">
+            <img className="quiz-happy-img-star" src={Star} alt="star" />
+            <h4 className="quiz-happy-title">Congratulations!</h4>
+            <p className="quiz-happy-text">
+              This is the correct answer. You are very knowledgeable!
+            </p>
+          </div>
         </div>
       );
     } else {
       setModalMessage(
-        <div>
-          <BsEmojiTear
-            style={{
-              width: "50px",
-              height: "50px",
-              color: "#ff0000",
-              marginBottom: "20px",
-            }}
-          />
-          <p
-            style={{
-              fontSize: "20px",
-              fontWeight: "600",
-              marginBottom: "20px",
-            }}
-          >
-            Incorrect answer. Please try again.
-          </p>
+        <div className="quiz-sad-wrapp">
+          <div className="quiz-sad-img-box">
+            <img className="quiz-sad-img-robot" src={SadRobot} alt="robot" />
+            <img
+              className="quiz-sad-img-hand"
+              src={HandRobot}
+              alt="robot hand"
+            />
+          </div>
+          <div className="quiz-sad-content">
+            <h4 className="quiz-sad-title">Alas, not this time</h4>
+            <p className="quiz-sad-text">
+              The answer is wrong, but next time you will definitely be lucky!
+            </p>
+          </div>
         </div>
       );
     }
@@ -64,9 +61,7 @@ const Quiz = ({ quizData }) => {
 
   return (
     <div className="quiz">
-      <h3 className="quiz-question">
-        Question: <span>{quizData.question}</span>
-      </h3>
+      <h3 className="quiz-question">{quizData.question}</h3>
       <ul className="quiz-answers">
         {quizData.answers.map((answer, index) => (
           <li

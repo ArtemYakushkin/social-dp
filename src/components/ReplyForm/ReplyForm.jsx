@@ -10,9 +10,10 @@ import {
 import validator from "validator";
 import { toast } from "react-toastify";
 import { db } from "../../firebase";
-import "./ReplyForm.css"; // Стили для формы ответа
+import { ReactComponent as Add } from "../../assets/icons/add.svg";
+import "./ReplyForm.css";
 
-const ReplyForm = ({ commentId, postId, user }) => {
+const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
   const [replyText, setReplyText] = useState("");
   // const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -44,6 +45,7 @@ const ReplyForm = ({ commentId, postId, user }) => {
         commentId,
         text: replyText,
         author: {
+          uid: user?.uid || "",
           avatar: user?.photoURL || "",
           nickname: user?.displayName || "",
         },
@@ -58,6 +60,11 @@ const ReplyForm = ({ commentId, postId, user }) => {
 
       setReplyText(""); // Очищаем текст
       toast.success("Reply added successfully!");
+
+      // Уведомляем родительский компонент
+      if (onReplyAdded) {
+        onReplyAdded();
+      }
     } catch (error) {
       console.error("Error adding reply: ", error);
       setError("Error sending reply");
@@ -65,16 +72,17 @@ const ReplyForm = ({ commentId, postId, user }) => {
   };
 
   return (
-    <form className="reply-form-form" onSubmit={handleReplySubmit}>
-      <textarea
+    <form className="reply-form" onSubmit={handleReplySubmit}>
+      <input
+        className="reply-input"
         value={replyText}
         onChange={(e) => setReplyText(e.target.value)}
-        placeholder="Write your reply..."
+        placeholder="Add your reply here"
         rows={3}
       />
       {error && <p className="reply-error">{error}</p>}
       <button className="reply-form-btn" type="submit">
-        Send Reply
+        <Add width={30} height={24} />
       </button>
     </form>
   );

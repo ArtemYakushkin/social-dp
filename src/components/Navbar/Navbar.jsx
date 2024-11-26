@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useAuth } from "../../auth/useAuth";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage";
@@ -7,12 +7,17 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import avatar from "../../assets/avatar.png";
 import logo from "../../assets/logo.png";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrow-down.svg";
+import { ReactComponent as ArrowUp } from "../../assets/icons/arrow-up.svg";
+import { ReactComponent as Profile } from "../../assets/icons/profile.svg";
+import { ReactComponent as Logout } from "../../assets/icons/logout.svg";
 import "./Navbar.css";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Эффект для управления блокировкой прокрутки страницы при открытом модальном окне
   useEffect(() => {
@@ -38,8 +43,9 @@ const Navbar = () => {
     setIsRegisterModalOpen(false);
   };
 
-  // <p className="navbar-nickname">{user.displayName || "User"}</p>;
-  // <IoLogOutOutline className="navbar-logout" onClick={logout} />;
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="navbar">
@@ -57,11 +63,31 @@ const Navbar = () => {
           {user ? (
             <div className="navbar-user">
               <button className="navbar-support-user">Support us</button>
-              <Link to={"/profile"} className="navbar-avatar">
+              <div className="navbar-avatar">
                 <img src={user.photoURL || avatar} alt="avatar" />
-              </Link>
-              <div className="navbar-arrow">
-                <ArrowDown />
+              </div>
+              <div className="navbar-arrow" onClick={toggleDropdown}>
+                {isOpen ? <ArrowUp /> : <ArrowDown />}
+                {isOpen && (
+                  <div className="navbar-dropdown-list">
+                    <div className="navbar-dropdown-nickname-box">
+                      <p className="navbar-nickname">
+                        {user.displayName || "User"}
+                      </p>
+                    </div>
+                    <div
+                      className="navbar-dropdown-item"
+                      onClick={() => navigate("/profile")}
+                    >
+                      <Profile />
+                      <p className="navbar-dropdown-item-text">Profile</p>
+                    </div>
+                    <div className="navbar-dropdown-item" onClick={logout}>
+                      <Logout />
+                      <p className="navbar-dropdown-item-text">Logout</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ) : (

@@ -9,6 +9,7 @@ import {
   startAfter,
 } from "firebase/firestore";
 import Hero from "../../components/Hero/Hero";
+import Options from "../../components/Options/Options";
 import PostCard from "../../components/PostCard/PostCard";
 import Loader from "../../components/Loader/Loader";
 import "./HomePage.css";
@@ -91,6 +92,8 @@ const HomePage = () => {
     <div className="home">
       <div className="container">
         <Hero />
+
+        <Options />
 
         <div className="home-list">
           {posts.length > 0 ? (

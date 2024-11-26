@@ -11,7 +11,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import CreatePostPage from "./pages/CreatePostPage/CreatePostPage";
 // import PostDetails from "./pages/PostDetails/PostDetails";
 
-// const secretCode = process.env.REACT_APP_DASHBOARD_CODE;
+const secretCode = process.env.REACT_APP_DASHBOARD_CODE;
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         <Route path='/create-post' element={<CreatePostPage />} />
 
         {/* <Route path={`/dashboard/${secretCode}`} element={<DashboardPage />} /> */}
-        {/* <Route path={`/dashboard/${secretCode}/create`} element={<CreatePostPage />} /> */}
+        <Route path={`/dashboard/${secretCode}/create`} element={<CreatePostPage />} />
       </Routes>
       <ToastContainer
         position="top-right"

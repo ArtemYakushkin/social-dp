@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import "./QuizModal.css";
 
 const QuizModal = ({ isOpen, onClose, message }) => {
@@ -7,8 +8,10 @@ const QuizModal = ({ isOpen, onClose, message }) => {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <p>{message}</p>
-        <button onClick={onClose}>Close</button>
+        <div>{message}</div>
+        <button className="modal-btn-close" onClick={onClose}>
+          <Close />
+        </button>
       </div>
     </div>
   );

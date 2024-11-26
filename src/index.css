@@ -25,10 +25,13 @@ body {
 :root {
     --bg-blue: #BCD8FF;
     --bg-white: #ffffff;
+    --bg-dark-white: #FBFBFB;
 
     --accent-blue-color: #2F7BF6;
     --accent-dark-blue-color: #094EBE;
     --accent-yellow-color: #FFD90F;
+    --accent-orange-color: #FDB730;
+    --accent-green-color: #70C56F;
     --text-black: #252425;
     --text-grey-dark: #787878;
     --text-white: #ffffff;
@@ -42,27 +45,27 @@ body {
 
 /* Стиль для общей области скроллбара */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 13px;
     /* ширина для вертикального скролла */
-    height: 6px;
+    height: 13px;
     /* высота для горизонтального скролла */
 }
 
 /* Стиль для ползунка (ползущей части скроллбара) */
 ::-webkit-scrollbar-thumb {
-    background-color: #2f7bf672;
+    background-color: var(--text-placeholder-focus);
     /* полупрозрачный черный */
-    border-radius: 10px;
+    border-radius: 90px;
     /* закругленные края */
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     background-clip: padding-box;
 }
 
 /* Стиль для области трека */
 ::-webkit-scrollbar-track {
-    background-color: #64646417;
+    background-color: var(--bg-input-inactive);
     /* полупрозрачный фон трека */
-    border-radius: 10px;
+    border-radius: 90px;
 }
 
 ul,
@@ -114,4 +117,160 @@ img {
     margin: 0 auto;
 }
 
-/* #de5900e7 */
+/* ----------- Swiper ------------- */
+
+.swiper-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* ------------------ Swiper CollapsedPost --------------- */
+
+.collapsed-swiper-pagination {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    bottom: 5px !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    background: #2F7BF633;
+    padding: 2px 8px;
+    border-radius: 6px;
+    width: auto !important;
+
+}
+
+.collapsed-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--bg-white);
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.collapsed-bullet-active {
+    background-color: var(--bg-white);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.collapsed-swiper-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+}
+
+.collapsed-swiper-button-prev {
+    left: 8px;
+}
+
+.collapsed-swiper-button-next {
+    right: 8px;
+}
+
+.collapsed-button-disabled {
+    cursor: none;
+}
+
+/* ------------------ Swiper ExpandedPost --------------- */
+
+.expanded-swiper-pagination {
+    /* position: absolute; */
+    /* z-index: 20; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    /* bottom: -16px !important; */
+    /* left: 50% !important; */
+    /* transform: translateX(-50%); */
+    background: transparent;
+    padding: 2px 8px;
+    border-radius: 6px;
+    width: auto !important;
+    margin-top: 16px;
+
+}
+
+.expanded-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-blue-color);
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.expanded-bullet-active {
+    background-color: var(--accent-blue-color);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.expanded-swiper-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+}
+
+.expanded-swiper-button-prev {
+    left: 8px;
+}
+
+.expanded-swiper-button-next {
+    right: 8px;
+}
+
+.expanded-button-disabled {
+    cursor: none;
+}
+
+/* ----------- Modal windows ------------ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(250, 250, 250, 0.5);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal {
+    position: relative;
+    background-color: var(--bg-white);
+    padding: 40px 67px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 30px 0px #2524254D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-btn-close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+    background-color: var(--bg-dark-white);
+    box-shadow: 0px 0px 25px 0px #2524251A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

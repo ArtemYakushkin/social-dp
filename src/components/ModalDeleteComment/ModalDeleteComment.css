@@ -1,0 +1,40 @@
+.mcd-modal {
+    padding: 40px;
+    height: 208px;
+}
+
+.mcd-wrapp {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 500px;
+}
+
+.mcd-title {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 38.4px;
+    color: var(--text-black);
+}
+
+.mcd-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+.mcd-btn {
+    padding: 14px 36px;
+    border-radius: 30px;
+    border: 1px solid var(--accent-orange-color);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--accent-blue-color);
+
+    &:hover {
+        background-color: var(--accent-orange-color);
+        color: var(--text-white);
+    }
+}
