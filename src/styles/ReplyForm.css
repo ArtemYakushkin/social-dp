@@ -1,0 +1,47 @@
+.reply-form {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background-color: var(--bg-blue-inactive);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.reply-input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+
+    &::placeholder {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 28.8px;
+        color: var(--text-grey-light);
+    }
+}
+
+.reply-error {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    transform: translateY(-50%);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-error);
+}
+
+.reply-not-register {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+    text-align: center;
+}

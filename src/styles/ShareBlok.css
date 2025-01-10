@@ -1,0 +1,38 @@
+.share {
+    padding: 120px 0;
+}
+
+.share-wrapp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+}
+
+.share-title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 57.6px;
+    color: var(--text-black);
+    text-align: center;
+    max-width: 1004px;
+}
+
+.share-social {
+    display: flex;
+    gap: 20px;
+    color: var(--text-black);
+    font-weight: 700;
+}
+
+.share-text {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-black);
+
+    span {
+        color: var(--accent-blue-color);
+        text-decoration: underline;
+    }
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -9,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,6 +32,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("user"); // Удаляем данные пользователя из localStorage при логауте
       localStorage.removeItem("rememberedEmail");
       localStorage.removeItem("rememberedPassword");
+      navigate("/");
     });
   };
 

@@ -1,0 +1,53 @@
+.mdr-modal {
+    padding: 26px 20px 30px 20px;
+    width: 406px;
+    border-top: 14px solid var(--accent-orange-color);
+    border-radius: 10px;
+}
+
+.mdr-wrapp {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.mdr-title {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+    text-align: center;
+}
+
+.mdr-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.mdr-btn {
+    padding: 14px 36px;
+    border-radius: 30px;
+    border: 1px solid var(--accent-blue-color);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.mdr-btn-yes {
+    background-color: var(--accent-blue-color);
+    color: var(--text-white);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+}
+
+.mdr-btn-no {
+    color: var(--accent-blue-color);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+}

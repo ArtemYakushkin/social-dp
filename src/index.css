@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sahitya:wght@400;700&display=swap');
 
 *,
 ::after,
@@ -26,21 +27,22 @@ body {
     --bg-blue: #BCD8FF;
     --bg-white: #ffffff;
     --bg-dark-white: #FBFBFB;
+    --bg-blue-inactive: #EFF2F9;
+    --bg-blue-hover: #EFF2F980;
 
     --accent-blue-color: #2F7BF6;
     --accent-dark-blue-color: #094EBE;
     --accent-yellow-color: #FFD90F;
     --accent-orange-color: #FDB730;
     --accent-green-color: #70C56F;
+
     --text-black: #252425;
     --text-grey-dark: #787878;
     --text-white: #ffffff;
     --text-input: #212121;
-    --text-placeholder-focus: #ADACAC;
+    --text-grey-light: #ADACAC;
     --text-error: #F63B3B;
     --text-inactive-grey: #BDBDBD;
-    --bg-input-inactive: #EFF2F9;
-    --bg-input-hover: #EFF2F980;
 }
 
 /* Стиль для общей области скроллбара */
@@ -53,7 +55,7 @@ body {
 
 /* Стиль для ползунка (ползущей части скроллбара) */
 ::-webkit-scrollbar-thumb {
-    background-color: var(--text-placeholder-focus);
+    background-color: var(--text-grey-light);
     /* полупрозрачный черный */
     border-radius: 90px;
     /* закругленные края */
@@ -63,7 +65,7 @@ body {
 
 /* Стиль для области трека */
 ::-webkit-scrollbar-track {
-    background-color: var(--bg-input-inactive);
+    background-color: var(--bg-blue-inactive);
     /* полупрозрачный фон трека */
     border-radius: 90px;
 }
@@ -92,6 +94,7 @@ button {
     padding: 0;
     cursor: pointer;
     color: inherit;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 a {
@@ -163,8 +166,19 @@ img {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2F7BF659;
     z-index: 10;
     cursor: pointer;
+
+    &.in-activ {
+        background-color: #2F7BF64D;
+    }
 }
 
 .collapsed-swiper-button-prev {
@@ -182,20 +196,15 @@ img {
 /* ------------------ Swiper ExpandedPost --------------- */
 
 .expanded-swiper-pagination {
-    /* position: absolute; */
-    /* z-index: 20; */
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 18px;
-    /* bottom: -16px !important; */
-    /* left: 50% !important; */
-    /* transform: translateX(-50%); */
     background: transparent;
     padding: 2px 8px;
     border-radius: 6px;
     width: auto !important;
-    margin-top: 16px;
+    margin-top: 14px;
 
 }
 
@@ -218,16 +227,27 @@ img {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2F7BF659;
     z-index: 10;
     cursor: pointer;
+
+    &.in-activ {
+        background-color: #2F7BF64D;
+    }
 }
 
 .expanded-swiper-button-prev {
-    left: 8px;
+    left: 25px;
 }
 
 .expanded-swiper-button-next {
-    right: 8px;
+    right: 25px;
 }
 
 .expanded-button-disabled {

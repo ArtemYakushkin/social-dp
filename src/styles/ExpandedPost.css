@@ -1,0 +1,196 @@
+.postExp {
+    width: 100%;
+    padding: 40px 0;
+    border-radius: 30px;
+    background-color: var(--bg-white);
+    box-shadow: 0px 4px 16px 0px #2F7BF626;
+    overflow: hidden;
+    transition: max-height 1.5s ease-in-out;
+}
+
+.transition-post {
+    transition: all 1.5s ease;
+    /* Плавный переход */
+}
+
+.postExp-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0 40px;
+    margin-bottom: 12px;
+}
+
+.postExp-avarar {
+    width: 63px;
+    height: 63px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.postExp-author {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.postExp-date {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-grey-light);
+}
+
+.postExp-center {
+    margin-bottom: 40px;
+}
+
+.postExp-title-box {
+    padding: 0 40px;
+    margin-bottom: 30px;
+}
+
+.postExp-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-black);
+}
+
+.postExp-img {
+    width: 100%;
+    margin-bottom: 16px;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.postExp-text-box {
+    padding: 0 40px;
+    margin-bottom: 30px;
+}
+
+.postExp-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.postExp-exam-box {
+    padding: 0 40px;
+}
+
+.postExp-line-box {
+    padding: 0 40px;
+    margin-bottom: 40px;
+}
+
+.postExp-line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--text-grey-light);
+}
+
+.postExp-bottom {
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postExp-bottom-left {
+    display: flex;
+    align-items: center;
+    gap: 31px;
+}
+
+.postExp-icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.postExp-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    background-color: var(--bg-blue-inactive);
+
+    span {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16.59px;
+        color: var(--text-black);
+    }
+}
+
+.postExp-btn-viewComm {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-grey-dark);
+    text-decoration: underline;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+        color: var(--accent-blue-color);
+    }
+}
+
+.postExp-collapse-btn {
+    background-color: var(--bg-blue-inactive);
+    padding: 6px;
+    border-radius: 5px;
+    transition: all 0.25s;
+
+    &:hover {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.postExp-comments-box {
+    margin: 40px 40px 0px 40px;
+    padding-top: 30px;
+    border: 1px solid var(--bg-blue);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    max-height: 968px;
+    overflow-y: auto;
+    overflow: hidden;
+}
+
+.postExp-comments-scroll {
+    position: relative;
+    overflow-y: auto;
+    /* Активируем скролл внутри внутреннего блока */
+    max-height: 100%;
+    /* Ограничиваем высоту внутреннего блока */
+    padding-right: 28px;
+    /* Отступ для скроллбара */
+    display: flex;
+    /* flex-direction: column; */
+    gap: 12px;
+    margin-right: 14px;
+}

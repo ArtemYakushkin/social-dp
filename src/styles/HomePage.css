@@ -1,0 +1,15 @@
+.home-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 65px;
+}
+
+.home-no-post-text {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-black);
+    text-decoration: underline;
+}
