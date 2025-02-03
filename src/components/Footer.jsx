@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 import logoFooter from "../assets/logo-footer.png";
 
-import { FaInstagram } from "react-icons/fa";
-import { SlSocialFacebook } from "react-icons/sl";
+// import { FaInstagram } from "react-icons/fa";
+// import { SlSocialFacebook } from "react-icons/sl";
 import { GoDotFill } from "react-icons/go";
 
 import "../styles/Footer.css";
@@ -27,13 +27,13 @@ const Footer = () => {
             <Link to={"/"} className="footer-top-policy">
               Privacy Policy
             </Link>
-            <div className="footer-top-social-box">
+            {/* <div className="footer-top-social-box">
               <FaInstagram size={24} style={{ color: "var(--text-white)", cursor: "pointer" }} />
               <SlSocialFacebook
                 size={24}
                 style={{ color: "var(--text-white)", cursor: "pointer" }}
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -44,15 +44,32 @@ const Footer = () => {
             <h4 className="footer-center-title">The project was made by:</h4>
             <div className="footer-center-text">
               <p>
-                Аuthor of the project <a href="#">Anna Yakushkina</a>
+                Аuthor of the project{" "}
+                <a
+                  href="https://www.instagram.com/start_english_today?igsh=MTdxdGJsZnQ1YWNxbQ=="
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Anna Yakushkina
+                </a>
               </p>
               <GoDotFill size={12} style={{ color: "var(--text-black)" }} />
               <p>
-                Site developer <a href="#">Artem Yakushkin</a>
+                Site developer{" "}
+                <a href="https://artem-yakushkin.netlify.app" target="_blank" rel="noreferrer">
+                  Artem Yakushkin
+                </a>
               </p>
               <GoDotFill size={12} style={{ color: "var(--text-black)" }} />
               <p>
-                Website designer <a href="#">Anastasia Horbatenko</a>
+                Website designer{" "}
+                <a
+                  href="https://anastasiiahorbatenko.weblium.site/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Anastasia Horbatenko
+                </a>
               </p>
             </div>
           </div>

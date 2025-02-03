@@ -1,10 +1,9 @@
 import React from "react";
 
-import facebook from "../assets/facebook.png";
 import instagram from "../assets/instagram.png";
 import telegram from "../assets/telegram.png";
-import viber from "../assets/viber.png";
 import whatsapp from "../assets/whatsapp.png";
+import linkedin from "../assets/linkedin.png";
 import Anna from "../assets/Anna.png";
 import Artem from "../assets/Artem.png";
 import Nastya from "../assets/Nastya.png";
@@ -38,15 +37,15 @@ const OurTeam = () => {
                 <p className="team-cont">Contacts:</p>
                 <a
                   className="team-link"
-                  href="https://www.facebook.com/profile.php?id=100041197479819"
+                  href="https://www.linkedin.com/in/anna-yakushkina-3011202a9"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={facebook} alt="" />
+                  <img src={linkedin} alt="" />
                 </a>
                 <a
                   className="team-link"
-                  href="https://www.instagram.com/yakushkin_artem_/"
+                  href="https://www.instagram.com/start_english_today?igsh=MTdxdGJsZnQ1YWNxbQ=="
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -75,11 +74,11 @@ const OurTeam = () => {
                 <p className="team-cont">Contacts:</p>
                 <a
                   className="team-link"
-                  href="https://www.facebook.com/profile.php?id=100041197479819"
+                  href="https://www.linkedin.com/in/artem-yakushkin-a86722229/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={facebook} alt="" />
+                  <img src={linkedin} alt="" />
                 </a>
                 <a
                   className="team-link"
@@ -113,23 +112,23 @@ const OurTeam = () => {
                 <p className="team-cont">Contacts:</p>
                 <a
                   className="team-link"
-                  href="https://www.facebook.com/profile.php?id=100041197479819"
+                  href="https://linkedin.com/in/anastasiia-horbatenko-designer/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={facebook} alt="" />
+                  <img src={linkedin} alt="" />
                 </a>
                 <a
                   className="team-link"
-                  href="viber://chat?number=+380507025708"
+                  href="tg://resolve?domain=StasiaGor"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={viber} alt="" />
+                  <img src={telegram} alt="" />
                 </a>
                 <a
                   className="team-link"
-                  href="https://wa.me/+380507025708"
+                  href="https://wa.me/+380663611504"
                   target="_blank"
                   rel="noreferrer"
                 >

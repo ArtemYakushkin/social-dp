@@ -60,7 +60,14 @@ const Navbar = () => {
           </div>
           {user ? (
             <div className="navbar-user">
-              <button className="navbar-btn navbar-support-user">Support us</button>
+              <a
+                className="navbar-btn navbar-support-user"
+                href="mailto: artem.frontdeveloper@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Support us
+              </a>
               <div className="navbar-avatar">
                 <img src={user.photoURL || avatar} alt="avatar" />
               </div>
@@ -88,7 +95,14 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="navbar-buttons">
-              <button className="navbar-support">Support us</button>
+              <a
+                className="navbar-support"
+                href="mailto: artem.frontdeveloper@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Support us
+              </a>
               <button
                 className="navbar-btn navbar-register"
                 onClick={() => setIsRegisterModalOpen(true)}

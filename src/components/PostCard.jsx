@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 
 import { db } from "../firebase";
 import { useAuth } from "../auth/useAuth";
@@ -8,11 +8,11 @@ import { useAuth } from "../auth/useAuth";
 import ExpandedPost from "./ExpandedPost";
 import CollapsedPost from "./CollapsedPost";
 
-const PostCard = ({ post, isExpanded, onExpand }) => {
+const PostCard = ({ post, isExpanded, onExpand, viewMode }) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(post.likes.includes(user?.uid));
   const [likesCount, setLikesCount] = useState(post.likes.length);
-  const [commentsVisible, setCommentsVisible] = useState(false);
+  // const [commentsVisible, setCommentsVisible] = useState(false);
   const [viewsCount, setViewsCount] = useState(post.views || 0);
   const [author, setAuthor] = useState(null);
 
@@ -76,64 +76,65 @@ const PostCard = ({ post, isExpanded, onExpand }) => {
     }
   };
 
-  const handleView = async () => {
-    const postRef = doc(db, "posts", post.id);
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
+  // const handleView = async () => {
+  //   const postRef = doc(db, "posts", post.id);
+  //   const auth = getAuth();
+  //   const currentUser = auth.currentUser;
 
-    if (!currentUser) {
-      return;
-    }
+  //   if (!currentUser) {
+  //     return;
+  //   }
 
-    try {
-      const postSnapshot = await getDoc(postRef);
+  //   try {
+  //     const postSnapshot = await getDoc(postRef);
 
-      if (postSnapshot.exists()) {
-        const currentViews = postSnapshot.data().views || 0;
+  //     if (postSnapshot.exists()) {
+  //       const currentViews = postSnapshot.data().views || 0;
 
-        await updateDoc(postRef, {
-          views: currentViews + 1,
-        });
-        setViewsCount(currentViews + 1);
-      } else {
-        console.error("Post not found");
-      }
-    } catch (error) {
-      console.error("Error updating views:", error);
-    }
-  };
+  //       await updateDoc(postRef, {
+  //         views: currentViews + 1,
+  //       });
+  //       setViewsCount(currentViews + 1);
+  //     } else {
+  //       console.error("Post not found");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating views:", error);
+  //   }
+  // };
 
-  const toggleCommentsVisibility = () => {
-    setCommentsVisible((prevState) => !prevState);
-  };
+  // const toggleCommentsVisibility = () => {
+  //   setCommentsVisible((prevState) => !prevState);
+  // };
 
-  const handleExpand = () => {
-    handleView();
-    onExpand();
-  };
+  // const handleExpand = () => {
+  //   handleView();
+  //   onExpand();
+  // };
 
-  return isExpanded ? (
+  return viewMode === "grid" ? (
     <ExpandedPost
-      user={user}
+      // user={user}
       post={post}
       author={author}
       liked={liked}
       likesCount={likesCount}
       viewsCount={viewsCount}
-      commentsVisible={commentsVisible}
-      toggleCommentsVisibility={toggleCommentsVisibility}
+      // commentsVisible={commentsVisible}
+      // toggleCommentsVisibility={toggleCommentsVisibility}
       handleLike={handleLike}
-      onExpand={onExpand}
+      // onExpand={onExpand}
     />
   ) : (
     <CollapsedPost
+      // user={user}
       post={post}
       author={author}
       liked={liked}
       likesCount={likesCount}
       viewsCount={viewsCount}
       handleLike={handleLike}
-      handleExpand={handleExpand}
+      // handleExpand={handleExpand}
     />
   );
 };

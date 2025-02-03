@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "firebase/firestore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { db } from "../firebase";
 import { useAuth } from "../auth/useAuth";
@@ -65,10 +67,11 @@ const PostDetailsPage = () => {
           setPost(postData);
 
           setLikesCount(postData.likes?.length || 0);
+          setLiked(postData.likes?.includes(user?.uid) || false);
 
-          setLiked(postData.likes?.includes(user.uid) || false);
-
-          await updateDoc(postRef, { views: (postData.views || 0) + 1 });
+          if (user?.uid) {
+            await updateDoc(postRef, { views: (postData.views || 0) + 1 });
+          }
 
           const authorRef = doc(db, "users", postData.author.uid);
           const authorSnap = await getDoc(authorRef);
@@ -88,7 +91,7 @@ const PostDetailsPage = () => {
     };
 
     fetchPost();
-  }, [postId, user.uid]);
+  }, [postId, user?.uid]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -127,7 +130,7 @@ const PostDetailsPage = () => {
 
   const handleLike = async () => {
     if (!user || !user.uid) {
-      alert("You need to be logged in to like a post.");
+      toast.info("You need to be logged in to like a post.");
       return;
     }
 
@@ -180,24 +183,27 @@ const PostDetailsPage = () => {
   return (
     <div className="details">
       <div className="container">
-        <button className="details-back" onClick={handleBack}>
-          <HiArrowLongLeft size={28} />
-          Go back
-        </button>
-
         {post ? (
           <>
             <div className="details-wrapper">
               <div className="details-author-box">
-                <div className="details-author-img" onClick={handleAvatarClick}>
-                  <img src={author?.avatar || avatar} alt="" />
+                <div className="details-author-info">
+                  <div className="details-author-img" onClick={handleAvatarClick}>
+                    <img src={author?.avatar || avatar} alt="" />
+                  </div>
+                  <div className="details-author-nickname-box">
+                    <p className="details-author-nickname">
+                      {author?.nickname || "Unknown Author"}
+                    </p>
+                    <p className="details-author-date">
+                      {new Date(post.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
-                <div className="details-author-nickname-box">
-                  <p className="details-author-nickname">{author?.nickname || "Unknown Author"}</p>
-                  <p className="details-author-date">
-                    {new Date(post.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
+                <button className="details-back" onClick={handleBack}>
+                  <HiArrowLongLeft size={28} />
+                  Go back
+                </button>
               </div>
 
               <h2 className="details-title">{post.title}</h2>

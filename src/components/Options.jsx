@@ -6,7 +6,7 @@ import { FiSearch } from "react-icons/fi";
 
 import "../styles/Options.css";
 
-const Options = ({ onSearch, onSort }) => {
+const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,6 +68,27 @@ const Options = ({ onSearch, onSort }) => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
+      </div>
+
+      <div className="options-choise">
+        <p className="options-choise-title">Display modes:</p>
+        <div
+          className={viewMode === "grid" ? "options-choice-square-active" : "options-choice-square"}
+          onClick={() => setViewMode("grid")}
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div
+          className={viewMode === "list" ? "options-choice-line-active" : "options-choice-line"}
+          onClick={() => setViewMode("list")}
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
 
       <div className="options-switcher">

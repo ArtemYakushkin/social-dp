@@ -1,0 +1,114 @@
+.app {
+    padding-bottom: 60px;
+}
+
+.app-container {
+    max-width: 1440px;
+    padding: 0 82px;
+    margin: 0 auto;
+}
+
+.app-info {
+    position: relative;
+    width: 100%;
+    background-color: var(--bg-white);
+    border-radius: 30px;
+    overflow: hidden;
+    padding-bottom: 32px;
+    margin-bottom: 60px;
+}
+
+.app-avatar-img {
+    position: absolute;
+    top: 189px;
+    left: 38px;
+    width: 282px;
+    height: 282px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid var(--bg-white);
+    box-shadow: 0px 4px 16px 0px #2F7BF626;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.app-cover {
+    width: 100%;
+    max-height: 368px;
+    object-fit: cover;
+    margin-bottom: 46px;
+}
+
+.app-nickname {
+    margin-left: 345px;
+    margin-bottom: 26px;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 57.6px;
+    color: var(--text-black);
+}
+
+.app-line-box {
+    padding: 0 38px;
+    margin-bottom: 30px;
+
+    div {
+        width: 100%;
+        height: 1px;
+        background-color: var(--text-grey-light);
+    }
+}
+
+.app-status {
+    margin-left: 38px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-item {
+    padding: 6px 20px;
+    border-radius: 20px;
+    background-color: var(--bg-blue-inactive);
+
+    p {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22.4px;
+        color: var(--text-grey-dark);
+    }
+
+    span {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22.4px;
+        color: var(--text-black);
+    }
+}
+
+.app-about {
+    width: 100%;
+    background-color: var(--bg-white);
+    border-radius: 30px;
+    box-shadow: 0px 4px 16px 0px #2F7BF626;
+    padding: 40px 30px;
+}
+
+.app-about-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-black);
+    margin-bottom: 24px;
+}
+
+.app-about-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}

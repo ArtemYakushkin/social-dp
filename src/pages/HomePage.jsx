@@ -17,7 +17,13 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [expandedPostId, setExpandedPostId] = useState(null);
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem("viewMode") || "grid";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("viewMode", viewMode);
+  }, [viewMode]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -69,29 +75,23 @@ const HomePage = () => {
     setFilteredPosts(sortedPosts);
   };
 
-  const handleExpand = (postId) => {
-    setExpandedPostId(postId === expandedPostId ? null : postId);
-  };
-
   return (
     <div className="home">
       <div className="container">
         <Hero />
 
-        <Options onSearch={handleSearch} onSort={handleSort} />
+        <Options
+          onSearch={handleSearch}
+          onSort={handleSort}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+        />
 
-        <div className="home-list">
+        <div className={viewMode === "grid" ? "home-list-grid" : "home-list-list"}>
           {isLoading ? (
             <Loader />
           ) : filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => (
-              <PostCard
-                key={post.id}
-                post={post}
-                isExpanded={expandedPostId === post.id}
-                onExpand={() => handleExpand(post.id)}
-              />
-            ))
+            filteredPosts.map((post) => <PostCard key={post.id} post={post} viewMode={viewMode} />)
           ) : (
             <h3 className="home-no-post-text">No posts found</h3>
           )}

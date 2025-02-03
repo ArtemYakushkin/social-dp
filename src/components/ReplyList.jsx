@@ -159,7 +159,7 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
                 onClick={() => {
                   setIsEditing(true);
                   setSelectedReply(reply);
-                  setEditedText(reply.text); // Устанавливаем текущий текст ответа для редактирования
+                  setEditedText(reply.text);
                 }}
               >
                 Edit Reply
@@ -168,7 +168,7 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
                 className="reply-list-options-btn"
                 onClick={() => {
                   setIsDeleting(true);
-                  setSelectedReply(reply); // Устанавливаем текущий ответ для удаления
+                  setSelectedReply(reply);
                 }}
               >
                 Delete Reply

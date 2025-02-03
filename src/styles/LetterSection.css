@@ -1,0 +1,124 @@
+.letter-wrapper {
+    background-color: #FFFFFFB2;
+    backdrop-filter: blur(50px);
+    box-shadow: 0px 4px 20px 0px #094EBE33;
+    border-radius: 30px;
+    padding: 71px 97px 101px 81px;
+    display: flex;
+    gap: 41px;
+}
+
+.letter-img-brackets {
+    display: block;
+}
+
+.letter-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.letter-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.letter-nickname {
+    p {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--text-black);
+    }
+
+    span {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14.4px;
+        color: var(--text-grey-light);
+        text-transform: uppercase;
+    }
+}
+
+.letter-text-box {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    margin-bottom: 29px;
+
+    p {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 31.2px;
+        color: var(--text-black);
+    }
+}
+
+.letter-frame {
+    position: relative;
+    background-image: url(../assets/frame.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.letter-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-black);
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+.letter-btn {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 30px;
+    padding: 14px 36px;
+    color: var(--text-white);
+    background-color: var(--accent-blue-color);
+    margin-bottom: 20px;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
+    }
+}
+
+.letter-attention {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16.8px;
+    color: var(--text-grey-dark);
+}
+
+.letter-img {
+    position: absolute;
+    bottom: -30%;
+    left: 5%;
+    width: 166px;
+    height: auto;
+}

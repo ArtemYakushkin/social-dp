@@ -18,6 +18,7 @@ const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [fade, setFade] = useState(false);
 
   const { user } = useAuth();
 
@@ -32,6 +33,12 @@ const HowItWorks = () => {
       document.body.style.overflow = "";
     };
   }, [isRegisterModalOpen, isLoginModalOpen]);
+
+  useEffect(() => {
+    setFade(true);
+    const timeout = setTimeout(() => setFade(false), 2000);
+    return () => clearTimeout(timeout);
+  }, [currentStep]);
 
   const openLogin = () => {
     setIsLoginModalOpen(true);
@@ -71,43 +78,31 @@ const HowItWorks = () => {
         <h2 className="how-title">How it works</h2>
         <div className="how-content">
           <div className="how-img">
-            <img src={stepImages[currentStep]} alt={`Step ${currentStep}`} />
+            <img
+              key={currentStep}
+              src={stepImages[currentStep]}
+              alt={`Step ${currentStep}`}
+              className={fade ? "fade-in" : ""}
+            />
           </div>
           <div className="how-steps">
-            <div
-              className={`how-step ${currentStep === 1 ? "how-step-active" : ""}`}
-              onClick={() => setCurrentStep(1)}
-            >
-              <h4 className="how-step-title">Step 1</h4>
-              <p className="how-step-text">Complete a short and simple registration</p>
-            </div>
-            <div
-              className={`how-step ${currentStep === 2 ? "how-step-active" : ""}`}
-              onClick={() => setCurrentStep(2)}
-            >
-              <h4 className="how-step-title">Step 2</h4>
-              <p className="how-step-text">Read educational posts and watch interesting videos</p>
-            </div>
-            <div
-              className={`how-step ${currentStep === 4 ? "how-step-active" : ""}`}
-              onClick={() => setCurrentStep(4)}
-            >
-              <h4 className="how-step-title">Step 4</h4>
-              <p className="how-step-text">
-                You receive bonuses and incentives, increase your level on the site and simply enjoy
-                communicating with like-minded people
-              </p>
-            </div>
-            <div
-              className={`how-step ${currentStep === 3 ? "how-step-active" : ""}`}
-              onClick={() => setCurrentStep(3)}
-            >
-              <h4 className="how-step-title">Step 3</h4>
-              <p className="how-step-text">
-                You participate in interactive activities, like, actively comment and communicate
-                with children from different countries of the world
-              </p>
-            </div>
+            {[1, 2, 4, 3].map((step) => (
+              <div
+                key={step}
+                className={`how-step ${currentStep === step ? "how-step-active" : ""}`}
+                onClick={() => setCurrentStep(step)}
+              >
+                <h4 className="how-step-title">Step {step}</h4>
+                <p className="how-step-text">
+                  {step === 1 && "Complete a short and simple registration"}
+                  {step === 2 && "Read educational posts and watch interesting videos"}
+                  {step === 3 &&
+                    "You participate in interactive activities, like, actively comment and communicate with children from different countries of the world"}
+                  {step === 4 &&
+                    "You receive bonuses and incentives, increase your level on the site and simply enjoy communicating with like-minded people"}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
         <div className="how-btn-box">

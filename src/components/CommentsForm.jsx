@@ -22,9 +22,13 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
   const [error, setError] = useState("");
   const { user } = useAuth();
 
+  // const isValidComment = (text) => {
+  //   const englishTextPattern = /^[A-Za-z0-9 .,!?'"()-]+$/;
+  //   return validator.matches(text, englishTextPattern);
+  // };
   const isValidComment = (text) => {
-    const englishTextPattern = /^[A-Za-z0-9 .,!?'"()-]+$/;
-    return validator.matches(text, englishTextPattern);
+    const englishTextPattern = "^[A-Za-z0-9 .,!?\"'()\\-]+$";
+    return validator.matches(text, new RegExp(englishTextPattern));
   };
 
   const handleCommentSubmit = async (e) => {
@@ -88,45 +92,10 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
           </button>
         </form>
       ) : (
-        <p className="comments-not-register">Log in to leave a comment.</p>
+        <p className="comments-not-register">Login to leave a comment.</p>
       )}
     </div>
   );
 };
 
 export default CommentsForm;
-
-// <div className="comments-section">
-//   {user ? (
-//     <form onSubmit={handleCommentSubmit} className="comments-form">
-//       <div className="comments-text-box">
-//         <textarea
-//           value={commentText}
-//           onChange={(e) => setCommentText(e.target.value)}
-//           placeholder="Add your comment here"
-//           className="comments-textarea"
-//         />
-//         {error && <p className="comments-error">{error}</p>}
-//       </div>
-//       <div className="comments-buttons-box">
-//         <div className="comments-text-icons">
-//           <TextB />
-//           <TextI />
-//           <TextU />
-//           <TextList />
-//           <TextImg />
-//           <TextGif />
-//           <TextHeadphones />
-//           <TextLink />
-//           <TextAdd />
-//           <TextSmile />
-//         </div>
-//         <button type="submit" className="comments-submit-btn">
-//           <Add width={36} height={30} />
-//         </button>
-//       </div>
-//     </form>
-//   ) : (
-//     <p className="comments-not-register">Log in to leave a comment.</p>
-//   )}
-// </div>;

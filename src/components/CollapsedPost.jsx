@@ -12,19 +12,10 @@ import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md"
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { SlEye } from "react-icons/sl";
 import { BiComment } from "react-icons/bi";
-import { TbArrowsDiagonal } from "react-icons/tb";
 
 import "../styles/CollapsedPost.css";
 
-const CollapsedPost = ({
-  post,
-  liked,
-  likesCount,
-  viewsCount,
-  handleLike,
-  handleExpand,
-  author,
-}) => {
+const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author }) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -158,6 +149,7 @@ const CollapsedPost = ({
           <img src={post.media[0]} alt="Post media" />
         )}
       </div>
+
       <div className="post-right">
         <div className="post-header">
           <div className="post-avatar" onClick={handleAvatarClick}>
@@ -190,11 +182,7 @@ const CollapsedPost = ({
             </div>
           </div>
           <button className="post-more-btn" onClick={handleExpandClick}>
-            <TbArrowsDiagonal
-              className="post-more-btn-icon"
-              size={24}
-              style={{ color: "var(--accent-blue-color)" }}
-            />
+            Read more
           </button>
         </div>
       </div>

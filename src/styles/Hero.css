@@ -1,6 +1,7 @@
 .hero {
     position: relative;
-    padding: 21px 0px 45px 0px;
+    padding: 25px 0px 45px 0px;
+    height: 100vh;
 }
 
 .hero-title-box {

@@ -8,79 +8,45 @@
     font-size: 48px;
     line-height: 57.6px;
     color: var(--text-black);
-    margin-bottom: 73px;
-}
-
-.ap-slider-container {
-    position: relative;
-}
-
-.ap-slider {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin: auto;
-    overflow: hidden;
-}
-
-.ap-slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
+    margin-bottom: 40px;
 }
 
 .ap-slide {
-    flex: 1 0 100%;
+    width: 100%;
+    min-height: 467px;
+    padding: 83px 98px 0 0;
+    background-image: url(../assets/stroke.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-bottom: 82px;
 }
 
-.ap-prev,
-.ap-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
+.ap-slide-info {
+    padding: 65px 40px;
+    border-radius: 200px;
+    background-color: var(--accent-blue-color);
+    /* display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: #2F7BF64D;
-    z-index: 10;
-
-    &:hover {
-        background-color: #2F7BF659;
-    }
+    gap: 29px; */
 }
 
-.ap-prev {
-    left: -67px;
+.ap-slide-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-white);
+    text-align: center;
+    margin-bottom: 18px;
 }
 
-.ap-next {
-    right: -67px;
-}
-
-.ap-navigation {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -42px;
-}
-
-.ap-nav-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #2F7BF64D;
-    border: none;
-    cursor: pointer;
-
-    &.ap-nav-active {
-        background-color: var(--accent-blue-color);
-    }
+.ap-slide-text {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-white);
+    text-align: center;
 }
 
 .ap-btn-box {
@@ -116,7 +82,7 @@
     }
 }
 
-.ap-slide1 {
+/* .ap-slide1 {
     position: relative;
 }
 
@@ -191,4 +157,4 @@
     font-size: 20px;
     line-height: 24px;
     color: var(--accent-blue-color);
-}
+} */

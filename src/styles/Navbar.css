@@ -1,5 +1,5 @@
 .navbar {
-    padding: 40px 0 39px 0;
+    padding: 20px 0 20px 0;
 }
 
 .navbar-content {
@@ -28,10 +28,27 @@
 }
 
 .navbar-link {
+    position: relative;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
-    color: var(--text-grey-dark);
+    color: var(--accent-blue-color);
+    transition: color 0.3s ease-in-out;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 0;
+        height: 1px;
+        background-color: var(--accent-blue-color);
+        transition: width 0.3s ease-in-out;
+    }
+
+    &:hover::after {
+        width: 100%;
+    }
 }
 
 .navbar-user {

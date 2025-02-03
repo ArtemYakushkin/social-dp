@@ -118,6 +118,8 @@ const RegisterPage = ({ onClose, isVisible, openLogin }) => {
         avatar: avatarURL || "",
         country,
         profession: selectedProfession,
+        cover: "",
+        aboutMe: "",
         createdPosts: [],
         createdComments: [],
         createdReplys: [],
