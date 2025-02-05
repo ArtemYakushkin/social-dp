@@ -6,9 +6,9 @@ import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
-import stroke from "../assets/stroke.png";
-import map from "../assets/map-stroke.png";
 import leter from "../assets/letter.png";
+import vectorBig from "../assets/vector-big-about.png";
+import vectorSmall from "../assets/vector-small-about.png";
 
 import "../styles/AboutProject.css";
 
@@ -67,9 +67,9 @@ const AboutProject = () => {
               This is a social network for those who want to communicate
               <br /> while learning English with people from all over the world
             </p>
-          </div>
-          <div className="ap-slide-bubble">
-            <p className="ap-slide-speech">Swipe right and find out how it works</p>
+            <div className="ap-slide-bubble">
+              <p className="ap-slide-speech">Swipe right and find out how it works</p>
+            </div>
           </div>
           <img className="ap-slide-img-leter" src={leter} alt="" />
         </div>
@@ -83,6 +83,9 @@ const AboutProject = () => {
           </button>
         </div>
       </div>
+
+      <img className="ap-vector-big" src={vectorBig} alt="" />
+      <img className="ap-vector-small" src={vectorSmall} alt="" />
 
       {isRegisterModalOpen && (
         <RegisterPage

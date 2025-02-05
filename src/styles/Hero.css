@@ -1,13 +1,23 @@
 .hero {
-    position: relative;
-    padding: 25px 0px 45px 0px;
+    /* position: relative; */
+    padding: 35px 0px 0px 0px;
+    margin-bottom: 45px;
+    margin-top: -100px;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .hero-title-box {
     margin-top: 50px;
     margin-bottom: 57px;
-    max-width: 550px;
+    max-width: 514px;
 }
 
 .hero-title {
@@ -57,10 +67,18 @@
 }
 
 .hero-image-box {
+    position: relative;
+    width: 686px;
+    height: 480px;
+}
+
+.hero-image {
     position: absolute;
-    top: 0;
-    right: -120px;
-    z-index: -3;
+    top: 50%;
+    right: -30px;
+    width: 100%;
+    height: auto;
+    transform: translateY(-50%) scale(1.2);
 }
 
 .hero-points {
@@ -77,27 +95,27 @@
 
 .hero-point-1 {
     top: 80px;
-    left: 100px;
+    left: 60px;
 }
 
 .hero-point-2 {
     top: 270px;
-    left: 160px;
+    left: 120px;
 }
 
 .hero-point-3 {
     top: 50px;
-    left: 250px;
+    left: 210px;
 }
 
 .hero-point-4 {
     top: 200px;
-    left: 445px;
+    left: 405px;
 }
 
 .hero-point-5 {
     top: 310px;
-    left: 750px;
+    left: 710px;
 }
 
 .hero-person-country {
@@ -111,7 +129,7 @@
 .hero-person-girl {
     position: absolute;
     top: 90px;
-    left: 90px;
+    left: 30px;
 }
 
 .hero-chat {
@@ -155,14 +173,14 @@
 
 .hero-country-canada {
     position: absolute;
-    top: 60px;
-    left: 195px;
+    top: 70px;
+    left: 155px;
 }
 
 .hero-country-uk {
     position: absolute;
     top: 105px;
-    left: 355px;
+    left: 305px;
 }
 
 .hero-person-boy {
