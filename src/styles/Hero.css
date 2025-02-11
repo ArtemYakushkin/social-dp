@@ -1,23 +1,17 @@
 .hero {
-    /* position: relative; */
     padding: 35px 0px 0px 0px;
     margin-bottom: 45px;
-    /* margin-top: -100px;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center; */
 }
 
 .hero-wrapper {
     display: flex;
-    align-items: center;
 }
 
 .hero-title-box {
     margin-top: 50px;
     margin-bottom: 57px;
     max-width: 514px;
+    flex: 1;
 }
 
 .hero-title {
@@ -69,16 +63,13 @@
 .hero-image-box {
     position: relative;
     width: 686px;
-    height: 480px;
+    flex: 1;
 }
 
 .hero-image {
-    position: absolute;
-    top: 50%;
-    right: -30px;
     width: 100%;
     height: auto;
-    transform: translateY(-50%) scale(1.2);
+    transform: scale(1.2);
 }
 
 .hero-points {
