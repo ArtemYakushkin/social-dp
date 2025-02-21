@@ -218,10 +218,26 @@ const AboutSlider = () => {
             </div>
           </div>
 
-          <button className="aboutSlider-prev" onClick={handlePrev}>
+          <button
+            className="aboutSlider-prev"
+            onClick={handlePrev}
+            disabled={currentSlide === 0}
+            style={{
+              opacity: currentSlide === 0 ? 0.5 : 1,
+              cursor: currentSlide === 0 ? "default" : "pointer",
+            }}
+          >
             <MdOutlineArrowBackIos size={22} style={{ color: "var(--text-white)" }} />
           </button>
-          <button className="aboutSlider-next" onClick={handleNext}>
+          <button
+            className="aboutSlider-next"
+            onClick={handleNext}
+            disabled={currentSlide === slideCount - 1}
+            style={{
+              opacity: currentSlide === slideCount - 1 ? 0.5 : 1,
+              cursor: currentSlide === slideCount - 1 ? "default" : "pointer",
+            }}
+          >
             <MdOutlineArrowForwardIos size={22} style={{ color: "var(--text-white)" }} />
           </button>
         </div>

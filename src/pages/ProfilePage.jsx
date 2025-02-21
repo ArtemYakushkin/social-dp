@@ -7,6 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { useAuth } from "../auth/useAuth";
 import { db, storage } from "../firebase";
+import PopularPosts from "../components/PopularPosts";
 import Footer from "../components/Footer";
 
 import avatarPlaceholder from "../assets/avatar.png";
@@ -380,6 +381,7 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+      <PopularPosts />
       <Footer />
     </div>
   );

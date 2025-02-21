@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
-// import { getAuth } from "firebase/auth";
 
 import { db } from "../firebase";
 import { useAuth } from "../auth/useAuth";
 
 import ExpandedPost from "./ExpandedPost";
 import CollapsedPost from "./CollapsedPost";
+import UnregisteredModal from "./UnregisteredModal";
 
 const PostCard = ({ post, isExpanded, onExpand, viewMode }) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(post.likes.includes(user?.uid));
   const [likesCount, setLikesCount] = useState(post.likes.length);
-  // const [commentsVisible, setCommentsVisible] = useState(false);
   const [viewsCount, setViewsCount] = useState(post.views || 0);
   const [author, setAuthor] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setLiked(post.likes.includes(user?.uid));
@@ -45,7 +45,7 @@ const PostCard = ({ post, isExpanded, onExpand, viewMode }) => {
 
   const handleLike = async () => {
     if (!user || !user.uid) {
-      alert("You need to be logged in to like a post.");
+      setIsModalOpen(true);
       return;
     }
 
@@ -76,66 +76,30 @@ const PostCard = ({ post, isExpanded, onExpand, viewMode }) => {
     }
   };
 
-  // const handleView = async () => {
-  //   const postRef = doc(db, "posts", post.id);
-  //   const auth = getAuth();
-  //   const currentUser = auth.currentUser;
+  return (
+    <>
+      {viewMode === "grid" ? (
+        <ExpandedPost
+          post={post}
+          author={author}
+          liked={liked}
+          likesCount={likesCount}
+          viewsCount={viewsCount}
+          handleLike={handleLike}
+        />
+      ) : (
+        <CollapsedPost
+          post={post}
+          author={author}
+          liked={liked}
+          likesCount={likesCount}
+          viewsCount={viewsCount}
+          handleLike={handleLike}
+        />
+      )}
 
-  //   if (!currentUser) {
-  //     return;
-  //   }
-
-  //   try {
-  //     const postSnapshot = await getDoc(postRef);
-
-  //     if (postSnapshot.exists()) {
-  //       const currentViews = postSnapshot.data().views || 0;
-
-  //       await updateDoc(postRef, {
-  //         views: currentViews + 1,
-  //       });
-  //       setViewsCount(currentViews + 1);
-  //     } else {
-  //       console.error("Post not found");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating views:", error);
-  //   }
-  // };
-
-  // const toggleCommentsVisibility = () => {
-  //   setCommentsVisible((prevState) => !prevState);
-  // };
-
-  // const handleExpand = () => {
-  //   handleView();
-  //   onExpand();
-  // };
-
-  return viewMode === "grid" ? (
-    <ExpandedPost
-      // user={user}
-      post={post}
-      author={author}
-      liked={liked}
-      likesCount={likesCount}
-      viewsCount={viewsCount}
-      // commentsVisible={commentsVisible}
-      // toggleCommentsVisibility={toggleCommentsVisibility}
-      handleLike={handleLike}
-      // onExpand={onExpand}
-    />
-  ) : (
-    <CollapsedPost
-      // user={user}
-      post={post}
-      author={author}
-      liked={liked}
-      likesCount={likesCount}
-      viewsCount={viewsCount}
-      handleLike={handleLike}
-      // handleExpand={handleExpand}
-    />
+      <UnregisteredModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };
 

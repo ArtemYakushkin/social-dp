@@ -161,10 +161,17 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
           )}
         </div>
         <div className="expPost-box-text">
-          <p className="expPost-title">{post.title}</p>
-          <p className="expPost-text">
-            {post.text} <span onClick={handleExpandClick}>More</span>
+          <p className="expPost-title" onClick={handleExpandClick}>
+            {post.title}
           </p>
+          <p className="expPost-text" onClick={handleExpandClick}>
+            {post.text}
+          </p>
+          <div className="expPost-more-box">
+            <span className="expPost-more" onClick={handleExpandClick}>
+              More...
+            </span>
+          </div>
         </div>
       </div>
 

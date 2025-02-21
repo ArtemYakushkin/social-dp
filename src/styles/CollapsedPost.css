@@ -82,6 +82,7 @@
     font-size: 32px;
     line-height: 38.4px;
     color: var(--text-black);
+    cursor: pointer;
 }
 
 .post-text {
@@ -92,6 +93,7 @@
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
+    cursor: pointer;
 }
 
 .post-bottom {

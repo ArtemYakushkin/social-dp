@@ -28,8 +28,6 @@
     }
 }
 
-.expPost-info-post {}
-
 .expPost-author {
     font-weight: 400;
     font-size: 18px;
@@ -64,7 +62,7 @@
 
 .expPost-box-text {
     padding: 0 20px 0 20px;
-    margin-bottom: 22px;
+    margin-bottom: 14px;
 }
 
 .expPost-title {
@@ -76,6 +74,7 @@
     line-height: 38.4px;
     color: var(--text-black);
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .expPost-text {
@@ -83,28 +82,37 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
-    position: relative;
     max-width: 100%;
     font-weight: 400;
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
+    cursor: pointer;
+    margin-bottom: 4px;
+}
 
-    span {
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 28.8px;
-        text-decoration-line: underline;
-        text-decoration-style: solid;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-        color: var(--accent-blue-color);
-        cursor: pointer;
+.expPost-more-box {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.expPost-more {
+    position: relative;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--accent-blue-color);
+    cursor: pointer;
+
+    &::after {
+        content: '';
         position: absolute;
-        bottom: 0;
-        right: 0;
-        background: white;
-        padding-left: 8px;
+        bottom: 4px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--accent-blue-color);
     }
 }
 

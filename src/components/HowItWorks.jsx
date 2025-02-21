@@ -9,8 +9,6 @@ import step1 from "../assets/step1.png";
 import step2 from "../assets/step2.png";
 import step3 from "../assets/step3.png";
 import step4 from "../assets/step4.png";
-import vector2 from "../assets/vector2.png";
-import vector3 from "../assets/vector3.png";
 
 import "../styles/HowItWorks.css";
 
@@ -110,9 +108,6 @@ const HowItWorks = () => {
             Register and start chatting
           </button>
         </div>
-
-        <img className="how-vector-2" src={vector2} alt="" />
-        <img className="how-vector-3" src={vector3} alt="" />
 
         {isRegisterModalOpen && (
           <RegisterPage

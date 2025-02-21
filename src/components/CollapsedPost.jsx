@@ -159,8 +159,12 @@ const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author
           <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
         </div>
         <div className="post-center">
-          <p className="post-title">{post.title}</p>
-          <p className="post-text">{post.text}</p>
+          <p className="post-title" onClick={handleExpandClick}>
+            {post.title}
+          </p>
+          <p className="post-text" onClick={handleExpandClick}>
+            {post.text}
+          </p>
         </div>
         <div className="post-bottom">
           <div className="post-icons">

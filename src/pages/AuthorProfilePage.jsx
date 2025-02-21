@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 import { db } from "../firebase";
 import Loader from "../components/Loader";
+import PopularPosts from "../components/PopularPosts";
 import Footer from "../components/Footer";
 
 import coverPlaceholder from "../assets/cover-img.jpg";
@@ -86,6 +87,7 @@ const AuthorProfile = () => {
           <Loader />
         )}
       </div>
+      <PopularPosts />
       <Footer />
     </>
   );

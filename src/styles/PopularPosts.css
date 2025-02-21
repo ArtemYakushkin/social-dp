@@ -1,0 +1,19 @@
+.popular {
+    padding: 120px 0;
+    background-color: var(--bg-blue);
+}
+
+.popular-title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 57.6px;
+    color: var(--text-black);
+    margin-bottom: 40px;
+}
+
+.popular-list {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}

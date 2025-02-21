@@ -7,8 +7,6 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
 import leter from "../assets/letter.png";
-import vectorBig from "../assets/vector-big-about.png";
-import vectorSmall from "../assets/vector-small-about.png";
 
 import "../styles/AboutProject.css";
 
@@ -83,9 +81,6 @@ const AboutProject = () => {
           </button>
         </div>
       </div>
-
-      <img className="ap-vector-big" src={vectorBig} alt="" />
-      <img className="ap-vector-small" src={vectorSmall} alt="" />
 
       {isRegisterModalOpen && (
         <RegisterPage

@@ -12,7 +12,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  const options = ["Newest", "Most commented", "Most liked"];
+  const options = ["New", "Comment", "Like"];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

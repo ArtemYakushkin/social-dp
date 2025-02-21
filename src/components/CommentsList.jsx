@@ -23,6 +23,7 @@ import ReplyForm from "./ReplyForm";
 import ReplyList from "./ReplyList";
 import ModalDeleteComment from "./ModalDeleteComment";
 import ModalEditComment from "./ModalEditComment";
+import UnregisteredModal from "./UnregisteredModal";
 
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -38,6 +39,7 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
   const [commentToDelete, setCommentToDelete] = useState(null);
   const [commentToEdit, setCommentToEdit] = useState(null);
   const [repliesCounts, setRepliesCounts] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const deletedComments = useMemo(() => new Set(), []);
 
@@ -97,7 +99,7 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
 
   const handleLike = async (commentId, likes) => {
     if (!user || !user.uid) {
-      alert("You need to be logged in to like a comment.");
+      setIsModalOpen(true);
       return;
     }
 
@@ -179,118 +181,122 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
   }
 
   return (
-    <div className="comment-list">
-      {comments.map((comment) => (
-        <div className="comment-total-wrapp" key={comment.id}>
-          <div className="comment-top-section">
-            <div
-              className="comment-avatar"
-              onClick={() => navigate(`/author/${comment.author.id}`)}
-            >
-              <img src={comment.author.avatar || avatar} alt="Avatar" />
-            </div>
-            <div className="comment-right">
-              <div className="comment-content">
-                <div className="comment-author">
-                  <p className="comment-nikname">{comment.author.nickname}</p>
-                  <p className="comment-date">
-                    {comment.createdAt && comment.createdAt.toDate
-                      ? comment.createdAt.toDate().toLocaleString("ru-RU", {
-                          timeZone: "Europe/Moscow",
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })
-                      : "Date not available"}
-                  </p>
+    <>
+      <div className="comment-list">
+        {comments.map((comment) => (
+          <div className="comment-total-wrapp" key={comment.id}>
+            <div className="comment-top-section">
+              <div
+                className="comment-avatar"
+                onClick={() => navigate(`/author/${comment.author.id}`)}
+              >
+                <img src={comment.author.avatar || avatar} alt="Avatar" />
+              </div>
+              <div className="comment-right">
+                <div className="comment-content">
+                  <div className="comment-author">
+                    <p className="comment-nikname">{comment.author.nickname}</p>
+                    <p className="comment-date">
+                      {comment.createdAt && comment.createdAt.toDate
+                        ? comment.createdAt.toDate().toLocaleString("ru-RU", {
+                            timeZone: "Europe/Moscow",
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : "Date not available"}
+                    </p>
+                  </div>
+                  <p className="comment-text">{comment.text}</p>
                 </div>
-                <p className="comment-text">{comment.text}</p>
               </div>
             </div>
-          </div>
-          <div className="comment-center-section">
-            <button
-              className="comment-btn-like"
-              onClick={() => handleLike(comment.id, comment.likes)}
-            >
-              {comment.likes.includes(user?.uid) ? (
-                <FaHeart size={24} style={{ color: "var(--text-error)" }} />
-              ) : (
-                <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
+            <div className="comment-center-section">
+              <button
+                className="comment-btn-like"
+                onClick={() => handleLike(comment.id, comment.likes)}
+              >
+                {comment.likes.includes(user?.uid) ? (
+                  <FaHeart size={24} style={{ color: "var(--text-error)" }} />
+                ) : (
+                  <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
+                )}
+                <span>{comment.likes.length}</span>
+              </button>
+              {comment.author.id === user?.uid && (
+                <div className="comment-center-options">
+                  <button
+                    className="comment-options-btn"
+                    onClick={() => handleEditComment(comment.id, comment.text)}
+                  >
+                    Edit comment
+                  </button>
+                  <button
+                    className="comment-options-btn"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  >
+                    Delete comment
+                  </button>
+                </div>
               )}
-              <span>{comment.likes.length}</span>
-            </button>
-            {comment.author.id === user?.uid && (
-              <div className="comment-center-options">
-                <button
-                  className="comment-options-btn"
-                  onClick={() => handleEditComment(comment.id, comment.text)}
-                >
-                  Edit comment
-                </button>
-                <button
-                  className="comment-options-btn"
-                  onClick={() => handleDeleteComment(comment.id)}
-                >
-                  Delete comment
-                </button>
+            </div>
+            {activeCommentId === comment.id && (
+              <div className="comment-list-reply-container">
+                <ReplyForm
+                  commentId={comment.id}
+                  postId={postId}
+                  user={user}
+                  onReplyAdded={() => handleReplyAdded(comment.id)}
+                />
+                <ReplyList
+                  commentId={comment.id}
+                  currentUser={user}
+                  onReplyDeleted={() => handleReplyDeleted(comment.id)}
+                />
               </div>
             )}
-          </div>
-          {activeCommentId === comment.id && (
-            <div className="comment-list-reply-container">
-              <ReplyForm
-                commentId={comment.id}
-                postId={postId}
-                user={user}
-                onReplyAdded={() => handleReplyAdded(comment.id)}
-              />
-              <ReplyList
-                commentId={comment.id}
-                currentUser={user}
-                onReplyDeleted={() => handleReplyDeleted(comment.id)}
-              />
+            <div className="comment-bottom-section">
+              <button className="comment-list-btn" onClick={() => toggleReplyList(comment.id)}>
+                {activeCommentId === comment.id ? (
+                  <>
+                    <div className="comment-list-frame-icon">
+                      <FaMinus size={14} />
+                    </div>
+                    <p className="comment-list-btn-text">
+                      hide {repliesCounts[comment.id] || 0} replies
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="comment-list-frame-icon">
+                      <FaPlus size={14} />
+                    </div>
+                    <p className="comment-list-btn-text">
+                      {repliesCounts[comment.id] || 0} more replies
+                    </p>
+                  </>
+                )}
+              </button>
             </div>
-          )}
-          <div className="comment-bottom-section">
-            <button className="comment-list-btn" onClick={() => toggleReplyList(comment.id)}>
-              {activeCommentId === comment.id ? (
-                <>
-                  <div className="comment-list-frame-icon">
-                    <FaMinus size={14} />
-                  </div>
-                  <p className="comment-list-btn-text">
-                    hide {repliesCounts[comment.id] || 0} replies
-                  </p>
-                </>
-              ) : (
-                <>
-                  <div className="comment-list-frame-icon">
-                    <FaPlus size={14} />
-                  </div>
-                  <p className="comment-list-btn-text">
-                    {repliesCounts[comment.id] || 0} more replies
-                  </p>
-                </>
-              )}
-            </button>
           </div>
-        </div>
-      ))}
-      <ModalDeleteComment
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-      />
-      <ModalEditComment
-        isOpen={isEditModalOpen}
-        currentText={commentToEdit?.text || ""}
-        onClose={() => setIsEditModalOpen(false)}
-        onSave={handleSaveEdit}
-      />
-    </div>
+        ))}
+        <ModalDeleteComment
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+        />
+        <ModalEditComment
+          isOpen={isEditModalOpen}
+          currentText={commentToEdit?.text || ""}
+          onClose={() => setIsEditModalOpen(false)}
+          onSave={handleSaveEdit}
+        />
+      </div>
+
+      <UnregisteredModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };
 

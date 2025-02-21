@@ -1,0 +1,43 @@
+.unreg-img-box {
+    position: relative;
+    width: 100%;
+    height: 210px;
+}
+
+.unreg-img-robot {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%) scale(1.3);
+}
+
+.unreg-content {
+    position: relative;
+    max-width: 406px;
+    padding: 26px 20px 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px 0px #00000026;
+    border-top: 14px solid var(--accent-dark-blue-color);
+    background-color: var(--bg-white);
+    z-index: 102;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.unreg-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 31.2px;
+    color: var(--accent-dark-blue-color);
+    text-align: center;
+}
+
+.unreg-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+    text-align: center;
+}

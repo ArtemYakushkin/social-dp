@@ -2,6 +2,9 @@
     position: relative;
     background-color: var(--bg-blue);
     padding: 120px 0;
+    background-image: url(../assets/vector2.png), url(../assets/vector3.png);
+    background-position: right, left bottom;
+    background-repeat: no-repeat, no-repeat;
 }
 
 .ap-vector-big {

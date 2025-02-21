@@ -2,7 +2,7 @@
     position: relative;
     padding: 120px 0 120px 0;
     background-color: var(--bg-blue);
-    background-image: url(../assets//vector.png);
+    background-image: url(../assets/vector.png);
     background-size: cover;
     background-repeat: no-repeat;
 }
