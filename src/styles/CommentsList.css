@@ -17,7 +17,7 @@
         position: absolute;
         left: 24px;
         top: 55px;
-        bottom: 10px;
+        bottom: 15px;
         width: 2px;
         background-color: var(--text-inactive-grey);
     }
@@ -74,14 +74,36 @@
     position: relative;
     margin-left: 61px;
 
+    span {
+        position: absolute;
+        background-color: var(--bg-white);
+        width: 12px;
+        height: 12px;
+        border-bottom-left-radius: 6px;
+        top: 0px;
+        left: -35px;
+    }
+
     &::after {
         content: "";
         position: absolute;
         top: 12px;
-        left: -35px;
-        width: 28px;
+        left: -30px;
+        width: 23px;
         height: 2px;
         background-color: var(--text-inactive-grey);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: -37px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: transparent;
+        border: 2px solid var(--text-inactive-grey);
     }
 }
 
@@ -116,12 +138,22 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
 
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
+}
+
+.comment-avatar-initial {
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--text-white);
 }
 
 .comment-right {

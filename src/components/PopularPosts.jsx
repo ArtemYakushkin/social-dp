@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import avatar from "../assets/avatar.png";
 
 import { FaRegHeart } from "react-icons/fa";
-import { SlEye } from "react-icons/sl";
+import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 
 import "../styles/PopularPosts.css";
@@ -129,7 +129,7 @@ const PopularPosts = () => {
                       <span>{post.likes.length}</span>
                     </div>
                     <div className="expPost-icon">
-                      <SlEye size={24} style={{ color: "var(--text-black)" }} />
+                      <FiEye size={24} style={{ color: "var(--text-black)" }} />
                       <span>{post.views}</span>
                     </div>
                     <div className="expPost-icon">

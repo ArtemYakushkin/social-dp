@@ -16,10 +16,7 @@ const Footer = () => {
         <div className="container">
           <div className="footer-top-wrapp">
             <Link to={"/"} className="footer-logo">
-              <div className="footer-logo-box">
-                <img src={logoFooter} alt="logo" />
-              </div>
-              <h2>Dear Penfriend</h2>
+              <img src={logoFooter} alt="logo" />
             </Link>
             <Link to={"/about"} className="footer-top-link">
               About project

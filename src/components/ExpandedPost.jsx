@@ -10,7 +10,7 @@ import avatar from "../assets/avatar.png";
 
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { SlEye } from "react-icons/sl";
+import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 
 import "../styles/ExpandedPost.css";
@@ -60,7 +60,9 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
           <img src={author?.avatar || avatar} alt="Post author" />
         </div>
         <div className="expPost-info-post">
-          <p className="expPost-author">{author?.nickname || "Unknown Author"}</p>
+          <p className="expPost-author" onClick={handleAvatarClick}>
+            {author?.nickname || "Unknown Author"}
+          </p>
           <p className="expPost-date">{new Date(post.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
@@ -190,7 +192,7 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
             <span>{likesCount}</span>
           </button>
           <div className="expPost-icon">
-            <SlEye size={24} style={{ color: "var(--text-black)" }} />
+            <FiEye size={24} style={{ color: "var(--text-black)" }} />
             <span>{viewsCount}</span>
           </div>
           <div className="expPost-icon">

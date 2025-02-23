@@ -5,7 +5,6 @@ import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
-import avatar from "../assets/avatar.png";
 import logo from "../assets/logo.png";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -51,7 +50,6 @@ const Navbar = () => {
         <div className="navbar-content">
           <Link to={"/"} className="navbar-logo">
             <img src={logo} alt="logo" />
-            <h2>Dear Penfriend</h2>
           </Link>
           <div className="navbar-links">
             <Link to={"/about"} className="navbar-link">
@@ -69,7 +67,13 @@ const Navbar = () => {
                 Support us
               </a>
               <div className="navbar-avatar">
-                <img src={user.photoURL || avatar} alt="avatar" />
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="avatar" />
+                ) : (
+                  <div className="navbar-avatar-initial">
+                    {user.displayName ? user.displayName.charAt(0).toUpperCase() : "U"}
+                  </div>
+                )}
               </div>
               <div className="navbar-arrow" onClick={toggleDropdown}>
                 {isOpen ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />}

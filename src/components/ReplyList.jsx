@@ -16,8 +16,6 @@ import ModalEditReply from "./ModalEditReply";
 import ModalDeleteReply from "./ModalDeleteReply";
 import Loader from "./Loader";
 
-import avatar from "../assets/avatar.png";
-
 import "../styles/ReplyList.css";
 
 const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
@@ -45,7 +43,11 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
             author: {
               ...reply.author,
               nickname: userData.nickname || "Unknown User",
-              avatar: userData.avatar || "/default-avatar.png",
+              avatar: userData.avatar
+                ? userData.avatar
+                : userData.nickname
+                ? userData.nickname.charAt(0).toUpperCase()
+                : "U",
             },
           };
         })
@@ -124,12 +126,22 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
     <div className="reply-list">
       {replies.map((reply) => (
         <div key={reply.id} className="reply-list-item">
+          <span></span>
           <div className="reply-list-top">
             <div
               className="reply-list-avatar"
               onClick={() => navigate(`/author/${reply.author.uid}`)}
             >
-              <img src={reply.author.avatar || avatar} alt="Avatar" />
+              {reply.author.avatar ||
+              (reply.author.nickname && reply.author.nickname.charAt(0).toUpperCase()) ? (
+                typeof reply.author.avatar === "string" && reply.author.avatar.length > 1 ? (
+                  <img src={reply.author.avatar} alt="Avatar" />
+                ) : (
+                  <div className="reply-list-avatar-initial">{reply.author.avatar}</div>
+                )
+              ) : (
+                <div className="reply-list-avatar-initial">U</div>
+              )}
             </div>
             <div className="reply-list-right">
               <div className="reply-list-content">

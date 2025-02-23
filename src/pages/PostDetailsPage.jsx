@@ -22,7 +22,7 @@ import avatar from "../assets/avatar.png";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { SlEye } from "react-icons/sl";
+import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 // import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
@@ -195,7 +195,7 @@ const PostDetailsPage = () => {
                       <img src={author?.avatar || avatar} alt="" />
                     </div>
                     <div className="details-author-nickname-box">
-                      <p className="details-author-nickname">
+                      <p className="details-author-nickname" onClick={handleAvatarClick}>
                         {author?.nickname || "Unknown Author"}
                       </p>
                       <p className="details-author-date">
@@ -316,14 +316,12 @@ const PostDetailsPage = () => {
 
                 <p className="details-text">{post.text}</p>
 
-                {user && (
-                  <div className="details-exam-box">
-                    {post.quiz && post.quiz.question && post.quiz.answers && (
-                      <Quiz quizData={post.quiz} />
-                    )}
-                    {post.poll && <Poll pollData={post.poll} postId={postId} />}
-                  </div>
-                )}
+                <div className="details-exam-box">
+                  {post.quiz && post.quiz.question && post.quiz.answers && (
+                    <Quiz quizData={post.quiz} user={user} />
+                  )}
+                  {post.poll && <Poll pollData={post.poll} postId={postId} />}
+                </div>
 
                 <div className="details-border">
                   <div></div>
@@ -340,7 +338,7 @@ const PostDetailsPage = () => {
                       <span>{likesCount}</span>
                     </button>
                     <div className="details-icon">
-                      <SlEye size={24} style={{ color: "var(--text-black)" }} />
+                      <FiEye size={24} style={{ color: "var(--text-black)" }} />
                       <span>{post.views}</span>
                     </div>
                     <div className="details-icon">

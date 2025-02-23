@@ -10,7 +10,7 @@ import avatar from "../assets/avatar.png";
 
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { SlEye } from "react-icons/sl";
+import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 
 import "../styles/CollapsedPost.css";
@@ -155,7 +155,9 @@ const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author
           <div className="post-avatar" onClick={handleAvatarClick}>
             <img src={author?.avatar || avatar} alt="Post author" />
           </div>
-          <p className="post-author">{author?.nickname || "Unknown Author"}</p>
+          <p className="post-author" onClick={handleAvatarClick}>
+            {author?.nickname || "Unknown Author"}
+          </p>
           <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
         </div>
         <div className="post-center">
@@ -177,7 +179,7 @@ const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author
               <span>{likesCount}</span>
             </button>
             <div className="post-icon">
-              <SlEye size={24} style={{ color: "var(--text-black)" }} />
+              <FiEye size={24} style={{ color: "var(--text-black)" }} />
               <span>{viewsCount}</span>
             </div>
             <div className="post-icon">

@@ -33,6 +33,7 @@
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
+    cursor: pointer;
 }
 
 .expPost-date {

@@ -14,7 +14,7 @@
 .unreg-content {
     position: relative;
     max-width: 406px;
-    padding: 26px 20px 30px 20px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px 0px #00000026;
     border-top: 14px solid var(--accent-dark-blue-color);
@@ -24,6 +24,7 @@
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    margin-bottom: 20px;
 }
 
 .unreg-title {
@@ -40,4 +41,47 @@
     line-height: 28.8px;
     color: var(--text-black);
     text-align: center;
+}
+
+.unreg-btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.unreg-btn {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 30px;
+    padding: 14px 36px;
+    transition: all 0.25s ease;
+}
+
+.unreg-register {
+    color: var(--accent-blue-color);
+    border: 1px solid var(--accent-blue-color);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        border: 1px solid var(--accent-dark-blue-color);
+        color: var(--accent-dark-blue-color);
+    }
+}
+
+.unreg-login {
+    color: var(--text-white);
+    background-color: var(--accent-blue-color);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
+    }
 }

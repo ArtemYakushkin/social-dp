@@ -16,8 +16,6 @@ import {
 
 import { db } from "../firebase";
 
-import avatar from "../assets/avatar.png";
-
 import Loader from "./Loader";
 import ReplyForm from "./ReplyForm";
 import ReplyList from "./ReplyList";
@@ -190,7 +188,15 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                 className="comment-avatar"
                 onClick={() => navigate(`/author/${comment.author.id}`)}
               >
-                <img src={comment.author.avatar || avatar} alt="Avatar" />
+                {comment.author.avatar ? (
+                  <img src={comment.author.avatar} alt="Avatar" />
+                ) : (
+                  <div className="comment-avatar-initial">
+                    {comment.author.nickname
+                      ? comment.author.nickname.charAt(0).toUpperCase()
+                      : "U"}
+                  </div>
+                )}
               </div>
               <div className="comment-right">
                 <div className="comment-content">
@@ -214,6 +220,27 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
               </div>
             </div>
             <div className="comment-center-section">
+              <div className="comment-center-options">
+                <button className="comment-options-btn" onClick={() => toggleReplyList(comment.id)}>
+                  Reply to comment
+                </button>
+                {comment.author.id === user?.uid && (
+                  <>
+                    <button
+                      className="comment-options-btn"
+                      onClick={() => handleEditComment(comment.id, comment.text)}
+                    >
+                      Edit comment
+                    </button>
+                    <button
+                      className="comment-options-btn"
+                      onClick={() => handleDeleteComment(comment.id)}
+                    >
+                      Delete comment
+                    </button>
+                  </>
+                )}
+              </div>
               <button
                 className="comment-btn-like"
                 onClick={() => handleLike(comment.id, comment.likes)}
@@ -225,22 +252,6 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                 )}
                 <span>{comment.likes.length}</span>
               </button>
-              {comment.author.id === user?.uid && (
-                <div className="comment-center-options">
-                  <button
-                    className="comment-options-btn"
-                    onClick={() => handleEditComment(comment.id, comment.text)}
-                  >
-                    Edit comment
-                  </button>
-                  <button
-                    className="comment-options-btn"
-                    onClick={() => handleDeleteComment(comment.id)}
-                  >
-                    Delete comment
-                  </button>
-                </div>
-              )}
             </div>
             {activeCommentId === comment.id && (
               <div className="comment-list-reply-container">
@@ -258,6 +269,7 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
               </div>
             )}
             <div className="comment-bottom-section">
+              <span></span>
               <button className="comment-list-btn" onClick={() => toggleReplyList(comment.id)}>
                 {activeCommentId === comment.id ? (
                   <>

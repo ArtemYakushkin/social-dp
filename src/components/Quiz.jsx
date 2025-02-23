@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import QuizModal from "./QuizModal";
+import UnregisteredModal from "./UnregisteredModal";
 
 import SadRobot from "../assets/robot-sad.png";
 import HappyRobot from "../assets/robot-happy.png";
@@ -9,13 +10,20 @@ import Star from "../assets/star.png";
 
 import "../styles/Quiz.css";
 
-const Quiz = ({ quizData }) => {
+const Quiz = ({ quizData, user }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
 
   const handleAnswerClick = (index) => {
+    if (!user) {
+      setIsModalOpen(true);
+      return;
+    }
+
     setSelectedAnswer(index);
+
     if (index === quizData.correctAnswer) {
       setModalMessage(
         <div className="quiz-happy-wrapp">
@@ -47,11 +55,11 @@ const Quiz = ({ quizData }) => {
         </div>
       );
     }
-    setIsModalOpen(true);
+    setIsQuizModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsQuizModalOpen(false);
   };
 
   return (
@@ -65,7 +73,8 @@ const Quiz = ({ quizData }) => {
         ))}
       </ul>
 
-      <QuizModal isOpen={isModalOpen} onClose={closeModal} message={modalMessage} />
+      <QuizModal isOpen={isQuizModalOpen} onClose={closeModal} message={modalMessage} />
+      <UnregisteredModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

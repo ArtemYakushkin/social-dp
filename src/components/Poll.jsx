@@ -5,11 +5,14 @@ import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { useAuth } from "../auth/useAuth";
 
+import UnregisteredModal from "./UnregisteredModal";
+
 import "../styles/Poll.css";
 
 const Poll = ({ pollData, postId }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [pollVotes, setPollVotes] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -26,7 +29,7 @@ const Poll = ({ pollData, postId }) => {
 
   const handleVote = async (index) => {
     if (!user) {
-      alert("You must be logged in to vote.");
+      setIsModalOpen(true);
       return;
     }
     if (selectedAnswer !== null) return;
@@ -81,6 +84,8 @@ const Poll = ({ pollData, postId }) => {
           </div>
         ))}
       </div>
+
+      <UnregisteredModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
