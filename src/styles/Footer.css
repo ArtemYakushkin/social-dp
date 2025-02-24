@@ -9,6 +9,38 @@
     justify-content: space-between;
 }
 
+.footer-logo {
+    width: 79px;
+    height: 72px;
+    position: relative;
+
+    .logo-img-1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .logo-img-2 {
+        position: absolute;
+        top: 11px;
+        left: 31px;
+    }
+
+    div {
+        position: absolute;
+        bottom: 0;
+    }
+
+    p {
+        font-family: Unbounded;
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 13px;
+        letter-spacing: -1%;
+        color: var(--text-white);
+    }
+}
+
 .footer-top-link {
     font-weight: 700;
     font-size: 20px;

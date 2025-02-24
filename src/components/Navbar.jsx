@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
-import logo from "../assets/logo.png";
+import logo1 from "../assets/logo-1.svg";
+import logo2 from "../assets/logo-2.svg";
+import logo1mob from "../assets/mobile/logo-1-mobile.svg";
+import logo2mob from "../assets/mobile/logo-2-mobile.svg";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FiLogOut, FiUser } from "react-icons/fi";
@@ -17,6 +21,8 @@ const Navbar = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
     if (isRegisterModalOpen || isLoginModalOpen) {
@@ -49,7 +55,21 @@ const Navbar = () => {
       <div className="container">
         <div className="navbar-content">
           <Link to={"/"} className="navbar-logo">
-            <img src={logo} alt="logo" />
+            {isMobile ? (
+              <>
+                <img className="logo-img-1" src={logo1mob} alt="logo" />
+                <img className="logo-img-2" src={logo2mob} alt="logo" />
+              </>
+            ) : (
+              <>
+                <img className="logo-img-1" src={logo1} alt="logo" />
+                <img className="logo-img-2" src={logo2} alt="logo" />
+              </>
+            )}
+            <div>
+              <p>Dear</p>
+              <p>Penfriend</p>
+            </div>
           </Link>
           <div className="navbar-links">
             <Link to={"/about"} className="navbar-link">
@@ -96,6 +116,12 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+
+              <button className="navbar-mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
             </div>
           ) : (
             <div className="navbar-buttons">
@@ -115,6 +141,12 @@ const Navbar = () => {
               </button>
               <button className="navbar-btn navbar-login" onClick={() => setIsLoginModalOpen(true)}>
                 Sign in
+              </button>
+
+              <button className="navbar-mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
               </button>
             </div>
           )}

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import logoFooter from "../assets/logo-footer.png";
+import logo1 from "../assets/logo-1.svg";
+import logo2 from "../assets/logo-2.svg";
 
 // import { FaInstagram } from "react-icons/fa";
 // import { SlSocialFacebook } from "react-icons/sl";
@@ -16,7 +17,12 @@ const Footer = () => {
         <div className="container">
           <div className="footer-top-wrapp">
             <Link to={"/"} className="footer-logo">
-              <img src={logoFooter} alt="logo" />
+              <img className="logo-img-1" src={logo1} alt="logo" />
+              <img className="logo-img-2" src={logo2} alt="logo" />
+              <div>
+                <p>Dear</p>
+                <p>Penfriend</p>
+              </div>
             </Link>
             <Link to={"/about"} className="footer-top-link">
               About project
