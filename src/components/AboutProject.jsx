@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "react-responsive";
 
 import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
 import leter from "../assets/letter.png";
+import leterTablet from "../assets/tablet/letter-tablet.png";
+import leterMobile from "../assets/mobile/letter-mobile.png";
+
+import { FaArrowRight } from "react-icons/fa6";
 
 import "../styles/AboutProject.css";
 
@@ -15,6 +20,15 @@ const AboutProject = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+
+  const getImage = () => {
+    if (isMobile) return leterMobile;
+    if (isTablet) return leterTablet;
+    return leter;
+  };
 
   useEffect(() => {
     if (isRegisterModalOpen || isLoginModalOpen) {
@@ -62,14 +76,15 @@ const AboutProject = () => {
           <div className="ap-slide-info">
             <h4 className="ap-slide-title">What is a Dear Penfriend?</h4>
             <p className="ap-slide-text">
-              This is a social network for those who want to communicate
-              <br /> while learning English with people from all over the world
+              This is a social network for those who want to communicate while learning English with
+              people from all over the world
             </p>
             <div className="ap-slide-bubble">
               <p className="ap-slide-speech">Swipe right and find out how it works</p>
+              <FaArrowRight size={24} style={{ color: "var(--accent-blue-color)" }} />
             </div>
           </div>
-          <img className="ap-slide-img-leter" src={leter} alt="" />
+          <img className="ap-slide-img-leter" src={getImage()} alt="letter" />
         </div>
 
         <div className="ap-btn-box">

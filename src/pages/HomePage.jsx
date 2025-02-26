@@ -23,7 +23,7 @@ const HomePage = () => {
     return localStorage.getItem("viewMode") || "grid";
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 3;
+  const postsPerPage = 6;
 
   useEffect(() => {
     localStorage.setItem("viewMode", viewMode);
@@ -99,14 +99,14 @@ const HomePage = () => {
       <div className="container">
         <Hero />
 
-        {/* <Options
+        <Options
           onSearch={handleSearch}
           onSort={handleSort}
           viewMode={viewMode}
           setViewMode={setViewMode}
-        /> */}
+        />
 
-        {/* <div className={viewMode === "grid" ? "home-list-grid" : "home-list-list"}>
+        <div className={viewMode === "grid" ? "home-list-grid" : "home-list-list"}>
           {isLoading ? (
             <Loader />
           ) : currentPosts.length > 0 ? (
@@ -114,9 +114,9 @@ const HomePage = () => {
           ) : (
             <h3 className="home-no-post-text">No posts found</h3>
           )}
-        </div> */}
+        </div>
 
-        {/* {!isLoading && totalPages > 1 && (
+        {!isLoading && totalPages > 1 && (
           <div className="home-pagination">
             <button
               className="home-btn"
@@ -143,14 +143,14 @@ const HomePage = () => {
               <HiArrowLongRight size={34} />
             </button>
           </div>
-        )} */}
+        )}
       </div>
 
-      {/* <AboutProject /> */}
+      <AboutProject />
 
-      {/* <ShareBlok /> */}
+      <ShareBlok />
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

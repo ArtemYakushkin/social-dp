@@ -120,7 +120,7 @@ img {
     margin: 0 auto;
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
+@media (min-width: 768px) and (max-width: 1259px) {
     .container {
         max-width: 768px;
         padding: 0 44px;
@@ -133,6 +133,10 @@ img {
         padding: 0 24px;
     }
 }
+
+/* @media (min-width: 768px) and (max-width: 1259px) {} */
+
+/* @media (max-width: 767px) {} */
 
 /* ----------- Swiper ------------- */
 

@@ -248,3 +248,114 @@
 .options-switcher-icon-active {
     color: var(--accent-blue-color);
 }
+
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .options {
+        margin-bottom: 30px;
+        padding: 16px 30px;
+        border-radius: 50px;
+    }
+
+    .options-dropdown {
+        width: 180px;
+    }
+
+    .options-dropdown-list {
+        position: absolute;
+        top: 50px;
+        left: 95px;
+        width: 100px;
+        padding: 5px 0px;
+    }
+
+    .options-search {
+        position: relative;
+        width: 203px;
+        height: 32px;
+    }
+
+    .options-search-input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--accent-blue-color);
+        border-radius: 0px;
+        background-color: transparent;
+        padding: 0px 0px 0px 20px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22.4px;
+        color: var(--text-black);
+    }
+
+    .options-search-icon {
+        right: 8px;
+        color: var(--accent-blue-color);
+    }
+
+    .options-choise-title {
+        display: none;
+    }
+
+    .options-switcher-title {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .options {
+        margin-bottom: 30px;
+        padding: 16px 30px;
+        border-radius: 50px;
+    }
+
+    .options-dropdown-list {
+        top: 50px;
+        left: 30px;
+        width: 100px;
+        padding: 5px 0px;
+    }
+
+    .options-title {
+        display: none;
+    }
+
+    .options-search {
+        position: relative;
+        width: 203px;
+        height: 32px;
+        margin-right: 20px;
+    }
+
+    .options-search-input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--accent-blue-color);
+        border-radius: 0px;
+        background-color: transparent;
+        padding: 0px 0px 0px 5px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22.4px;
+        color: var(--text-black);
+    }
+
+    .options-search-icon {
+        right: 5px;
+        color: var(--accent-blue-color);
+    }
+
+    .options-choise-title {
+        display: none;
+    }
+
+    .options-choise {
+        display: none;
+    }
+
+    .options-switcher-btn {
+        color: var(--accent-blue-color);
+    }
+
+}

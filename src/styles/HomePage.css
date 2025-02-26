@@ -1,18 +1,16 @@
 .home-list-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    /* grid-template-rows: repeat(2, 1fr); */
-    gap: 30px 24px;
-    margin-bottom: 70px;
+    gap: 24px;
+    margin-bottom: 50px;
 }
 
 .home-list-list {
-    /* height: 1452px; */
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin-bottom: 70px;
+    margin-bottom: 50px;
 }
 
 .home-no-post-text {
@@ -58,4 +56,53 @@
     font-size: 20px;
     line-height: 24px;
     color: var(--text-white);
+}
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .home-list-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px;
+        margin-bottom: 40px;
+    }
+
+    .home-list-list {
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .home-pagination {
+        gap: 20px;
+        margin-bottom: 90px;
+    }
+
+    .home-btn-number {
+        width: 50px;
+        height: 50px;
+    }
+
+    .home-btn-number-active {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 767px) {
+    .home-list-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .home-pagination {
+        gap: 20px;
+        margin-bottom: 90px;
+    }
+
+    .home-btn-number {
+        display: none;
+    }
+
+    .home-btn-number-active {
+        display: none;
+    }
 }

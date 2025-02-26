@@ -1,6 +1,7 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 
-import { FaInstagram } from "react-icons/fa";
+// import { FaInstagram } from "react-icons/fa";
 import { SlSocialFacebook } from "react-icons/sl";
 import { LiaTelegramPlane } from "react-icons/lia";
 import { CiLinkedin } from "react-icons/ci";
@@ -9,6 +10,7 @@ import "../styles/ShareBlok.css";
 
 const ShareBlok = () => {
   const appUrl = encodeURIComponent("http://localhost:3000/");
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const shareLinks = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${appUrl}`,
@@ -41,15 +43,28 @@ const ShareBlok = () => {
               <LiaTelegramPlane size={24} />
             </a>
           </div>
-          <p className="share-text">
-            You can use the hashtag{" "}
-            <span>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                #dear_penfriend
-              </a>
-            </span>{" "}
-            to talk about this course on social media
-          </p>
+          {isMobile ? (
+            <p className="share-text">
+              You can use the
+              <br /> hashtag{" "}
+              <span>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  #dear_penfriend
+                </a>
+              </span>{" "}
+              to talk about this course on social media
+            </p>
+          ) : (
+            <p className="share-text">
+              You can use the hashtag{" "}
+              <span>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  #dear_penfriend
+                </a>
+              </span>{" "}
+              to talk about this course on social media
+            </p>
+          )}
         </div>
       </div>
     </div>

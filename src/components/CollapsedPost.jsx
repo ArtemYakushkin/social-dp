@@ -54,7 +54,7 @@ const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author
   };
 
   return (
-    <div className="post transition-post">
+    <div className="post">
       <div className="post-left">
         {post.media.length > 1 ? (
           <Swiper
@@ -160,6 +160,7 @@ const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author
           </p>
           <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
         </div>
+
         <div className="post-center">
           <p className="post-title" onClick={handleExpandClick}>
             {post.title}
@@ -168,6 +169,7 @@ const CollapsedPost = ({ post, liked, likesCount, viewsCount, handleLike, author
             {post.text}
           </p>
         </div>
+
         <div className="post-bottom">
           <div className="post-icons">
             <button className="post-icon" onClick={handleLike}>

@@ -177,27 +177,29 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
         </div>
       </div>
 
-      <div className="expPost-line">
-        <div></div>
-      </div>
+      <div className="expPost-bottom">
+        <div className="expPost-line">
+          <div></div>
+        </div>
 
-      <div className="expPost-footer">
-        <div className="expPost-icon-box">
-          <button className="expPost-icon" onClick={handleLike}>
-            {liked ? (
-              <FaHeart size={24} style={{ color: "var(--text-error)" }} />
-            ) : (
-              <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
-            )}
-            <span>{likesCount}</span>
-          </button>
-          <div className="expPost-icon">
-            <FiEye size={24} style={{ color: "var(--text-black)" }} />
-            <span>{viewsCount}</span>
-          </div>
-          <div className="expPost-icon">
-            <BiComment size={24} style={{ color: "var(--text-black)" }} />
-            <span>{post.comments?.length || 0}</span>
+        <div className="expPost-footer">
+          <div className="expPost-icon-box">
+            <button className="expPost-icon" onClick={handleLike}>
+              {liked ? (
+                <FaHeart size={24} style={{ color: "var(--text-error)" }} />
+              ) : (
+                <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
+              )}
+              <span>{likesCount}</span>
+            </button>
+            <div className="expPost-icon">
+              <FiEye size={24} style={{ color: "var(--text-black)" }} />
+              <span>{viewsCount}</span>
+            </div>
+            <div className="expPost-icon">
+              <BiComment size={24} style={{ color: "var(--text-black)" }} />
+              <span>{post.comments?.length || 0}</span>
+            </div>
           </div>
         </div>
       </div>

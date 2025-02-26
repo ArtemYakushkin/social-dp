@@ -46,34 +46,50 @@ const Footer = () => {
           <div className="footer-center-wrap">
             <h4 className="footer-center-title">The project was made by:</h4>
             <div className="footer-center-text">
-              <p>
-                Аuthor of the project{" "}
-                <a
-                  href="https://www.instagram.com/start_english_today?igsh=MTdxdGJsZnQ1YWNxbQ=="
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Anna Yakushkina
-                </a>
-              </p>
-              <GoDotFill size={12} style={{ color: "var(--text-black)" }} />
-              <p>
-                Site developer{" "}
-                <a href="https://artem-yakushkin.netlify.app" target="_blank" rel="noreferrer">
-                  Artem Yakushkin
-                </a>
-              </p>
-              <GoDotFill size={12} style={{ color: "var(--text-black)" }} />
-              <p>
-                Website designer{" "}
-                <a
-                  href="https://anastasiiahorbatenko.weblium.site/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Anastasia Horbatenko
-                </a>
-              </p>
+              <div className="footer-center-block-text">
+                <GoDotFill size={10} style={{ color: "var(--text-black)" }} />
+                <div className="footer-center-author">
+                  <p className="footer-center-job">Аuthor of the project</p>
+                  <a
+                    className="footer-center-name"
+                    href="https://www.instagram.com/start_english_today?igsh=MTdxdGJsZnQ1YWNxbQ=="
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Anna Yakushkina
+                  </a>
+                </div>
+              </div>
+
+              <div className="footer-center-block-text">
+                <GoDotFill size={10} style={{ color: "var(--text-black)" }} />
+                <div className="footer-center-author">
+                  <p className="footer-center-job">Site developer</p>
+                  <a
+                    className="footer-center-name"
+                    href="https://artem-yakushkin.netlify.app"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Artem Yakushkin
+                  </a>
+                </div>
+              </div>
+
+              <div className="footer-center-block-text">
+                <GoDotFill size={10} style={{ color: "var(--text-black)" }} />
+                <div className="footer-center-author">
+                  <p className="footer-center-job">Website designer</p>
+                  <a
+                    className="footer-center-name"
+                    href="https://anastasiiahorbatenko.weblium.site/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Anastasia Horbatenko
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

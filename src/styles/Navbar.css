@@ -224,7 +224,7 @@
     }
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
+@media (min-width: 768px) and (max-width: 1259px) {
     .navbar-btn {
         font-size: 16px;
         line-height: 16px;

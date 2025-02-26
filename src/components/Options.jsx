@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 import { LuSun, LuMoon } from "react-icons/lu";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -8,9 +9,12 @@ import "../styles/Options.css";
 
 const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Newest");
+  const [selectedOption, setSelectedOption] = useState("New");
   const [searchQuery, setSearchQuery] = useState("");
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
 
   const options = ["New", "Comment", "Like"];
 
@@ -64,7 +68,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
         <input
           className="options-search-input"
           type="text"
-          placeholder="Search post"
+          placeholder={isTablet || isMobile ? "" : "Search post"}
           value={searchQuery}
           onChange={handleSearchChange}
         />
@@ -91,29 +95,37 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
         </div>
       </div>
 
-      <div className="options-switcher">
-        <p className="options-switcher-title">Site theme:</p>
-        <div className="options-switcher-box">
-          <LuSun
-            size={24}
-            className={isDarkTheme ? "options-switcher-icon" : "options-switcher-icon-active"}
-          />
-          <label className="options-switcher-label" htmlFor="theme-toggle">
-            <input
-              className="options-switcher-input"
-              type="checkbox"
-              id="theme-toggle"
-              checked={isDarkTheme}
-              onChange={toggleSwitcher}
-            />
-            <div className="options-switcher-toggle"></div>
-          </label>
-          <LuMoon
-            size={24}
-            className={isDarkTheme ? "options-switcher-icon-active" : "options-switcher-icon"}
-          />
+      {isMobile ? (
+        <div className="options-switcher">
+          <button className="options-switcher-btn" onClick={toggleSwitcher}>
+            {isDarkTheme ? <LuSun size={24} /> : <LuMoon size={24} />}
+          </button>
         </div>
-      </div>
+      ) : (
+        <div className="options-switcher">
+          <p className="options-switcher-title">Site theme:</p>
+          <div className="options-switcher-box">
+            <LuSun
+              size={24}
+              className={isDarkTheme ? "options-switcher-icon" : "options-switcher-icon-active"}
+            />
+            <label className="options-switcher-label" htmlFor="theme-toggle">
+              <input
+                className="options-switcher-input"
+                type="checkbox"
+                id="theme-toggle"
+                checked={isDarkTheme}
+                onChange={toggleSwitcher}
+              />
+              <div className="options-switcher-toggle"></div>
+            </label>
+            <LuMoon
+              size={24}
+              className={isDarkTheme ? "options-switcher-icon-active" : "options-switcher-icon"}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
