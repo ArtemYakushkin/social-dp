@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import validator from "validator";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "react-responsive";
 
 import { db } from "../firebase";
 
@@ -19,6 +20,8 @@ import "../styles/ReplyForm.css";
 const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
   const [replyText, setReplyText] = useState("");
   const [error, setError] = useState("");
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const isValidReply = (text) => {
     const englishTextPattern = /^[A-Za-z0-9 .,!?'"()-]+$/;
@@ -80,7 +83,7 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
           />
           {error && <p className="reply-error">{error}</p>}
           <button className="reply-form-btn" type="submit">
-            <IoSend size={30} color="var(--accent-blue-color)" />
+            <IoSend size={isTablet || isMobile ? "24" : "30"} color="var(--accent-blue-color)" />
           </button>
         </form>
       ) : (

@@ -77,3 +77,68 @@
     line-height: 22.4px;
     color: var(--text-black);
 }
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .poll {
+        padding: 20px;
+
+    }
+
+    .poll-question {
+        margin-bottom: 20px;
+    }
+
+    .poll-answer-button {
+        width: 103px;
+        height: 36px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .poll-progress-bar {
+        height: 6px;
+    }
+
+    .poll-progress-text {
+        font-size: 16px;
+        line-height: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .poll {
+        padding: 20px 0px;
+        background-color: transparent;
+    }
+
+    .poll-question {
+        font-size: 16px;
+        line-height: 16px;
+        margin-bottom: 20px;
+    }
+
+    .poll-answers {
+        gap: 8px;
+    }
+
+    .poll-answer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .poll-answer-button {
+        width: 60px;
+        height: 26px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .poll-progress-bar {
+        height: 5px;
+    }
+
+    .poll-progress-text {
+        font-size: 12px;
+    }
+}

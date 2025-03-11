@@ -128,3 +128,42 @@
     color: var(--text-black);
     text-align: center;
 }
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .quiz {
+        padding: 20px;
+    }
+
+    .quiz-answers {
+        flex-wrap: wrap;
+    }
+
+    .quiz-answer {
+        padding: 10px 26px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .quiz {
+        padding: 20px 0px;
+        background-color: transparent;
+    }
+
+    .quiz-question {
+        font-size: 16px;
+        line-height: 16px;
+        margin-bottom: 20px;
+    }
+
+    .quiz-answers {
+        flex-wrap: wrap;
+    }
+
+    .quiz-answer {
+        padding: 6px 10px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+}

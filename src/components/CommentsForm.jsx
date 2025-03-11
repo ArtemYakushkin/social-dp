@@ -9,6 +9,7 @@ import {
   collection,
   serverTimestamp,
 } from "firebase/firestore";
+import { useMediaQuery } from "react-responsive";
 
 import { useAuth } from "../auth/useAuth";
 import { db } from "../firebase";
@@ -21,11 +22,9 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
   const [commentText, setCommentText] = useState("");
   const [error, setError] = useState("");
   const { user } = useAuth();
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
-  // const isValidComment = (text) => {
-  //   const englishTextPattern = /^[A-Za-z0-9 .,!?'"()-]+$/;
-  //   return validator.matches(text, englishTextPattern);
-  // };
   const isValidComment = (text) => {
     const englishTextPattern = "^[A-Za-z0-9 .,!?\"'()\\-]+$";
     return validator.matches(text, new RegExp(englishTextPattern));
@@ -78,21 +77,44 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
 
   return (
     <div className="comments-section">
-      {user ? (
-        <form onSubmit={handleCommentSubmit} className="comments-form">
-          <input
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-            placeholder="Add your comment here"
-            className="comments-input"
-          />
-          {error && <p className="comments-error">{error}</p>}
-          <button type="submit" className="comments-submit-btn">
-            <IoSend size={36} />
-          </button>
-        </form>
+      {isMobile ? (
+        <div className="container">
+          {user ? (
+            <form onSubmit={handleCommentSubmit} className="comments-form">
+              <input
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Add your comment here"
+                className="comments-input"
+              />
+              {error && <p className="comments-error">{error}</p>}
+              <button type="submit" className="comments-submit-btn">
+                <IoSend size={24} />
+              </button>
+            </form>
+          ) : (
+            <p className="comments-not-register">Login to leave a comment.</p>
+          )}
+        </div>
       ) : (
-        <p className="comments-not-register">Login to leave a comment.</p>
+        <>
+          {user ? (
+            <form onSubmit={handleCommentSubmit} className="comments-form">
+              <input
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Add your comment here"
+                className="comments-input"
+              />
+              {error && <p className="comments-error">{error}</p>}
+              <button type="submit" className="comments-submit-btn">
+                <IoSend size={isTablet ? "24" : "36"} />
+              </button>
+            </form>
+          ) : (
+            <p className="comments-not-register">Login to leave a comment.</p>
+          )}
+        </>
       )}
     </div>
   );

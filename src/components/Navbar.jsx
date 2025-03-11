@@ -5,6 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
+import MobileMenu from "./MobileMenu";
 
 import logo1 from "../assets/logo-1.svg";
 import logo2 from "../assets/logo-2.svg";
@@ -19,13 +20,14 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
-    if (isRegisterModalOpen || isLoginModalOpen) {
+    if (isRegisterModalOpen || isLoginModalOpen || isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -34,7 +36,7 @@ const Navbar = () => {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isRegisterModalOpen, isLoginModalOpen]);
+  }, [isRegisterModalOpen, isLoginModalOpen, isMobileMenuOpen]);
 
   const openRegister = () => {
     setIsRegisterModalOpen(true);
@@ -49,6 +51,12 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <div className="navbar">
@@ -117,7 +125,12 @@ const Navbar = () => {
                 )}
               </div>
 
-              <button className="navbar-mobile-menu">
+              <button
+                className={`navbar-mobile-menu ${
+                  isMobileMenuOpen ? "navbar-mobile-menu-open" : ""
+                }`}
+                onClick={toggleMobileMenu}
+              >
                 <span></span>
                 <span></span>
                 <span></span>
@@ -127,7 +140,7 @@ const Navbar = () => {
             <div className="navbar-buttons">
               <a
                 className="navbar-support"
-                href="mailto: artem.frontdeveloper@gmail.com"
+                href="mailto:artem.frontdeveloper@gmail.com"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -143,7 +156,12 @@ const Navbar = () => {
                 Sign in
               </button>
 
-              <button className="navbar-mobile-menu">
+              <button
+                className={`navbar-mobile-menu ${
+                  isMobileMenuOpen ? "navbar-mobile-menu-open" : ""
+                }`}
+                onClick={toggleMobileMenu}
+              >
                 <span></span>
                 <span></span>
                 <span></span>
@@ -168,6 +186,15 @@ const Navbar = () => {
           openRegister={openRegister}
         />
       )}
+
+      {isMobileMenuOpen && <div className="navbar-overlay" onClick={closeMenu}></div>}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        toggleMenu={toggleMobileMenu}
+        user={user}
+        logout={logout}
+        closeMenu={closeMenu}
+      />
     </div>
   );
 };

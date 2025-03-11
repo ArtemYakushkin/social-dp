@@ -10,11 +10,14 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { useMediaQuery } from "react-responsive";
 
 import { db } from "../firebase";
 import ModalEditReply from "./ModalEditReply";
 import ModalDeleteReply from "./ModalDeleteReply";
 import Loader from "./Loader";
+
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 import "../styles/ReplyList.css";
 
@@ -25,6 +28,7 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedReply, setSelectedReply] = useState(null);
   const [editedText, setEditedText] = useState("");
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const navigate = useNavigate();
 
@@ -125,66 +129,134 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
   return (
     <div className="reply-list">
       {replies.map((reply) => (
-        <div key={reply.id} className="reply-list-item">
-          <span></span>
-          <div className="reply-list-top">
-            <div
-              className="reply-list-avatar"
-              onClick={() => navigate(`/author/${reply.author.uid}`)}
-            >
-              {reply.author.avatar ||
-              (reply.author.nickname && reply.author.nickname.charAt(0).toUpperCase()) ? (
-                typeof reply.author.avatar === "string" && reply.author.avatar.length > 1 ? (
-                  <img src={reply.author.avatar} alt="Avatar" />
-                ) : (
-                  <div className="reply-list-avatar-initial">{reply.author.avatar}</div>
-                )
-              ) : (
-                <div className="reply-list-avatar-initial">U</div>
-              )}
-            </div>
-            <div className="reply-list-right">
-              <div className="reply-list-content">
-                <div className="reply-list-author">
-                  <p className="reply-list-nikname">{reply.author.nickname}</p>
-                  <p className="reply-list-date">
-                    {reply.createdAt && reply.createdAt.toDate
-                      ? reply.createdAt.toDate().toLocaleString("ru-RU", {
-                          timeZone: "Europe/Moscow",
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })
-                      : "Date not available"}
-                  </p>
+        <div key={reply.id}>
+          {isMobile ? (
+            <div className="reply-list-item">
+              <span></span>
+              <div className="reply-list-top">
+                <div
+                  className="reply-list-avatar"
+                  onClick={() => navigate(`/author/${reply.author.uid}`)}
+                >
+                  {reply.author.avatar ||
+                  (reply.author.nickname && reply.author.nickname.charAt(0).toUpperCase()) ? (
+                    typeof reply.author.avatar === "string" && reply.author.avatar.length > 1 ? (
+                      <img src={reply.author.avatar} alt="Avatar" />
+                    ) : (
+                      <div className="reply-list-avatar-initial">{reply.author.avatar}</div>
+                    )
+                  ) : (
+                    <div className="reply-list-avatar-initial">U</div>
+                  )}
                 </div>
-                <p className="reply-list-text">{reply.text}</p>
+                <div className="reply-list-right">
+                  <div className="reply-list-content">
+                    <div className="reply-list-author">
+                      <p className="reply-list-nikname">{reply.author.nickname}</p>
+                      {reply.author.uid === currentUser?.uid && (
+                        <div className="reply-list-bottom">
+                          <button
+                            className="reply-list-options-btn"
+                            onClick={() => {
+                              setIsEditing(true);
+                              setSelectedReply(reply);
+                              setEditedText(reply.text);
+                            }}
+                          >
+                            <AiOutlineEdit size={20} />
+                          </button>
+                          <button
+                            className="reply-list-options-btn"
+                            onClick={() => {
+                              setIsDeleting(true);
+                              setSelectedReply(reply);
+                            }}
+                          >
+                            <AiOutlineDelete size={20} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <p className="reply-list-date">
+                      {reply.createdAt && reply.createdAt.toDate
+                        ? reply.createdAt.toDate().toLocaleString("ru-RU", {
+                            timeZone: "Europe/Moscow",
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : "Date not available"}
+                    </p>
+                    <p className="reply-list-text">{reply.text}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          {reply.author.uid === currentUser?.uid && (
-            <div className="reply-list-bottom">
-              <button
-                className="reply-list-options-btn"
-                onClick={() => {
-                  setIsEditing(true);
-                  setSelectedReply(reply);
-                  setEditedText(reply.text);
-                }}
-              >
-                Edit Reply
-              </button>
-              <button
-                className="reply-list-options-btn"
-                onClick={() => {
-                  setIsDeleting(true);
-                  setSelectedReply(reply);
-                }}
-              >
-                Delete Reply
-              </button>
+          ) : (
+            <div className="reply-list-item">
+              <span></span>
+              <div className="reply-list-top">
+                <div
+                  className="reply-list-avatar"
+                  onClick={() => navigate(`/author/${reply.author.uid}`)}
+                >
+                  {reply.author.avatar ||
+                  (reply.author.nickname && reply.author.nickname.charAt(0).toUpperCase()) ? (
+                    typeof reply.author.avatar === "string" && reply.author.avatar.length > 1 ? (
+                      <img src={reply.author.avatar} alt="Avatar" />
+                    ) : (
+                      <div className="reply-list-avatar-initial">{reply.author.avatar}</div>
+                    )
+                  ) : (
+                    <div className="reply-list-avatar-initial">U</div>
+                  )}
+                </div>
+                <div className="reply-list-right">
+                  <div className="reply-list-content">
+                    <div className="reply-list-author">
+                      <p className="reply-list-nikname">{reply.author.nickname}</p>
+                      <p className="reply-list-date">
+                        {reply.createdAt && reply.createdAt.toDate
+                          ? reply.createdAt.toDate().toLocaleString("ru-RU", {
+                              timeZone: "Europe/Moscow",
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })
+                          : "Date not available"}
+                      </p>
+                    </div>
+                    <p className="reply-list-text">{reply.text}</p>
+                  </div>
+                </div>
+              </div>
+              {reply.author.uid === currentUser?.uid && (
+                <div className="reply-list-bottom">
+                  <button
+                    className="reply-list-options-btn"
+                    onClick={() => {
+                      setIsEditing(true);
+                      setSelectedReply(reply);
+                      setEditedText(reply.text);
+                    }}
+                  >
+                    Edit Reply
+                  </button>
+                  <button
+                    className="reply-list-options-btn"
+                    onClick={() => {
+                      setIsDeleting(true);
+                      setSelectedReply(reply);
+                    }}
+                  >
+                    Delete Reply
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

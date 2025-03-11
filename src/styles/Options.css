@@ -7,6 +7,7 @@
     justify-content: space-between;
     padding: 22px 38px;
     margin-bottom: 65px;
+    scroll-margin-top: 30px;
 }
 
 .options-dropdown {
@@ -305,6 +306,7 @@
 
 @media (max-width: 767px) {
     .options {
+        scroll-margin-top: 100px;
         margin-bottom: 30px;
         padding: 16px 30px;
         border-radius: 50px;

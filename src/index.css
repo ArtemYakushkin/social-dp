@@ -14,16 +14,9 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    background-image: url('./assets/background.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: "Nunito Sans", sans-serif;
-    min-height: 100vh;
-}
-
 :root {
+    --background: url('./assets/background.png') center / cover no-repeat;
+
     --bg-blue: #BCD8FF;
     --bg-white: #ffffff;
     --bg-dark-white: #FBFBFB;
@@ -43,6 +36,12 @@ body {
     --text-grey-light: #ADACAC;
     --text-error: #F63B3B;
     --text-inactive-grey: #BDBDBD;
+}
+
+body {
+    background: var(--background);
+    font-family: "Nunito Sans", sans-serif;
+    min-height: 100vh;
 }
 
 /* Стиль для общей области скроллбара */
@@ -273,6 +272,51 @@ img {
 
 .expanded-button-disabled {
     cursor: none;
+}
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .expanded-swiper-pagination {
+        gap: 10px;
+    }
+
+    .expanded-bullet {
+        width: 5px;
+        height: 5px;
+    }
+
+    .expanded-bullet-active {
+        background-color: var(--accent-blue-color);
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .expanded-swiper-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .expanded-swiper-button-prev {
+        left: 15px;
+    }
+
+    .expanded-swiper-button-next {
+        right: 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .expanded-swiper-button {
+        display: none;
+    }
+
+    .expanded-swiper-pagination {
+        gap: 6px;
+    }
+
+    .expanded-bullet {
+        width: 5px;
+        height: 5px;
+    }
 }
 
 /* ----------- Modal windows ------------ */

@@ -38,10 +38,69 @@
     color: var(--text-error);
 }
 
+.reply-form-btn {
+    display: flex;
+    align-items: center;
+}
+
 .reply-not-register {
     font-weight: 700;
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
     text-align: center;
+}
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .reply-form {
+        height: 40px;
+        padding: 0 20px;
+    }
+
+    .reply-input {
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::placeholder {
+            font-size: 16px;
+            line-height: 25.6px;
+        }
+    }
+
+    .reply-error {
+        font-size: 16px;
+        line-height: 25.6px;
+    }
+
+    .reply-not-register {
+        font-size: 16px;
+        line-height: 25.6px;
+    }
+}
+
+@media (max-width: 767px) {
+    .reply-form {
+        height: 40px;
+        padding: 0 15px;
+    }
+
+    .reply-input {
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::placeholder {
+            font-size: 16px;
+            line-height: 25.6px;
+        }
+    }
+
+    .reply-error {
+        font-size: 16px;
+        line-height: 25.6px;
+    }
+
+    .reply-not-register {
+        font-size: 16px;
+        line-height: 25.6px;
+    }
 }

@@ -1,6 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { collection, query, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
 import { db } from "../firebase";
 import Loader from "./Loader";
 import avatar from "../assets/avatar.png";
@@ -8,6 +14,7 @@ import avatar from "../assets/avatar.png";
 import { FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import "../styles/PopularPosts.css";
 
@@ -17,11 +24,17 @@ const PopularPosts = () => {
   const [error, setError] = useState(false);
   const [authors, setAuthors] = useState({});
   const navigate = useNavigate();
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const fetchPopularPosts = async () => {
       try {
-        const q = query(collection(db, "posts"), orderBy("likes", "desc"), limit(3));
+        const q = query(collection(db, "posts"), orderBy("likes", "desc"), limit(5));
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
@@ -40,6 +53,15 @@ const PopularPosts = () => {
 
     fetchPopularPosts();
   }, []);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.params.navigation.prevEl = prevRef.current;
+      swiperRef.current.params.navigation.nextEl = nextRef.current;
+      swiperRef.current.navigation.init();
+      swiperRef.current.navigation.update();
+    }
+  }, [posts]);
 
   useEffect(() => {
     if (posts.length === 0) return;
@@ -79,67 +101,96 @@ const PopularPosts = () => {
         <h2 className="popular-title">Topics that may interest you</h2>
 
         {loading && <Loader />}
-
-        {error && !loading && (
-          <p className="text-center text-gray-500">Популярные посты не найдены.</p>
-        )}
+        {error && !loading && <p className="popular-not-found">Popular posts not found.</p>}
 
         {!loading && !error && (
-          <div className="popular-list">
-            {posts.map((post) => (
-              <div className="expPost" key={post.id}>
-                <div className="expPost-header">
-                  <div className="expPost-avatar">
-                    <img src={authors[post.author?.uid]?.avatar || avatar} alt="Post author" />
-                  </div>
-                  <div className="expPost-info-post">
-                    <p className="expPost-author">
-                      {authors[post.author?.uid]?.nickname || "Unknown Author"}
-                    </p>
-                    <p className="expPost-date">{new Date(post.createdAt).toLocaleDateString()}</p>
-                  </div>
-                </div>
+          <div className="popular-slider-container">
+            <button ref={prevRef} className="popular-custom-btn popular-custom-btn-prev">
+              <IoIosArrowBack size={32} />
+            </button>
 
-                <div className="expPost-content" onClick={() => handleExpandClick(post.id)}>
-                  <div className="expPost-image">
-                    {post.media?.[0] &&
-                      (post.media[0].includes(".mp4") ? (
-                        <video autoPlay loop muted>
-                          <source src={post.media[0]} type="video/mp4" />
-                          Your browser does not support video.
-                        </video>
-                      ) : (
-                        <img src={post.media[0]} alt="Post media" />
-                      ))}
-                  </div>
-                  <div className="expPost-box-text">
-                    <p className="expPost-title">{post.title}</p>
-                    <p className="expPost-text">{post.text}</p>
-                  </div>
-                </div>
+            <Swiper
+              ref={swiperRef}
+              modules={[Navigation]}
+              loop={true}
+              spaceBetween={20}
+              slidesPerView={isMobile ? 1 : isTablet ? 2 : 3}
+              navigation={{
+                prevEl: prevRef.current,
+                nextEl: nextRef.current,
+              }}
+              onBeforeInit={(swiper) => {
+                swiper.params.navigation.prevEl = prevRef.current;
+                swiper.params.navigation.nextEl = nextRef.current;
+                swiperRef.current = swiper;
+              }}
+              className="popular-slider"
+            >
+              {posts.map((post) => (
+                <SwiperSlide key={post.id}>
+                  <div className="expPost">
+                    <div className="expPost-header">
+                      <div className="expPost-avatar">
+                        <img src={authors[post.author?.uid]?.avatar || avatar} alt="Post author" />
+                      </div>
+                      <div className="expPost-info-post">
+                        <p className="expPost-author">
+                          {authors[post.author?.uid]?.nickname || "Unknown Author"}
+                        </p>
+                        <p className="expPost-date">
+                          {new Date(post.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="expPost-line">
-                  <div></div>
-                </div>
+                    <div className="expPost-content" onClick={() => handleExpandClick(post.id)}>
+                      <div className="expPost-image">
+                        {post.media?.[0] &&
+                          (post.media[0].includes(".mp4") ? (
+                            <video autoPlay loop muted>
+                              <source src={post.media[0]} type="video/mp4" />
+                              Your browser does not support video.
+                            </video>
+                          ) : (
+                            <img src={post.media[0]} alt="Post media" />
+                          ))}
+                      </div>
+                      <div className="expPost-box-text">
+                        <p className="expPost-title">{post.title}</p>
+                        <p className="expPost-text">{post.text}</p>
+                      </div>
+                    </div>
 
-                <div className="expPost-footer">
-                  <div className="expPost-icon-box">
-                    <div className="expPost-icon">
-                      <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
-                      <span>{post.likes.length}</span>
-                    </div>
-                    <div className="expPost-icon">
-                      <FiEye size={24} style={{ color: "var(--text-black)" }} />
-                      <span>{post.views}</span>
-                    </div>
-                    <div className="expPost-icon">
-                      <BiComment size={24} style={{ color: "var(--text-black)" }} />
-                      <span>{post.comments?.length || 0}</span>
+                    <div className="expPost-bottom">
+                      <div className="expPost-line">
+                        <div></div>
+                      </div>
+
+                      <div className="expPost-footer">
+                        <div className="expPost-icon-box">
+                          <div className="expPost-icon">
+                            <FaRegHeart size={24} />
+                            <span>{post.likes.length}</span>
+                          </div>
+                          <div className="expPost-icon">
+                            <FiEye size={24} />
+                            <span>{post.views}</span>
+                          </div>
+                          <div className="expPost-icon">
+                            <BiComment size={24} />
+                            <span>{post.comments?.length || 0}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <button ref={nextRef} className="popular-custom-btn popular-custom-btn-next">
+              <IoIosArrowForward size={32} />
+            </button>
           </div>
         )}
       </div>

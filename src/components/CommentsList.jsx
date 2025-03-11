@@ -13,6 +13,7 @@ import {
   orderBy,
   getDoc,
 } from "firebase/firestore";
+import { useMediaQuery } from "react-responsive";
 
 import { db } from "../firebase";
 
@@ -25,6 +26,7 @@ import UnregisteredModal from "./UnregisteredModal";
 
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 import "../styles/CommentsList.css";
 
@@ -40,6 +42,8 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const deletedComments = useMemo(() => new Set(), []);
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
     if (!postId) return;
@@ -182,116 +186,243 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
     <>
       <div className="comment-list">
         {comments.map((comment) => (
-          <div className="comment-total-wrapp" key={comment.id}>
-            <div className="comment-top-section">
-              <div
-                className="comment-avatar"
-                onClick={() => navigate(`/author/${comment.author.id}`)}
-              >
-                {comment.author.avatar ? (
-                  <img src={comment.author.avatar} alt="Avatar" />
-                ) : (
-                  <div className="comment-avatar-initial">
-                    {comment.author.nickname
-                      ? comment.author.nickname.charAt(0).toUpperCase()
-                      : "U"}
+          <div key={comment.id}>
+            {isMobile ? (
+              <div className="container">
+                <div className="comment-total-wrapp">
+                  <div className="comment-top-section">
+                    <div
+                      className="comment-avatar"
+                      onClick={() => navigate(`/author/${comment.author.id}`)}
+                    >
+                      {comment.author.avatar ? (
+                        <img src={comment.author.avatar} alt="Avatar" />
+                      ) : (
+                        <div className="comment-avatar-initial">
+                          {comment.author.nickname
+                            ? comment.author.nickname.charAt(0).toUpperCase()
+                            : "U"}
+                        </div>
+                      )}
+                    </div>
+                    <div className="comment-right">
+                      <div className="comment-content">
+                        <div className="comment-author">
+                          <p className="comment-nikname">{comment.author.nickname}</p>
+                          {comment.author.id === user?.uid && (
+                            <div className="comment-options-btn-box">
+                              <button
+                                className="comment-options-btn"
+                                onClick={() => handleEditComment(comment.id, comment.text)}
+                              >
+                                <AiOutlineEdit size={20} />
+                              </button>
+                              <button
+                                className="comment-options-btn"
+                                onClick={() => handleDeleteComment(comment.id)}
+                              >
+                                <AiOutlineDelete size={20} />
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                        <p className="comment-date">
+                          {comment.createdAt && comment.createdAt.toDate
+                            ? comment.createdAt.toDate().toLocaleString("ru-RU", {
+                                timeZone: "Europe/Moscow",
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })
+                            : "Date not available"}
+                        </p>
+                        <p className="comment-text">{comment.text}</p>
+                      </div>
+                    </div>
                   </div>
-                )}
-              </div>
-              <div className="comment-right">
-                <div className="comment-content">
-                  <div className="comment-author">
-                    <p className="comment-nikname">{comment.author.nickname}</p>
-                    <p className="comment-date">
-                      {comment.createdAt && comment.createdAt.toDate
-                        ? comment.createdAt.toDate().toLocaleString("ru-RU", {
-                            timeZone: "Europe/Moscow",
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })
-                        : "Date not available"}
-                    </p>
+                  <div className="comment-center-section">
+                    <div className="comment-center-options">
+                      <button
+                        className="comment-options-btn"
+                        onClick={() => toggleReplyList(comment.id)}
+                      >
+                        Reply to comment
+                      </button>
+                    </div>
+                    <button
+                      className="comment-btn-like"
+                      onClick={() => handleLike(comment.id, comment.likes)}
+                    >
+                      {comment.likes.includes(user?.uid) ? (
+                        <FaHeart size={20} style={{ color: "var(--text-error)" }} />
+                      ) : (
+                        <FaRegHeart size={20} style={{ color: "var(--text-black)" }} />
+                      )}
+                      <span>{comment.likes.length}</span>
+                    </button>
                   </div>
-                  <p className="comment-text">{comment.text}</p>
+                  {activeCommentId === comment.id && (
+                    <div className="comment-list-reply-container">
+                      <ReplyForm
+                        commentId={comment.id}
+                        postId={postId}
+                        user={user}
+                        onReplyAdded={() => handleReplyAdded(comment.id)}
+                      />
+                      <ReplyList
+                        commentId={comment.id}
+                        currentUser={user}
+                        onReplyDeleted={() => handleReplyDeleted(comment.id)}
+                      />
+                    </div>
+                  )}
+                  <div className="comment-bottom-section">
+                    <span></span>
+                    <button
+                      className="comment-list-btn"
+                      onClick={() => toggleReplyList(comment.id)}
+                    >
+                      {activeCommentId === comment.id ? (
+                        <>
+                          <div className="comment-list-frame-icon">
+                            <FaMinus size={14} />
+                          </div>
+                          <p className="comment-list-btn-text">
+                            hide {repliesCounts[comment.id] || 0} replies
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <div className="comment-list-frame-icon">
+                            <FaPlus size={14} />
+                          </div>
+                          <p className="comment-list-btn-text">
+                            {repliesCounts[comment.id] || 0} more replies
+                          </p>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="comment-center-section">
-              <div className="comment-center-options">
-                <button className="comment-options-btn" onClick={() => toggleReplyList(comment.id)}>
-                  Reply to comment
-                </button>
-                {comment.author.id === user?.uid && (
-                  <>
+            ) : (
+              <div className="comment-total-wrapp">
+                <div className="comment-top-section">
+                  <div
+                    className="comment-avatar"
+                    onClick={() => navigate(`/author/${comment.author.id}`)}
+                  >
+                    {comment.author.avatar ? (
+                      <img src={comment.author.avatar} alt="Avatar" />
+                    ) : (
+                      <div className="comment-avatar-initial">
+                        {comment.author.nickname
+                          ? comment.author.nickname.charAt(0).toUpperCase()
+                          : "U"}
+                      </div>
+                    )}
+                  </div>
+                  <div className="comment-right">
+                    <div className="comment-content">
+                      <div className="comment-author">
+                        <p className="comment-nikname">{comment.author.nickname}</p>
+                        <p className="comment-date">
+                          {comment.createdAt && comment.createdAt.toDate
+                            ? comment.createdAt.toDate().toLocaleString("ru-RU", {
+                                timeZone: "Europe/Moscow",
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })
+                            : "Date not available"}
+                        </p>
+                      </div>
+                      <p className="comment-text">{comment.text}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="comment-center-section">
+                  <div className="comment-center-options">
                     <button
                       className="comment-options-btn"
-                      onClick={() => handleEditComment(comment.id, comment.text)}
+                      onClick={() => toggleReplyList(comment.id)}
                     >
-                      Edit comment
+                      Reply to comment
                     </button>
-                    <button
-                      className="comment-options-btn"
-                      onClick={() => handleDeleteComment(comment.id)}
-                    >
-                      Delete comment
-                    </button>
-                  </>
+                    {comment.author.id === user?.uid && (
+                      <>
+                        <button
+                          className="comment-options-btn"
+                          onClick={() => handleEditComment(comment.id, comment.text)}
+                        >
+                          Edit comment
+                        </button>
+                        <button
+                          className="comment-options-btn"
+                          onClick={() => handleDeleteComment(comment.id)}
+                        >
+                          Delete comment
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  <button
+                    className="comment-btn-like"
+                    onClick={() => handleLike(comment.id, comment.likes)}
+                  >
+                    {comment.likes.includes(user?.uid) ? (
+                      <FaHeart size={24} style={{ color: "var(--text-error)" }} />
+                    ) : (
+                      <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
+                    )}
+                    <span>{comment.likes.length}</span>
+                  </button>
+                </div>
+                {activeCommentId === comment.id && (
+                  <div className="comment-list-reply-container">
+                    <ReplyForm
+                      commentId={comment.id}
+                      postId={postId}
+                      user={user}
+                      onReplyAdded={() => handleReplyAdded(comment.id)}
+                    />
+                    <ReplyList
+                      commentId={comment.id}
+                      currentUser={user}
+                      onReplyDeleted={() => handleReplyDeleted(comment.id)}
+                    />
+                  </div>
                 )}
-              </div>
-              <button
-                className="comment-btn-like"
-                onClick={() => handleLike(comment.id, comment.likes)}
-              >
-                {comment.likes.includes(user?.uid) ? (
-                  <FaHeart size={24} style={{ color: "var(--text-error)" }} />
-                ) : (
-                  <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
-                )}
-                <span>{comment.likes.length}</span>
-              </button>
-            </div>
-            {activeCommentId === comment.id && (
-              <div className="comment-list-reply-container">
-                <ReplyForm
-                  commentId={comment.id}
-                  postId={postId}
-                  user={user}
-                  onReplyAdded={() => handleReplyAdded(comment.id)}
-                />
-                <ReplyList
-                  commentId={comment.id}
-                  currentUser={user}
-                  onReplyDeleted={() => handleReplyDeleted(comment.id)}
-                />
+                <div className="comment-bottom-section">
+                  <span></span>
+                  <button className="comment-list-btn" onClick={() => toggleReplyList(comment.id)}>
+                    {activeCommentId === comment.id ? (
+                      <>
+                        <div className="comment-list-frame-icon">
+                          <FaMinus size={14} />
+                        </div>
+                        <p className="comment-list-btn-text">
+                          hide {repliesCounts[comment.id] || 0} replies
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <div className="comment-list-frame-icon">
+                          <FaPlus size={14} />
+                        </div>
+                        <p className="comment-list-btn-text">
+                          {repliesCounts[comment.id] || 0} more replies
+                        </p>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             )}
-            <div className="comment-bottom-section">
-              <span></span>
-              <button className="comment-list-btn" onClick={() => toggleReplyList(comment.id)}>
-                {activeCommentId === comment.id ? (
-                  <>
-                    <div className="comment-list-frame-icon">
-                      <FaMinus size={14} />
-                    </div>
-                    <p className="comment-list-btn-text">
-                      hide {repliesCounts[comment.id] || 0} replies
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div className="comment-list-frame-icon">
-                      <FaPlus size={14} />
-                    </div>
-                    <p className="comment-list-btn-text">
-                      {repliesCounts[comment.id] || 0} more replies
-                    </p>
-                  </>
-                )}
-              </button>
-            </div>
           </div>
         ))}
         <ModalDeleteComment
