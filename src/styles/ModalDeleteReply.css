@@ -51,3 +51,32 @@
         box-shadow: 0px 4px 4px 0px #2F7BF640;
     }
 }
+
+
+@media (max-width: 767px) {
+
+    .mdr-modal {
+        padding: 16px 10px 10px 10px;
+        width: 307px;
+        border-top: 10px solid var(--accent-orange-color);
+    }
+
+    .mdr-wrapp {
+        gap: 18px;
+    }
+
+    .mdr-title {
+        font-size: 14px;
+        line-height: 22.8px;
+    }
+
+    .mdr-actions {
+        gap: 10px;
+    }
+
+    .mdr-btn {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+}

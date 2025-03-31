@@ -39,7 +39,6 @@
     position: relative;
     width: 684px;
     max-height: 90vh;
-    overflow: hidden;
     background-color: var(--bg-white);
     box-shadow: 0px 4px 16px 0px #8DD3BB26;
     position: relative;
@@ -457,4 +456,61 @@
         text-decoration: underline;
         cursor: pointer;
     }
+}
+
+
+
+
+@media (max-width: 767px) {
+
+    .register {
+        padding: 0px;
+    }
+
+    .register-form {
+        width: 100%;
+        max-width: 375px;
+        max-height: 90vh;
+        padding: 40px 4px 40px 24px;
+        border-radius: 0px;
+    }
+
+    .register-title {
+        margin-bottom: 30px;
+        font-size: 28px;
+        line-height: 33.6px;
+    }
+
+    .register-fields {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .register-fields-basic {
+        width: 100%;
+    }
+
+    .register-fields-secondary {
+        width: 186px;
+    }
+
+    .register-dropdown-item {
+        padding-left: 14px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .register-error {
+        max-width: 200px;
+    }
+
+    .register-password {
+        margin-bottom: 38px;
+    }
+
+
+    .register-link-box {
+        justify-content: flex-start;
+    }
+
 }

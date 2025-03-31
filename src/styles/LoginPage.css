@@ -39,7 +39,6 @@
     position: relative;
     width: 482px;
     max-height: 90vh;
-    overflow: hidden;
     background-color: var(--bg-white);
     box-shadow: 0px 4px 16px 0px #8DD3BB26;
     position: relative;
@@ -286,4 +285,26 @@
     color: var(--accent-blue-color);
     text-decoration: underline;
     cursor: pointer;
+}
+
+@media (max-width: 767px) {
+
+    .login {
+        padding: 00px;
+    }
+
+    .login-form {
+        width: 100%;
+        max-width: 375px;
+        max-height: 90vh;
+        padding: 40px 24px;
+        border-radius: 0px;
+    }
+
+    .login-title {
+        margin-bottom: 30px;
+        font-size: 28px;
+        line-height: 33.6px;
+    }
+
 }

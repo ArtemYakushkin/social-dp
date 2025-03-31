@@ -1,5 +1,5 @@
 .app {
-    padding-bottom: 60px;
+    padding-bottom: 120px;
 }
 
 .app-container {
@@ -14,8 +14,8 @@
     background-color: var(--bg-white);
     border-radius: 30px;
     overflow: hidden;
-    padding-bottom: 32px;
-    margin-bottom: 60px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .app-avatar-img {
@@ -26,6 +26,7 @@
     height: 282px;
     border-radius: 50%;
     overflow: hidden;
+    background-color: var(--bg-blue-inactive);
     border: 8px solid var(--bg-white);
     box-shadow: 0px 4px 16px 0px #2F7BF626;
 
@@ -111,4 +112,121 @@
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
+    word-break: break-word;
+}
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .app {
+        padding-bottom: 90px;
+    }
+
+    .app-avatar-img {
+        top: 162px;
+        left: 20px;
+        width: 176px;
+        height: 176px;
+        border: 5px solid var(--bg-white);
+    }
+
+    .app-cover {
+        width: 100%;
+        max-height: 250px;
+        margin-bottom: 95px;
+    }
+
+    .app-nickname {
+        margin-left: 20px;
+        margin-bottom: 10px;
+        font-size: 40px;
+        line-height: 46px;
+    }
+
+    .app-line-box {
+        padding: 0 20px;
+        margin-bottom: 20px;
+    }
+
+    .app-status {
+        margin-left: 20px;
+    }
+
+    .app-item {
+        padding: 4px 20px;
+    }
+
+    .app-about-title {
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .app {
+        margin-top: 81px;
+        padding-bottom: 90px;
+    }
+
+    .app-info {
+        width: 100%;
+        border-radius: 0px;
+        overflow: visible;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+
+    .app-avatar-img {
+        top: 162px;
+        left: 24px;
+        width: 176px;
+        height: 176px;
+        border: 5px solid var(--bg-white);
+    }
+
+    .app-cover {
+        height: 250px;
+        max-height: 250px;
+        margin-bottom: 90px;
+    }
+
+    .app-nickname {
+        margin-left: 0px;
+        margin-bottom: 10px;
+        font-size: 40px;
+        line-height: 46px;
+    }
+
+    .app-line-box {
+        padding: 0px;
+        margin-bottom: 20px;
+    }
+
+    .app-status {
+        margin-left: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .app-item {
+        padding: 4px 20px;
+    }
+
+    .app-about {
+        padding: 40px 20px;
+    }
+
+    .app-about-title {
+        font-size: 22px;
+        line-height: 26.4px;
+        margin-bottom: 20px;
+    }
+
+    .app-about-text {
+        font-size: 18px;
+        line-height: 28.8px;
+    }
 }

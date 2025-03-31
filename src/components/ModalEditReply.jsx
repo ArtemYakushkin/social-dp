@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "../styles/ModalEditReply.css";
 
 const ModalEditReply = ({ text, onSave, onCancel, onTextChange }) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  const handleOverlayClick = (e) => {
+    if (e.target.id === "modal-overlay") {
+      onCancel();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" id="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal mer-modal">
         <div className="mer-wrapp">
-          <h2 className="mer-title">Edit your reply</h2>
-          <input
+          <textarea
             className="mer-input"
             value={text}
             onChange={(e) => onTextChange(e.target.value)}

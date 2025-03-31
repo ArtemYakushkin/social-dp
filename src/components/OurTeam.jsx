@@ -24,7 +24,7 @@ const OurTeam = () => {
           </div>
 
           <div className="team-right">
-            <div className="team-item">
+            <div className="team-item team-item-anna-height">
               <div className="team-item-anna">
                 <img src={Anna} alt="Anna" />
               </div>
@@ -62,7 +62,7 @@ const OurTeam = () => {
               </div>
             </div>
 
-            <div className="team-item">
+            <div className="team-item team-item-artem-height">
               <div className="team-item-artem">
                 <img src={Artem} alt="Artem" />
               </div>
@@ -99,7 +99,7 @@ const OurTeam = () => {
               </div>
             </div>
 
-            <div className="team-item">
+            <div className="team-item team-item-nastya-height">
               <div className="team-item-nastya">
                 <img src={Nastya} alt="Nastya" />
               </div>

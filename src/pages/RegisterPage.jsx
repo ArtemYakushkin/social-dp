@@ -17,7 +17,7 @@ import { VscError } from "react-icons/vsc";
 
 import "../styles/RegisterPage.css";
 
-const RegisterPage = ({ onClose, isVisible, openLogin }) => {
+const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
   const [nickname, setNickname] = useState("");
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
@@ -125,6 +125,10 @@ const RegisterPage = ({ onClose, isVisible, openLogin }) => {
         createdReplys: [],
         likedPosts: [],
         likedComments: [],
+        facebook: "",
+        instagram: "",
+        telegram: "",
+        savedPosts: [],
       };
 
       const userRef = doc(collection(db, "users"), user.uid);
@@ -134,6 +138,7 @@ const RegisterPage = ({ onClose, isVisible, openLogin }) => {
 
       if (onClose) {
         onClose();
+        onCloseUnreg();
       }
     } catch (error) {
       console.error("Registration error:", error);

@@ -13,7 +13,7 @@ import { FaCheck } from "react-icons/fa";
 
 import "../styles/LoginPage.css";
 
-const LoginPage = ({ isVisible, onClose, openRegister }) => {
+const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
@@ -76,6 +76,7 @@ const LoginPage = ({ isVisible, onClose, openRegister }) => {
 
       if (onClose) {
         onClose();
+        onCloseUnreg();
       }
     } catch (error) {
       if (error.code === "auth/wrong-password") {

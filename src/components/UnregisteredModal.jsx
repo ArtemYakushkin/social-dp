@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
-import Robot from "../assets/robot-attention.png";
+import Robot from "../assets/robby-hello2.svg";
 
 import { IoIosClose } from "react-icons/io";
 
@@ -13,7 +13,7 @@ const UnregisteredModal = ({ isOpen, onClose }) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   useEffect(() => {
-    if (isRegisterModalOpen || isLoginModalOpen) {
+    if (isOpen || isRegisterModalOpen || isLoginModalOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -22,30 +22,42 @@ const UnregisteredModal = ({ isOpen, onClose }) => {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isRegisterModalOpen, isLoginModalOpen]);
+  }, [isOpen, isRegisterModalOpen, isLoginModalOpen]);
 
   const openRegister = () => {
     setIsRegisterModalOpen(true);
     setIsLoginModalOpen(false);
+    closeModal();
   };
 
   const openLogin = () => {
     setIsLoginModalOpen(true);
     setIsRegisterModalOpen(false);
+    closeModal();
+  };
+
+  const closeModal = () => {
+    setIsLoginModalOpen(false);
+    setIsRegisterModalOpen(false);
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className="modal-overlay" onClick={closeModal}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-btn-close" onClick={onClose}>
+          <IoIosClose size={30} color="var(--text-grey-light)" />
+        </button>
+
         <div className="unreg-wrapp">
           <div className="unreg-img-box">
             <img className="unreg-img-robot" src={Robot} alt="robot" />
           </div>
           <div className="unreg-content">
             <h4 className="unreg-title">Please note</h4>
-            <p className="quiz-happy-text">
+            <p className="unreg-text">
               Please register or log in to the site to leave comments / likes / participate in
               interactives
             </p>
@@ -62,10 +74,6 @@ const UnregisteredModal = ({ isOpen, onClose }) => {
             </button>
           </div>
         </div>
-
-        <button className="modal-btn-close" onClick={onClose}>
-          <IoIosClose size={30} color="var(--text-grey-light)" />
-        </button>
       </div>
 
       {isRegisterModalOpen && (
@@ -73,6 +81,7 @@ const UnregisteredModal = ({ isOpen, onClose }) => {
           isVisible={isRegisterModalOpen}
           onClose={() => setIsRegisterModalOpen(false)}
           openLogin={openLogin}
+          onCloseUnreg={closeModal}
         />
       )}
 
@@ -81,6 +90,7 @@ const UnregisteredModal = ({ isOpen, onClose }) => {
           isVisible={isLoginModalOpen}
           onClose={() => setIsLoginModalOpen(false)}
           openRegister={openRegister}
+          onCloseUnreg={closeModal}
         />
       )}
     </div>

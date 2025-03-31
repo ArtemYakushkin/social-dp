@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth"; // Хук для получения данных о текущем пользователе
 import { db, storage } from "../firebase"; // Firebase конфигурация
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp, updateDoc, arrayUnion, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
 import "../styles/CreatePostPage.css";
@@ -110,7 +110,15 @@ const CreatePostPage = () => {
       }
 
       // Сохранение данных в Firestore
-      await addDoc(collection(db, "posts"), postData);
+      const postRef = await addDoc(collection(db, "posts"), postData);
+
+      // **Обновляем массив createdPosts у пользователя**
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        createdPosts: arrayUnion({
+          id: postRef.id,
+        }),
+      });
 
       toast.success("Post created successfully");
       // Очистка формы после успешного сохранения

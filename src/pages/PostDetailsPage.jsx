@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { getAuth } from "firebase/auth";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "firebase/firestore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
@@ -15,7 +16,6 @@ import Quiz from "../components/Quiz";
 import Poll from "../components/Poll";
 import PopularPosts from "../components/PopularPosts";
 import ShareBlock from "../components/ShareBlok";
-import Footer from "../components/Footer";
 import UnregisteredModal from "../components/UnregisteredModal";
 
 import avatar from "../assets/avatar.png";
@@ -26,6 +26,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { BsBookmarkFill } from "react-icons/bs";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -33,6 +34,7 @@ import "swiper/css/navigation";
 import "../styles/PostDetailsPage.css";
 
 const PostDetailsPage = () => {
+  const auth = getAuth();
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [author, setAuthor] = useState(null);
@@ -46,6 +48,7 @@ const PostDetailsPage = () => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -179,6 +182,24 @@ const PostDetailsPage = () => {
 
   const handleCommentDeleted = () => {
     setCommentsCount((prevCount) => Math.max(prevCount - 1, 0));
+  };
+
+  const handleSavePost = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const userRef = doc(db, "users", user.uid);
+
+        await updateDoc(userRef, {
+          savedPosts: arrayUnion(postId),
+        });
+        setIsSaved(true);
+      } catch (error) {
+        console.error("Ошибка при сохранении поста: ", error);
+      }
+    } else {
+      alert("Вы должны быть зарегистрированы, чтобы сохранять посты");
+    }
   };
 
   if (error) {
@@ -362,6 +383,13 @@ const PostDetailsPage = () => {
                           <BiComment size={24} style={{ color: "var(--text-black)" }} />
                           <span>{commentsCount}</span>
                         </div>
+                        <button className="details-btn-saved" onClick={handleSavePost}>
+                          {isSaved ? (
+                            <BsBookmarkFill size={24} style={{ color: "var(--text-grey-dark)" }} />
+                          ) : (
+                            <BsBookmarkFill size={24} style={{ color: "var(--text-black)" }} />
+                          )}
+                        </button>
                       </div>
 
                       <div className="details-btn-viewComm-box">
@@ -569,6 +597,14 @@ const PostDetailsPage = () => {
                         {commentsVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
                       </button>
                     </div>
+
+                    <button className="details-btn-saved" onClick={handleSavePost}>
+                      {isSaved ? (
+                        <BsBookmarkFill size={24} style={{ color: "var(--text-grey-dark)" }} />
+                      ) : (
+                        <BsBookmarkFill size={24} style={{ color: "var(--text-black)" }} />
+                      )}
+                    </button>
                   </div>
 
                   {isTablet ? (
@@ -615,8 +651,6 @@ const PostDetailsPage = () => {
         <PopularPosts />
 
         <ShareBlock />
-
-        <Footer />
       </div>
 
       <UnregisteredModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

@@ -1,3 +1,10 @@
+.letter {
+    padding-bottom: 120px;
+    background-image: url(../assets/vector-letter.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
 .letter-wrapper {
     background-color: #FFFFFFB2;
     backdrop-filter: blur(50px);
@@ -121,4 +128,165 @@
     left: 5%;
     width: 166px;
     height: auto;
+}
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .letter {
+        padding: 60px 0px;
+        background-color: var(--bg-white);
+        background-image: url(../assets/tablet/vector-letter-tablet.png);
+    }
+
+    .letter-author {
+        position: relative;
+        margin-top: 79px;
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: -77px;
+            left: 0;
+            width: 126px;
+            height: 103px;
+            background-image: url(../assets/tablet/brackets-tablet.png);
+        }
+    }
+
+    .letter-avatar {
+        z-index: 2;
+    }
+
+    .letter-nickname {
+        span {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16.8px;
+            color: var(--text-grey-light);
+            text-transform: none;
+        }
+    }
+
+    .letter-text-box {
+        gap: 32px;
+        margin-bottom: 40px;
+
+        p {
+            font-size: 22px;
+            line-height: 22.8px;
+        }
+    }
+
+    .letter-frame {
+        background-image: url(../assets/tablet/frame-letter-tablet.png);
+        display: block;
+        padding: 40px 0 0 75px;
+        margin-bottom: 77px;
+    }
+
+    .letter-title {
+        font-size: 22px;
+        line-height: 26.4px;
+        text-align: start;
+        margin-bottom: 46px;
+    }
+
+    .letter-btn {
+        margin-bottom: 16px;
+    }
+
+    .letter-attention {
+        font-size: 10px;
+        line-height: 12px;
+        max-width: 254px;
+    }
+
+    .letter-img {
+        position: absolute;
+        bottom: -100px;
+        left: 358px;
+        width: 280px;
+    }
+}
+
+@media (max-width: 767px) {
+    .letter {
+        padding: 60px 0px 90px 0px;
+        background-color: var(--bg-white);
+        background-image: url(../assets/mobile/vector-top-mobile.png), url(../assets/mobile/vector-bottom-mobile.png);
+        background-repeat: no-repeat, no-repeat;
+        background-position: right top -60px, left bottom -150px;
+    }
+
+    .letter-author {
+        position: relative;
+        margin-top: 100px;
+        margin-bottom: 20px;
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: -100px;
+            left: 0;
+            width: 150px;
+            height: 134px;
+            background-image: url(../assets/mobile/brackets-mobile.png);
+        }
+    }
+
+    .letter-avatar {
+        z-index: 2;
+    }
+
+    .letter-nickname {
+        span {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16.8px;
+            color: var(--text-grey-light);
+            text-transform: none;
+        }
+    }
+
+    .letter-text-box {
+        gap: 36px;
+        margin-bottom: 36px;
+
+        p {
+            font-size: 22px;
+            line-height: 22.8px;
+        }
+    }
+
+    .letter-frame {
+        background-image: url(../assets/mobile/frame-letter-mobile.png);
+        display: block;
+        min-height: 198px;
+        padding: 35px 0 0 30px;
+        margin-bottom: 52px;
+    }
+
+    .letter-title {
+        font-size: 22px;
+        line-height: 26.4px;
+        text-align: start;
+        margin-bottom: 10px;
+    }
+
+    .letter-attention {
+        font-size: 10px;
+        line-height: 12px;
+        max-width: 144px;
+    }
+
+    .letter-img {
+        position: absolute;
+        bottom: -21px;
+        left: 194px;
+        width: 125px;
+    }
+
+    .letter-btn {
+        margin-bottom: 0px;
+    }
 }

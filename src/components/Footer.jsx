@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import logo1 from "../assets/logo-1.svg";
 import logo2 from "../assets/logo-2.svg";
 
-// import { FaInstagram } from "react-icons/fa";
-// import { SlSocialFacebook } from "react-icons/sl";
 import { GoDotFill } from "react-icons/go";
 
 import "../styles/Footer.css";
@@ -30,13 +28,6 @@ const Footer = () => {
             <Link to={"/"} className="footer-top-policy">
               Privacy Policy
             </Link>
-            {/* <div className="footer-top-social-box">
-              <FaInstagram size={24} style={{ color: "var(--text-white)", cursor: "pointer" }} />
-              <SlSocialFacebook
-                size={24}
-                style={{ color: "var(--text-white)", cursor: "pointer" }}
-              />
-            </div> */}
           </div>
         </div>
       </div>
@@ -52,7 +43,7 @@ const Footer = () => {
                   <p className="footer-center-job">Аuthor of the project</p>
                   <a
                     className="footer-center-name"
-                    href="https://www.instagram.com/start_english_today?igsh=MTdxdGJsZnQ1YWNxbQ=="
+                    href="https://a-teacher.netlify.app/"
                     target="_blank"
                     rel="noreferrer"
                   >

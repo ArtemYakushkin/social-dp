@@ -42,7 +42,7 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const deletedComments = useMemo(() => new Set(), []);
-  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {

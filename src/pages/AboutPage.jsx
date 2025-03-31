@@ -5,7 +5,6 @@ import HowItWorks from "../components/HowItWorks";
 import OurTeam from "../components/OurTeam";
 import LetterSection from "../components/LetterSection";
 import ShareBlok from "../components/ShareBlok";
-import Footer from "../components/Footer";
 
 const AboutPage = () => {
   useEffect(() => {
@@ -19,7 +18,6 @@ const AboutPage = () => {
       <OurTeam />
       <LetterSection />
       <ShareBlok />
-      <Footer />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
-// import { FaInstagram } from "react-icons/fa";
 import { SlSocialFacebook } from "react-icons/sl";
 import { LiaTelegramPlane } from "react-icons/lia";
 import { CiLinkedin } from "react-icons/ci";
@@ -9,7 +8,7 @@ import { CiLinkedin } from "react-icons/ci";
 import "../styles/ShareBlok.css";
 
 const ShareBlok = () => {
-  const appUrl = encodeURIComponent("http://localhost:3000/");
+  const appUrl = encodeURIComponent("https://dear-penfriend-5d0fd.firebaseapp.com/");
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const shareLinks = {

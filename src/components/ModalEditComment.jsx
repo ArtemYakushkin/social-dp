@@ -6,7 +6,19 @@ const ModalEditComment = ({ isOpen, currentText, onClose, onSave }) => {
   const [newText, setNewText] = useState(currentText);
 
   useEffect(() => {
-    setNewText(currentText); // Обновляем текст при открытии модального окна
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    setNewText(currentText);
   }, [currentText]);
 
   if (!isOpen) return null;
@@ -16,12 +28,17 @@ const ModalEditComment = ({ isOpen, currentText, onClose, onSave }) => {
     onClose();
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target.id === "modal-overlay") {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" id="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal mec-modal">
         <div className="mec-wrapp">
-          <h2 className="mec-title">Edit your comment</h2>
-          <input
+          <textarea
             className="mec-input"
             value={newText}
             onChange={(e) => setNewText(e.target.value)}

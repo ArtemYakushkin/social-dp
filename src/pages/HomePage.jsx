@@ -8,7 +8,6 @@ import Options from "../components/Options";
 import PostCard from "../components/PostCard";
 import AboutProject from "../components/AboutProject";
 import ShareBlok from "../components/ShareBlok";
-import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
 import { HiArrowLongLeft, HiArrowLongRight } from "react-icons/hi2";
@@ -149,8 +148,6 @@ const HomePage = () => {
       <AboutProject />
 
       <ShareBlok />
-
-      <Footer />
     </div>
   );
 };

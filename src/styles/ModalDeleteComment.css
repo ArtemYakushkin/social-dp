@@ -1,5 +1,5 @@
 .mcd-modal {
-    padding: 26px 20px 30px 20px;
+    padding: 26px 20px 20px 20px;
     width: 406px;
     border-top: 14px solid var(--accent-orange-color);
     border-radius: 10px;
@@ -50,4 +50,32 @@
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;
     }
+}
+
+@media (max-width: 767px) {
+
+    .mcd-modal {
+        padding: 16px 10px 10px 10px;
+        width: 307px;
+        border-top: 10px solid var(--accent-orange-color);
+    }
+
+    .mcd-wrapp {
+        gap: 18px;
+    }
+
+    .mcd-title {
+        font-size: 14px;
+        line-height: 22.8px;
+    }
+
+    .mcd-actions {
+        gap: 10px;
+    }
+
+    .mcd-btn {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
 }

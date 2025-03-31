@@ -69,6 +69,28 @@ body {
     border-radius: 90px;
 }
 
+@media (min-width: 768px) and (max-width: 1259px) {
+
+    /* Стиль для общей области скроллбара */
+    ::-webkit-scrollbar {
+        width: 8px;
+        /* ширина для вертикального скролла */
+        height: 8px;
+        /* высота для горизонтального скролла */
+    }
+}
+
+@media (max-width: 767px) {
+
+    /* Стиль для общей области скроллбара */
+    ::-webkit-scrollbar {
+        width: 8px;
+        /* ширина для вертикального скролла */
+        height: 8px;
+        /* высота для горизонтального скролла */
+    }
+}
+
 ul,
 li {
     list-style: none;
@@ -132,6 +154,12 @@ img {
         padding: 0 24px;
     }
 }
+
+/* import { useMediaQuery } from "react-responsive"; */
+
+/* const isMobile=useMediaQuery({query: "(max-width: 767px)"}); */
+
+/* const isTablet=useMediaQuery({query: "(min-width: 768px) and (max-width: 1259px)"}); */
 
 /* @media (min-width: 768px) and (max-width: 1259px) {} */
 
@@ -333,29 +361,40 @@ img {
     justify-content: center;
     align-items: center;
     z-index: 100;
+    padding: 20px;
 }
 
 .modal {
     position: relative;
     background-color: var(--bg-white);
-    padding: 40px 67px;
     border-radius: 30px;
     box-shadow: 0px 0px 30px 0px #2524254D;
+}
+
+.modal-btn-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bg-dark-white);
+    box-shadow: 0px 0px 5px 0px rgba(37, 36, 37, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal-btn-close {
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 47px;
-    height: 47px;
-    border-radius: 50%;
-    background-color: var(--bg-dark-white);
-    box-shadow: 0px 0px 25px 0px #2524251A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@media (max-width: 767px) {
+
+    .modal-overlay {
+        padding: 20px 24px;
+    }
+
+    .modal {
+        width: 100%;
+        max-width: 327px;
+        max-height: 100%;
+    }
+
 }

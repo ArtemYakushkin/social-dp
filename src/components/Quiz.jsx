@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import QuizModal from "./QuizModal";
 import UnregisteredModal from "./UnregisteredModal";
 
-import SadRobot from "../assets/robot-sad.png";
-import HappyRobot from "../assets/robot-happy.png";
-import HandRobot from "../assets/robot-hand.png";
+// import SadRobot from "../assets/robby-base.svg";
+// import HappyRobot from "../assets/robby-funny.svg";
+// import HandRobot from "../assets/robby-hand.svg";
 import Star from "../assets/star.png";
 
 import "../styles/Quiz.css";
@@ -28,7 +28,8 @@ const Quiz = ({ quizData, user }) => {
       setModalMessage(
         <div className="quiz-happy-wrapp">
           <div className="quiz-happy-img-box">
-            <img className="quiz-happy-img-robot" src={HappyRobot} alt="robot" />
+            {/* <img className="quiz-happy-img-robot" src={HappyRobot} alt="robot" /> */}
+            <img className="quiz-happy-img-robot" src="/image/robby-funny.svg" alt="robot" />
           </div>
           <div className="quiz-happy-content">
             <img className="quiz-happy-img-star" src={Star} alt="star" />
@@ -43,8 +44,10 @@ const Quiz = ({ quizData, user }) => {
       setModalMessage(
         <div className="quiz-sad-wrapp">
           <div className="quiz-sad-img-box">
-            <img className="quiz-sad-img-robot" src={SadRobot} alt="robot" />
-            <img className="quiz-sad-img-hand" src={HandRobot} alt="robot hand" />
+            <img className="quiz-sad-img-robot" src="/image/robby-base.svg" alt="robot" />
+            <img className="quiz-sad-img-hand" src="/image/robby-hand.svg" alt="robot hand" />
+            {/* <img className="quiz-sad-img-robot" src={SadRobot} alt="robot" />
+            <img className="quiz-sad-img-hand" src={HandRobot} alt="robot hand" /> */}
           </div>
           <div className="quiz-sad-content">
             <h4 className="quiz-sad-title">Alas, not this time</h4>
