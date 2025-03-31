@@ -18,14 +18,14 @@ const ModalUpdateCredentials = ({ onClose }) => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    document.body.style.overflow = "hidden"; // Блокируем прокрутку
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "auto"; // Восстанавливаем прокрутку при закрытии модалки
+      document.body.style.overflow = "auto";
     };
   }, []);
 
@@ -57,7 +57,7 @@ const ModalUpdateCredentials = ({ onClose }) => {
       return;
     }
 
-    setLoading(true);
+    // setLoading(true);
     setErrors({});
 
     try {
@@ -82,7 +82,7 @@ const ModalUpdateCredentials = ({ onClose }) => {
       setErrors(errorMessage);
     }
 
-    setLoading(false);
+    // setLoading(false);
   };
 
   return (
@@ -94,26 +94,23 @@ const ModalUpdateCredentials = ({ onClose }) => {
 
         <h2 className="muc-title">Settings</h2>
         <div className="muc-content">
-          <div className="register-input-group">
-            <div className="register-input-container register-password">
+          <div className="muc-input-group">
+            <div className="muc-input-container muc-password">
               <input
-                className={`register-input ${errors.oldPassword ? "register-input-error" : ""}`}
+                className={`muc-input ${errors.oldPassword ? "muc-input-error" : ""}`}
                 type={showOldPassword ? "text" : "password"}
                 placeholder="Old password (min. 6 characters)"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
               />
-              <span className="register-placeholder">Old password (min. 6 characters)</span>
-              <span
-                className="register-pass-eye"
-                onClick={() => setShowOldPassword(!showOldPassword)}
-              >
+              <span className="muc-placeholder">Old password (min. 6 characters)</span>
+              <span className="muc-pass-eye" onClick={() => setShowOldPassword(!showOldPassword)}>
                 {showOldPassword ? <PiEye size={24} /> : <PiEyeClosed size={24} />}
               </span>
-              <p className="register-show-text">Show password</p>
+              <p className="muc-show-text">Show password</p>
             </div>
             {errors.oldPassword && (
-              <p className="register-error register-error-fix">
+              <p className="muc-error muc-error-fix">
                 <span>
                   <VscError size={16} />
                 </span>
@@ -122,26 +119,23 @@ const ModalUpdateCredentials = ({ onClose }) => {
             )}
           </div>
 
-          <div className="register-input-group">
-            <div className="register-input-container register-password">
+          <div className="muc-input-group">
+            <div className="muc-input-container muc-password">
               <input
-                className={`register-input ${errors.newPassword ? "register-input-error" : ""}`}
+                className={`muc-input ${errors.newPassword ? "muc-input-error" : ""}`}
                 type={showNewPassword ? "text" : "password"}
                 placeholder="New password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
-              <span className="register-placeholder">New password</span>
-              <span
-                className="register-pass-eye"
-                onClick={() => setShowNewPassword(!showNewPassword)}
-              >
+              <span className="muc-placeholder">New password</span>
+              <span className="muc-pass-eye" onClick={() => setShowNewPassword(!showNewPassword)}>
                 {showNewPassword ? <PiEye size={24} /> : <PiEyeClosed size={24} />}
               </span>
-              <p className="register-show-text">Show password</p>
+              <p className="muc-show-text">Show password</p>
             </div>
             {errors.newPassword && (
-              <p className="register-error register-error-fix">
+              <p className="muc-error muc-error-fix">
                 <span>
                   <VscError size={16} />
                 </span>
@@ -150,26 +144,26 @@ const ModalUpdateCredentials = ({ onClose }) => {
             )}
           </div>
 
-          <div className="register-input-group">
-            <div className="register-input-container register-password">
+          <div className="muc-input-group">
+            <div className="muc-input-container muc-password">
               <input
-                className={`register-input ${errors.confirmPassword ? "register-input-error" : ""}`}
+                className={`muc-input ${errors.confirmPassword ? "muc-input-error" : ""}`}
                 type={showNewPassword ? "text" : "password"}
                 placeholder="Confirm new password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <span className="register-placeholder">Confirm new password</span>
+              <span className="muc-placeholder">Confirm new password</span>
               <span
-                className="register-pass-eye"
+                className="muc-pass-eye"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? <PiEye size={24} /> : <PiEyeClosed size={24} />}
               </span>
-              <p className="register-show-text">Show password</p>
+              <p className="muc-show-text">Show password</p>
             </div>
             {errors.confirmPassword && (
-              <p className="register-error register-error-fix">
+              <p className="muc-error muc-error-fix">
                 <span>
                   <VscError size={16} />
                 </span>
