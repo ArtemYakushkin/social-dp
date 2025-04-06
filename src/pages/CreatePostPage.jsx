@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth"; // Хук для получения данных о текущем пользователе
-import { db, storage } from "../firebase"; // Firebase конфигурация
+import { useAuth } from "../auth/useAuth";
+import { db, storage } from "../firebase";
 import { collection, addDoc, Timestamp, updateDoc, arrayUnion, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "react-responsive";
+
 import "../styles/CreatePostPage.css";
 
 const CreatePostPage = () => {
-  const { user } = useAuth(); // Получаем данные о текущем пользователе
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [previewImages, setPreviewImages] = useState([]); // Состояние для превью изображений
-  const [activeTab, setActiveTab] = useState("Quiz"); // Текущая активная вкладка
+  const [previewImages, setPreviewImages] = useState([]);
+  const [activeTab, setActiveTab] = useState("Quiz");
   const [quiz, setQuiz] = useState({
     question: "",
     answers: [],
@@ -22,52 +24,47 @@ const CreatePostPage = () => {
   const [poll, setPoll] = useState({ question: "", answers: ["Yes", "No"] });
   const navigate = useNavigate();
 
-  // Обработчик изменения файлов
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setSelectedFiles(files);
 
-    // Создаем массив для хранения URL-адресов превью
     const filePreviews = files.map((file) => {
       const reader = new FileReader();
-      reader.readAsDataURL(file); // Преобразуем файл в URL
+      reader.readAsDataURL(file);
 
       return new Promise((resolve) => {
         reader.onloadend = () => {
-          resolve(reader.result); // Когда чтение завершено, сохраняем результат
+          resolve(reader.result);
         };
       });
     });
 
-    // Ждем завершения загрузки всех превью и сохраняем их в состоянии
     Promise.all(filePreviews).then((previews) => {
       setPreviewImages(previews);
     });
   };
 
-  // Обработчик изменения формы Quiz
   const handleQuizChange = (e) => {
     setQuiz({ ...quiz, [e.target.name]: e.target.value });
   };
 
-  // Обработчик добавления вариантов ответа в Quiz
   const addQuizAnswer = () => {
     setQuiz({ ...quiz, answers: [...quiz.answers, ""] });
   };
 
-  // Обработчик изменения вариантов ответа в Quiz
   const handleQuizAnswerChange = (index, value) => {
     const newAnswers = [...quiz.answers];
     newAnswers[index] = value;
     setQuiz({ ...quiz, answers: newAnswers });
   };
 
-  // Обработчик формы Poll
   const handlePollChange = (e) => {
     setPoll({ ...poll, [e.target.name]: e.target.value });
   };
 
-  // Обработчик отправки формы
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,7 +74,6 @@ const CreatePostPage = () => {
     }
 
     try {
-      // Загрузка изображений или видео в Firebase Storage
       const mediaUrls = await Promise.all(
         selectedFiles.map(async (file) => {
           const storageRef = ref(storage, `posts/${file.name}`);
@@ -86,7 +82,6 @@ const CreatePostPage = () => {
         })
       );
 
-      // Подготовка данных для сохранения в Firestore
       const postData = {
         title,
         text,
@@ -97,22 +92,17 @@ const CreatePostPage = () => {
         views: 0,
         author: {
           uid: user.uid,
-          // avatar: user.photoURL,
-          // nickname: user.displayName,
         },
       };
 
-      // Добавление функционала для вкладок Quiz и Poll
       if (activeTab === "Quiz") {
         postData.quiz = quiz;
       } else if (activeTab === "Poll") {
         postData.poll = poll;
       }
 
-      // Сохранение данных в Firestore
       const postRef = await addDoc(collection(db, "posts"), postData);
 
-      // **Обновляем массив createdPosts у пользователя**
       const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         createdPosts: arrayUnion({
@@ -121,7 +111,6 @@ const CreatePostPage = () => {
       });
 
       toast.success("Post created successfully");
-      // Очистка формы после успешного сохранения
       setTitle("");
       setText("");
       setSelectedFiles([]);
@@ -137,111 +126,111 @@ const CreatePostPage = () => {
   return (
     <div className="create">
       <div className="container">
-        <form className="create-form" onSubmit={handleSubmit}>
-          <div className="create-group">
-            <label className="create-label">
-              Title
-              <input
-                className="create-input"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Create title..."
-              />
-            </label>
-          </div>
-          <div className="create-group">
-            <label className="create-label">
-              Text
-              <textarea
-                className="create-textarea"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Create text..."
-              />
-            </label>
+        <form className="create-wrapp" onSubmit={handleSubmit}>
+          <div className="create-input-container">
+            <input
+              className="create-input"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <span className="create-placeholder">Create title</span>
           </div>
 
-          {/* Вкладки для выбора Quiz или Poll */}
-          <div className="create-select">
+          <div className="create-textarea-container">
+            <textarea
+              className="create-textarea"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <span className="create-placeholder">Create text</span>
+          </div>
+
+          <div className="create-tabs">
             <button
-              className={activeTab === "Quiz" ? "create-select-btn-activ" : "create-select-btn"}
-              type="button"
+              className={`create-tabs-btn ${activeTab === "Quiz" ? "create-tabs-btn-active" : ""}`}
               onClick={() => setActiveTab("Quiz")}
             >
               Quiz
             </button>
             <button
-              className={activeTab === "Poll" ? "create-select-btn-activ" : "create-select-btn"}
-              type="button"
+              className={`create-tabs-btn ${activeTab === "Poll" ? "create-tabs-btn-active" : ""}`}
               onClick={() => setActiveTab("Poll")}
             >
               Poll
             </button>
           </div>
 
-          {/* Функционал для Quiz */}
           {activeTab === "Quiz" && (
-            <div className="create-quiz">
-              <label className="create-label">
-                Question
+            <div className="create-quiz-section">
+              <div className="create-input-container">
                 <input
                   className="create-input"
                   type="text"
                   name="question"
                   value={quiz.question}
                   onChange={handleQuizChange}
-                  placeholder="Enter quiz question..."
                 />
-              </label>
+                <span className="create-placeholder">Question:</span>
+              </div>
               {quiz.answers.map((answer, index) => (
-                <div key={index} className="create-quiz-group">
+                <div key={index} className="create-quiz-answers">
+                  <div className="create-quiz-input-container">
+                    <input
+                      className="create-input"
+                      type="text"
+                      value={answer}
+                      onChange={(e) => handleQuizAnswerChange(index, e.target.value)}
+                    />
+                    <span className="create-placeholder">Answer:</span>
+                  </div>
                   <input
-                    className="create-quiz-input-text"
-                    type="text"
-                    value={answer}
-                    onChange={(e) => handleQuizAnswerChange(index, e.target.value)}
-                    placeholder={`Answer ${index + 1}`}
-                  />
-                  <input
-                    className="create-quiz-input-radio"
+                    className="create-input-radio"
                     type="radio"
                     name="correctAnswer"
                     value={index}
                     checked={quiz.correctAnswer === index}
                     onChange={() => setQuiz({ ...quiz, correctAnswer: index })}
                   />
-                  Correct
+                  <p
+                    className="create-text-correct"
+                    style={{
+                      color:
+                        quiz.correctAnswer === index
+                          ? "var(--accent-blue-color)"
+                          : "var(--text-black)",
+                    }}
+                  >
+                    Correct
+                  </p>
                 </div>
               ))}
-              <button className="create-quiz-btn" type="button" onClick={addQuizAnswer}>
+              <button className="create-addanswer-btn" type="button" onClick={addQuizAnswer}>
                 Add Answer
               </button>
             </div>
           )}
 
-          {/* Функционал для Poll */}
           {activeTab === "Poll" && (
-            <div className="create-poll">
-              <label className="create-label">
-                Question
+            <div className="create-poll-section">
+              <div className="create-input-container">
                 <input
                   className="create-input"
                   type="text"
                   name="question"
                   value={poll.question}
                   onChange={handlePollChange}
-                  placeholder="Enter poll question..."
                 />
-              </label>
+                <span className="create-placeholder">Question:</span>
+              </div>
               <div className="create-poll-group">
-                <label>
+                <label className="edit-poll-label">
                   Yes
-                  <input type="radio" name="pollAnswer" value="Yes" />
+                  <input className="edit-input-radio" type="radio" name="pollAnswer" value="Yes" />
                 </label>
-                <label>
+                <label className="edit-poll-label">
                   No
-                  <input type="radio" name="pollAnswer" value="No" />
+                  <input className="edit-input-radio" type="radio" name="pollAnswer" value="No" />
                 </label>
               </div>
             </div>

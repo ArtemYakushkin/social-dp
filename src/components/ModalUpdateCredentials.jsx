@@ -18,7 +18,6 @@ const ModalUpdateCredentials = ({ onClose }) => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -57,7 +56,6 @@ const ModalUpdateCredentials = ({ onClose }) => {
       return;
     }
 
-    // setLoading(true);
     setErrors({});
 
     try {

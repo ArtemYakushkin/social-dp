@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   addDoc,
   collection,
@@ -11,6 +11,8 @@ import validator from "validator";
 import { toast } from "react-toastify";
 import { useMediaQuery } from "react-responsive";
 
+import RegisterPage from "../pages/RegisterPage";
+import LoginPage from "../pages/LoginPage";
 import { db } from "../firebase";
 
 import { IoSend } from "react-icons/io5";
@@ -20,8 +22,32 @@ import "../styles/ReplyForm.css";
 const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
   const [replyText, setReplyText] = useState("");
   const [error, setError] = useState("");
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+  useEffect(() => {
+    if (isRegisterModalOpen || isLoginModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isRegisterModalOpen, isLoginModalOpen]);
+
+  const openLogin = () => {
+    setIsLoginModalOpen(true);
+    setIsRegisterModalOpen(false);
+  };
+
+  const openRegister = () => {
+    setIsRegisterModalOpen(true);
+    setIsLoginModalOpen(false);
+  };
 
   const isValidReply = (text) => {
     const englishTextPattern = /^[A-Za-z0-9 .,!?'"()-]+$/;
@@ -70,6 +96,21 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
     }
   };
 
+  const handleRegisterClick = () => {
+    if (user) {
+      toast.info("You are already registered", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      setIsRegisterModalOpen(true);
+    }
+  };
+
   return (
     <>
       {user ? (
@@ -87,7 +128,24 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
           </button>
         </form>
       ) : (
-        <p className="reply-not-register">Log in to leave a reply.</p>
+        <p className="reply-not-register" onClick={handleRegisterClick}>
+          Log in to leave a reply
+        </p>
+      )}
+
+      {isRegisterModalOpen && (
+        <RegisterPage
+          isVisible={isRegisterModalOpen}
+          onClose={() => setIsRegisterModalOpen(false)}
+          openLogin={openLogin}
+        />
+      )}
+      {isLoginModalOpen && (
+        <LoginPage
+          isVisible={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+          openRegister={openRegister}
+        />
       )}
     </>
   );

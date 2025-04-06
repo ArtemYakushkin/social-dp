@@ -153,7 +153,7 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
                 )}
               </button>
             </Swiper>
-          ) : post.media[0].includes(".mp4") ? (
+          ) : Array.isArray(post.media) && post.media[0]?.includes(".mp4") ? (
             <video autoPlay loop>
               <source src={post.media[0]} type="video/mp4" />
               Your browser does not support video.
@@ -161,6 +161,13 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
           ) : (
             <img src={post.media[0]} alt="Post media" />
           )}
+          {/* ) : post.media[0].includes(".mp4") ? (
+          <video autoPlay loop>
+             <source src={post.media[0]} type="video/mp4" />
+            Your browser does not support video.
+          </video>
+          ) : (  <img src={post.media[0]} alt="Post media" />
+         )} */}
         </div>
         <div className="expPost-box-text">
           <p className="expPost-title" onClick={handleExpandClick}>

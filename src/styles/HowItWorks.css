@@ -1,13 +1,15 @@
 .how {
     background-color: var(--bg-blue-inactive);
     padding: 120px 0;
-    background-image: url(../assets/vector2.png), url(../assets/vector3.png);
-    background-position: right, left bottom;
-    background-repeat: no-repeat, no-repeat;
+    height: 980px;
+    background-image: url(../assets/vector-how.png);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.container-how {
-    position: relative;
+.how-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .how-title {
@@ -16,95 +18,120 @@
     line-height: 57.6px;
     color: var(--text-black);
     text-align: center;
-    margin-bottom: 54px;
+    margin-bottom: 80px;
 }
 
-.how-content {
+.how-list {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 24px;
-    margin-bottom: 50px;
 }
 
-.how-img img {
-    width: 100%;
-    height: auto;
-    transition: opacity 2s ease-in-out;
-}
-
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 2s forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.how-steps {
-    max-width: 588px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-}
-
-.how-step {
-    max-width: 282px;
-    padding: 20px;
+.how-item-1 {
+    position: relative;
+    display: inline-block;
     background-color: var(--bg-dark-white);
-    border: 2px solid var(--bg-white);
-    color: var(--text-black);
+    padding: 30px 40px;
     border-radius: 20px;
-    cursor: pointer;
-    z-index: 2;
-
-    &:hover {
-        background-color: var(--accent-dark-blue-color);
-        border: 2px solid var(--accent-dark-blue-color);
-        box-shadow: 0px 4px 4px 0px #094EBE40;
-        color: var(--text-white);
-    }
-}
-
-.how-step-active {
-    background-color: var(--accent-dark-blue-color);
-    border: 2px solid var(--accent-dark-blue-color);
-    box-shadow: 0px 4px 4px 0px #094EBE40;
-    color: var(--text-white);
-}
-
-.how-step-title {
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 38.4px;
-    margin-bottom: 14px;
-}
-
-.how-step-text {
+    max-width: 500px;
     font-weight: 400;
     font-size: 18px;
     line-height: 28.8px;
+    color: var(--text-black);
+    transform: rotate(-2deg);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -92px;
+        left: -333px;
+        background-image: url(../assets/step1.png);
+        width: 339px;
+        height: 196px;
+    }
+}
+
+.how-item-1-step,
+.how-item-2-step,
+.how-item-3-step {
+    position: absolute;
+    top: -22px;
+    left: 40px;
+    background-color: var(--accent-orange-color);
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 33.6px;
+    color: var(--text-white);
+}
+
+.how-item-2 {
+    position: relative;
+    right: 88px;
+    top: 31px;
+    display: inline-block;
+    background-color: var(--bg-dark-white);
+    padding: 30px 40px;
+    border-radius: 20px;
+    max-width: 614px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+    transform: rotate(4deg);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: -162px;
+        right: -178px;
+        background-image: url(../assets/step2.png);
+        width: 197px;
+        height: 297px;
+    }
+}
+
+.how-item-3 {
+    position: relative;
+    left: 88px;
+    top: 70px;
+    display: inline-block;
+    background-color: var(--accent-dark-blue-color);
+    padding: 30px 40px;
+    border-radius: 20px;
+    max-width: 500px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-white);
+    transform: rotate(-2deg);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -47px;
+        left: -220px;
+        background-image: url(../assets/step3.png);
+        width: 293px;
+        height: 266px;
+    }
 }
 
 .how-btn-box {
     display: flex;
     justify-content: center;
+    margin-top: 155px;
 }
 
 .how-btn {
-    padding: 20px 26px;
+    padding: 20px 56px;
+    background-color: var(--accent-blue-color);
+    border-radius: 30px;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
     color: var(--text-white);
-    background-color: var(--accent-blue-color);
-    border-radius: 30px;
 
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;
@@ -115,97 +142,185 @@
     }
 }
 
-
-
 @media (min-width: 768px) and (max-width: 1259px) {
+
     .how {
         padding: 90px 0;
-        background-image: url(../assets/tablet/vector-tablet.png), url(../assets/tablet/vector-3-tablet.png);
-        background-position: right, left bottom;
-        background-repeat: no-repeat, no-repeat;
+        height: 781px;
+        background-image: url(../assets/tablet/vector-how-tablet.png);
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .how-title {
         font-size: 40px;
         line-height: 46px;
-        margin-bottom: 40px;
+        margin-bottom: 55px;
     }
 
-    .how-content {
-        align-items: flex-start;
-        gap: 0px;
-        margin-bottom: 0px;
-    }
-
-    .how-img {
-        margin-bottom: 30px;
-    }
-
-    .how-steps {
-        max-width: 352px;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        gap: 10px;
-    }
-
-    .how-step {
-        max-width: 100%;
-        padding: 12px 20px;
-    }
-
-    .how-step-title {
-        font-size: 24px;
-        line-height: 31.2px;
-        margin-bottom: 4px;
-    }
-
-    .how-step-text {
-        font-size: 14px;
-        line-height: 16.8px;
-    }
-}
-
-
-
-@media (max-width: 767px) {
-    .how {
-        padding: 90px 0;
-        background-image: url(../assets/mobile/vector-1.png), url(../assets/mobile/vector-2.png);
-        background-position: right top, left 630px;
-        background-repeat: no-repeat, no-repeat;
-    }
-
-    .how-title {
-        font-size: 40px;
-        line-height: 46px;
-        margin-bottom: 34px;
-    }
-
-    .how-content {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-        margin-bottom: 40px;
-    }
-
-    .how-step {
-        max-width: 100%;
-        padding: 20px;
-    }
-
-    .how-step-title {
-        font-size: 22px;
-        line-height: 26.4px;
-        margin-bottom: 14px;
-    }
-
-    .how-step-text {
+    .how-item-1 {
+        left: 65px;
+        padding: 30px;
+        max-width: 400px;
         font-size: 16px;
         line-height: 25.6px;
+
+        &::before {
+            top: -46px;
+            left: -197px;
+            background-image: url(../assets/tablet/step1-tablet.png);
+            width: 200px;
+            height: 116px;
+        }
+    }
+
+    .how-item-1-step,
+    .how-item-2-step,
+    .how-item-3-step {
+        top: -20px;
+        left: 30px;
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .how-item-2 {
+        right: 25px;
+        top: 18px;
+        padding: 30px;
+        max-width: 530px;
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::after {
+            top: -30px;
+            right: -87px;
+            background-image: url(../assets/tablet/step2-tablet.png);
+            width: 105px;
+            height: 158px;
+        }
+    }
+
+    .how-item-3 {
+        left: -16px;
+        top: 43px;
+        padding: 30px;
+        max-width: 400px;
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::before {
+            top: 27px;
+            left: -116px;
+            background-image: url(../assets/tablet/step3-tablet.png);
+            width: 154px;
+            height: 140px;
+        }
+    }
+
+    .how-btn-box {
+        justify-content: flex-start;
+        margin-top: 90px;
+        margin-left: 93px;
     }
 
     .how-btn {
         padding: 14px 36px;
     }
+
+}
+
+@media (max-width: 767px) {
+
+    .how {
+        padding: 90px 0;
+        height: 1017px;
+        background-image: url(../assets/mobile/vector-how-mobile.png);
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .how-title {
+        font-size: 40px;
+        line-height: 46px;
+        margin-bottom: 40px;
+    }
+
+    .how-item-1 {
+        top: 72px;
+        left: -29px;
+        padding: 20px;
+        max-width: 262px;
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -70px;
+            left: 155px;
+            background-image: url(../assets/mobile/step1-mobile.png);
+            width: 170px;
+            height: 90px;
+        }
+    }
+
+    .how-item-1-step,
+    .how-item-3-step {
+        top: -20px;
+        left: 20px;
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .how-item-2-step {
+        top: -20px;
+        left: 143px;
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .how-item-2 {
+        right: -29px;
+        top: 108px;
+        padding: 20px;
+        max-width: 262px;
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::after {
+            top: -16px;
+            right: 246px;
+            background-image: url(../assets/mobile/step2-mobile.png);
+            width: 81px;
+            height: 122px;
+        }
+    }
+
+    .how-item-3 {
+        left: -30px;
+        top: 141px;
+        padding: 20px;
+        max-width: 262px;
+        font-size: 16px;
+        line-height: 25.6px;
+
+        &::before {
+            top: -27px;
+            left: 222px;
+            background-image: url(../assets/mobile/step3-mobile.png);
+            width: 119px;
+            height: 109px;
+        }
+    }
+
+    .how-btn-box {
+        margin-top: 245px;
+    }
+
+    .how-btn {
+        padding: 14px 36px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
 }

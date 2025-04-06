@@ -57,8 +57,10 @@
     font-weight: 700;
     font-size: 18px;
     line-height: 28.8px;
-    color: var(--text-black);
+    color: var(--accent-blue-color);
     text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media (min-width: 768px) and (max-width: 1259px) {

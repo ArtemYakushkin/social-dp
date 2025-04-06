@@ -202,19 +202,6 @@
     }
 }
 
-.profile-posts,
-.profile-saved {
-    h2 {
-        font-weight: 700;
-        font-size: 28px;
-        line-height: 33.6px;
-        color: var(--text-black);
-        padding-top: 40px;
-        padding-left: 30px;
-        margin-bottom: 24px;
-    }
-}
-
 
 
 @media (min-width: 768px) and (max-width: 1259px) {
@@ -280,14 +267,6 @@
             line-height: 20.8px;
         }
     }
-
-    .profile-posts,
-    .profile-saved {
-        h2 {
-            font-size: 22px;
-            line-height: 20.8px;
-        }
-    }
 }
 
 @media (max-width: 767px) {
@@ -346,7 +325,6 @@
         top: -68px;
         right: 24px;
         justify-content: flex-end;
-        /* margin-bottom: 38px; */
     }
 
     .profile-contacts {
@@ -398,16 +376,6 @@
         h2 {
             font-size: 22px;
             line-height: 26.4px;
-            margin-bottom: 20px;
-        }
-    }
-
-    .profile-posts,
-    .profile-saved {
-        h2 {
-            font-size: 22px;
-            line-height: 26.4px;
-            padding-left: 20px;
             margin-bottom: 20px;
         }
     }

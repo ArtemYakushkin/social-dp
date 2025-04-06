@@ -58,7 +58,7 @@ const ProfilePosts = () => {
       {loading ? (
         <Loader />
       ) : posts.length === 0 ? (
-        <p className="pp-no-posts">No posts yet.</p>
+        <p className="pp-no-posts">No posts yet</p>
       ) : (
         <ul className="pp-list">
           {posts.reverse().map((post) => (

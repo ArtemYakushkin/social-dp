@@ -184,6 +184,7 @@
 .login-remember {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 30px;
 }
 
@@ -244,6 +245,15 @@
     color: var(--text-white);
 }
 
+.login-forgot {
+    font-family: Nunito Sans;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-inactive-grey);
+    cursor: pointer;
+}
+
 .login-btn {
     width: 100%;
     background-color: var(--accent-blue-color);
@@ -268,7 +278,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
 }
 
 .login-link-text {
@@ -285,6 +295,24 @@
     color: var(--accent-blue-color);
     text-decoration: underline;
     cursor: pointer;
+}
+
+.login-recovery-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.login-recovery-item {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-black);
+}
+
+.login-recovery-btn {
+    margin-bottom: 0;
 }
 
 @media (max-width: 767px) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import validator from "validator";
 import {
@@ -11,6 +11,8 @@ import {
 } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 
+import RegisterPage from "../pages/RegisterPage";
+import LoginPage from "../pages/LoginPage";
 import { useAuth } from "../auth/useAuth";
 import { db } from "../firebase";
 
@@ -22,8 +24,32 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
   const [commentText, setCommentText] = useState("");
   const [error, setError] = useState("");
   const { user } = useAuth();
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+  useEffect(() => {
+    if (isRegisterModalOpen || isLoginModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isRegisterModalOpen, isLoginModalOpen]);
+
+  const openLogin = () => {
+    setIsLoginModalOpen(true);
+    setIsRegisterModalOpen(false);
+  };
+
+  const openRegister = () => {
+    setIsRegisterModalOpen(true);
+    setIsLoginModalOpen(false);
+  };
 
   const isValidComment = (text) => {
     const englishTextPattern = "^[A-Za-z0-9 .,!?\"'()\\-]+$";
@@ -75,6 +101,21 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
     }
   };
 
+  const handleRegisterClick = () => {
+    if (user) {
+      toast.info("You are already registered", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      setIsRegisterModalOpen(true);
+    }
+  };
+
   return (
     <div className="comments-section">
       {isMobile ? (
@@ -93,7 +134,9 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
               </button>
             </form>
           ) : (
-            <p className="comments-not-register">Login to leave a comment.</p>
+            <p className="comments-not-register" onClick={handleRegisterClick}>
+              Login to leave a comment
+            </p>
           )}
         </div>
       ) : (
@@ -112,9 +155,26 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
               </button>
             </form>
           ) : (
-            <p className="comments-not-register">Login to leave a comment.</p>
+            <p className="comments-not-register" onClick={handleRegisterClick}>
+              Login to leave a comment
+            </p>
           )}
         </>
+      )}
+
+      {isRegisterModalOpen && (
+        <RegisterPage
+          isVisible={isRegisterModalOpen}
+          onClose={() => setIsRegisterModalOpen(false)}
+          openLogin={openLogin}
+        />
+      )}
+      {isLoginModalOpen && (
+        <LoginPage
+          isVisible={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+          openRegister={openRegister}
+        />
       )}
     </div>
   );

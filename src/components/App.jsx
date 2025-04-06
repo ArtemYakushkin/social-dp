@@ -13,6 +13,7 @@ import AuthorProfilePage from "../pages/AuthorProfilePage";
 // import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import CreatePostPage from "../pages/CreatePostPage";
 import PostDetailsPage from "../pages/PostDetailsPage";
+import EditPostPage from "../pages/EditPostPage";
 import { AuthProvider } from "../auth/useAuth";
 
 const secretCode = process.env.REACT_APP_DASHBOARD_CODE;
@@ -31,6 +32,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/post/:postId" element={<PostDetailsPage />} />
           <Route path="/create-post" element={<CreatePostPage />} />
+          <Route path="/edit-post/:postId" element={<EditPostPage />} />
 
           {/* <Route path={`/dashboard/${secretCode}`} element={<DashboardPage />} /> */}
           <Route path={`/dashboard/${secretCode}/create`} element={<CreatePostPage />} />

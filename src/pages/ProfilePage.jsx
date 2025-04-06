@@ -206,14 +206,12 @@ const ProfilePage = () => {
 
                 {activeTab === "posts" && (
                   <div className="profile-posts">
-                    <h2>My Posts</h2>
                     <ProfilePosts />
                   </div>
                 )}
 
                 {activeTab === "saved" && (
                   <div className="profile-saved">
-                    <h2>Saved Posts</h2>
                     <SavedPosts />
                   </div>
                 )}
@@ -327,14 +325,12 @@ const ProfilePage = () => {
 
               {activeTab === "posts" && (
                 <div className="profile-posts">
-                  <h2>My Posts</h2>
                   <ProfilePosts />
                 </div>
               )}
 
               {activeTab === "saved" && (
                 <div className="profile-saved">
-                  <h2>Saved Posts</h2>
                   <SavedPosts />
                 </div>
               )}
@@ -454,14 +450,12 @@ const ProfilePage = () => {
 
                 {activeTab === "posts" && (
                   <div className="profile-posts">
-                    <h2>My Posts</h2>
                     <ProfilePosts />
                   </div>
                 )}
 
                 {activeTab === "saved" && (
                   <div className="profile-saved">
-                    <h2>Saved Posts</h2>
                     <SavedPosts />
                   </div>
                 )}

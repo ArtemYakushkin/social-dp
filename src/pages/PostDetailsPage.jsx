@@ -202,6 +202,10 @@ const PostDetailsPage = () => {
     }
   };
 
+  const handleEditPost = () => {
+    navigate(`/edit-post/${postId}`);
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -215,10 +219,17 @@ const PostDetailsPage = () => {
               <>
                 <div className="details-wrapper">
                   <div className="container">
-                    <button className="details-back" onClick={handleBack}>
-                      <HiArrowLongLeft size={18} />
-                      Go back
-                    </button>
+                    <div className="details-author-post-options">
+                      <button className="details-back" onClick={handleBack}>
+                        <HiArrowLongLeft size={18} />
+                        Go back
+                      </button>
+                      {user?.uid === post?.author?.uid && (
+                        <button className="details-edit-post-btn" onClick={handleEditPost}>
+                          Edit post
+                        </button>
+                      )}
+                    </div>
                     <div className="details-author-box">
                       <div className="details-author-info">
                         <div className="details-author-img" onClick={handleAvatarClick}>
@@ -442,10 +453,17 @@ const PostDetailsPage = () => {
                         </p>
                       </div>
                     </div>
-                    <button className="details-back" onClick={handleBack}>
-                      {isTablet ? <HiArrowLongLeft size={24} /> : <HiArrowLongLeft size={28} />}
-                      Go back
-                    </button>
+                    <div className="details-author-post-options">
+                      <button className="details-back" onClick={handleBack}>
+                        {isTablet ? <HiArrowLongLeft size={24} /> : <HiArrowLongLeft size={28} />}
+                        Go back
+                      </button>
+                      {user?.uid === post?.author?.uid && (
+                        <button className="details-edit-post-btn" onClick={handleEditPost}>
+                          Edit post
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   <h2 className="details-title">{post.title}</h2>
