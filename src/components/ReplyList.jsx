@@ -56,7 +56,11 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
           };
         })
       );
-      setReplies(repliesData);
+      setReplies(
+        repliesData
+          .filter((reply) => reply.createdAt) // убедись, что есть createdAt
+          .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis()) // сортировка по убыванию
+      );
       setLoading(false);
     });
 

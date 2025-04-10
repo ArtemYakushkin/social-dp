@@ -31,6 +31,16 @@
         background-color: var(--accent-orange-color);
         color: var(--text-white);
     }
+
+    &.quiz-answer-selected {
+        background-color: var(--accent-orange-color);
+        color: var(--text-white);
+    }
+
+    &.quiz-answer-disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 }
 
 /* ---------------------- */

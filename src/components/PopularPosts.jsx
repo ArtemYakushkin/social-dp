@@ -128,7 +128,10 @@ const PopularPosts = () => {
             >
               {posts.map((post) => (
                 <SwiperSlide key={post.id}>
-                  <div className="expPost">
+                  <div
+                    className="expPost popular-wrapper"
+                    onClick={() => handleExpandClick(post.id)}
+                  >
                     <div className="expPost-header">
                       <div className="expPost-avatar">
                         <img src={authors[post.author?.uid]?.avatar || avatar} alt="Post author" />
@@ -143,7 +146,7 @@ const PopularPosts = () => {
                       </div>
                     </div>
 
-                    <div className="expPost-content" onClick={() => handleExpandClick(post.id)}>
+                    <div className="expPost-content">
                       <div className="expPost-image">
                         {post.media?.[0] &&
                           (post.media[0].includes(".mp4") ? (

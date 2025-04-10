@@ -248,7 +248,7 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                         className="comment-options-btn"
                         onClick={() => toggleReplyList(comment.id)}
                       >
-                        Reply to comment
+                        {activeCommentId === comment.id ? "Cancel reply" : "Reply to comment"}
                       </button>
                     </div>
                     <button
@@ -345,13 +345,14 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                     </div>
                   </div>
                 </div>
+
                 <div className="comment-center-section">
                   <div className="comment-center-options">
                     <button
                       className="comment-options-btn"
                       onClick={() => toggleReplyList(comment.id)}
                     >
-                      Reply to comment
+                      {activeCommentId === comment.id ? "Cancel reply" : "Reply to comment"}
                     </button>
                     {comment.author.id === user?.uid && (
                       <>

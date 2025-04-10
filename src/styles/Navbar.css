@@ -87,7 +87,7 @@
 .navbar-support-user {
     border: 1px solid var(--accent-blue-color);
     color: var(--accent-blue-color);
-    margin-right: 40px;
+    margin-right: 30px;
 
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;

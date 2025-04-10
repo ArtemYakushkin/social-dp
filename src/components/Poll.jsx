@@ -15,6 +15,10 @@ const Poll = ({ pollData, postId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
 
+  const pollKey = `poll-${postId}-${pollData.question.replace(/\s+/g, "-")}-${
+    user?.uid || "guest"
+  }`;
+
   useEffect(() => {
     const fetchPollVotes = async () => {
       const postRef = doc(db, "posts", postId);
@@ -24,14 +28,22 @@ const Poll = ({ pollData, postId }) => {
         setPollVotes(postData.pollVotes || new Array(pollData.answers.length).fill(0));
       }
     };
+
+    const stored = localStorage.getItem(pollKey);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setSelectedAnswer(parsed.selectedAnswer);
+    }
+
     fetchPollVotes();
-  }, [postId, pollData.answers.length]);
+  }, [postId, pollData.answers.length, pollKey]);
 
   const handleVote = async (index) => {
     if (!user) {
       setIsModalOpen(true);
       return;
     }
+
     if (selectedAnswer !== null) return;
 
     try {
@@ -46,6 +58,13 @@ const Poll = ({ pollData, postId }) => {
 
       setSelectedAnswer(index);
       setPollVotes(updatedVotes);
+
+      localStorage.setItem(
+        pollKey,
+        JSON.stringify({
+          selectedAnswer: index,
+        })
+      );
 
       toast.success("Your vote has been recorded!");
     } catch (error) {
@@ -67,7 +86,9 @@ const Poll = ({ pollData, postId }) => {
         {pollData.answers.map((answer, index) => (
           <div key={index} className="poll-answer">
             <button
-              className={`poll-answer-button ${selectedAnswer === index ? "selected" : ""}`}
+              className={`poll-answer-button ${
+                selectedAnswer === index ? "poll-answer-button-selected" : ""
+              }`}
               onClick={() => handleVote(index)}
               disabled={selectedAnswer !== null}
             >

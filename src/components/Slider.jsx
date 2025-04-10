@@ -76,7 +76,7 @@ const AboutSlider = () => {
   };
 
   const desktopSlides = [
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
@@ -106,7 +106,7 @@ const AboutSlider = () => {
         <img src={slide1} alt="slide-1" />
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
@@ -143,7 +143,7 @@ const AboutSlider = () => {
         <img src={slide2} alt="slide-2" />
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
@@ -169,7 +169,7 @@ const AboutSlider = () => {
         <img src={slide3} alt="slide-3" />
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
@@ -201,7 +201,7 @@ const AboutSlider = () => {
   ];
 
   const tabletSlides = [
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-tab-title">What is the Dear Penfriend project?</h3>
       <div className="aboutSlider-tab-wrapper aboutSlider-tab-wrapper-slide1">
         <div className="aboutSlider-avatars">
@@ -230,7 +230,7 @@ const AboutSlider = () => {
         </div>
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <div className="aboutSlider-tab-title-box">
         <h3 className="aboutSlider-tab-title aboutSlider-tab-title-slide2">
           Interactives and bonus system
@@ -264,7 +264,7 @@ const AboutSlider = () => {
         </div>
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-tab-title">Advantages of the platform</h3>
       <div className="aboutSlider-tab-wrapper aboutSlider-tab-wrapper-slide3">
         <div className="aboutSlider-avatars">
@@ -289,7 +289,7 @@ const AboutSlider = () => {
         </div>
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-tab-title">Join today and make friends!</h3>
       <div className="aboutSlider-tab-wrapper aboutSlider-tab-wrapper-slide4">
         <button className="aboutSlider-slide-btn" onClick={handleRegisterClick}>
@@ -306,7 +306,7 @@ const AboutSlider = () => {
   ];
 
   const mobileSlides = [
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-mob-title aboutSlider-mob-title-slide1">
         What is the
         <br /> Dear Penfriend project?
@@ -339,7 +339,7 @@ const AboutSlider = () => {
         </p>
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-mob-title aboutSlider-mob-title-slide2">
         Interactives and bonus system
         <div className="aboutSlider-avatars aboutSlider-avatars-slide2">
@@ -372,7 +372,7 @@ const AboutSlider = () => {
         </p>
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-mob-title aboutSlider-mob-title-slide3">
         Advantages of the platform
         <div className="aboutSlider-avatars aboutSlider-avatars-slide3">
@@ -400,7 +400,7 @@ const AboutSlider = () => {
         </p>
       </div>
     </div>,
-    <div className="aboutSlider-slide">
+    <div className="aboutSlider-content">
       <h3 className="aboutSlider-mob-title aboutSlider-mob-title-slide4">
         Join today and make friends!
         <div className="aboutSlider-avatars aboutSlider-avatars-slide4">
@@ -437,14 +437,6 @@ const AboutSlider = () => {
 
   const slideCount = slides.length;
 
-  const handlePrev = () => {
-    setCurrentSlide((prev) => (prev - 1 + slideCount) % slideCount);
-  };
-
-  const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % slideCount);
-  };
-
   const handleTouchStart = (e) => {
     setTouchStartX(e.touches[0].clientX);
     setTouchEndX(null);
@@ -467,6 +459,14 @@ const AboutSlider = () => {
     setTouchEndX(null);
   };
 
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? desktopSlides.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev === desktopSlides.length - 1 ? 0 : prev + 1));
+  };
+
   return (
     <div
       className="aboutSlider"
@@ -475,8 +475,51 @@ const AboutSlider = () => {
       onTouchEnd={handleTouchEnd}
     >
       <div className="container aboutSlider-container">
-        <div className="aboutSlider-slider-container">
-          <div className="aboutSlider-slider">
+        <div className="aboutSlider-slider-wrapper">
+          <div className="aboutSlider-slides">
+            {isMobile ? (
+              <>
+                {mobileSlides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className={`aboutSlider-slide ${
+                      currentSlide === index ? "aboutSlider-slide-active" : ""
+                    }`}
+                  >
+                    {slide}
+                  </div>
+                ))}
+              </>
+            ) : isTablet ? (
+              <>
+                {tabletSlides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className={`aboutSlider-slide ${
+                      currentSlide === index ? "aboutSlider-slide-active" : ""
+                    }`}
+                  >
+                    {slide}
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>
+                {desktopSlides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className={`aboutSlider-slide ${
+                      currentSlide === index ? "aboutSlider-slide-active" : ""
+                    }`}
+                  >
+                    {slide}
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+
+          {/* <div className="aboutSlider-slider">
             <div
               className="aboutSlider-slides"
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -487,7 +530,7 @@ const AboutSlider = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {!(isMobile || isTablet) && (
             <>

@@ -10,8 +10,6 @@ import AboutProject from "../components/AboutProject";
 import ShareBlok from "../components/ShareBlok";
 import Loader from "../components/Loader";
 
-import { HiArrowLongLeft, HiArrowLongRight } from "react-icons/hi2";
-
 import "../styles/HomePage.css";
 
 const HomePage = () => {
@@ -21,7 +19,11 @@ const HomePage = () => {
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem("viewMode") || "grid";
   });
-  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(() => {
+    const savedCount = localStorage.getItem("visibleCount");
+    return savedCount ? parseInt(savedCount, 10) : 6;
+  });
+
   const postsPerPage = 6;
 
   useEffect(() => {
@@ -29,7 +31,6 @@ const HomePage = () => {
   }, [viewMode]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const fetchAllPosts = async () => {
       try {
         const postsCollection = collection(db, "posts");
@@ -54,8 +55,7 @@ const HomePage = () => {
     const lowerCaseQuery = searchQuery.toLowerCase();
     const filtered = posts.filter((post) => post.title?.toLowerCase().includes(lowerCaseQuery));
     setFilteredPosts(filtered);
-
-    setCurrentPage(1);
+    setVisibleCount(6);
   };
 
   const handleSort = (sortOption) => {
@@ -78,20 +78,19 @@ const HomePage = () => {
       });
     }
     setFilteredPosts(sortedPosts);
-
-    setCurrentPage(1);
+    setVisibleCount(6);
   };
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredPosts.slice(0, visibleCount);
 
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo(0, 0);
+  const handleSeeMore = () => {
+    const newCount = visibleCount + postsPerPage;
+    setVisibleCount(newCount);
   };
+
+  useEffect(() => {
+    localStorage.setItem("visibleCount", visibleCount);
+  }, [visibleCount]);
 
   return (
     <div className="home">
@@ -115,38 +114,16 @@ const HomePage = () => {
           )}
         </div>
 
-        {!isLoading && totalPages > 1 && (
-          <div className="home-pagination">
-            <button
-              className="home-btn"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              <HiArrowLongLeft size={34} />
-            </button>
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => handlePageChange(index + 1)}
-                disabled={currentPage === index + 1}
-                className={currentPage === index + 1 ? "home-btn-number-active" : "home-btn-number"}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              className="home-btn"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              <HiArrowLongRight size={34} />
+        {!isLoading && visibleCount < filteredPosts.length && (
+          <div className="home-see-more-container">
+            <button className="home-btn-see-more" onClick={handleSeeMore}>
+              See more
             </button>
           </div>
         )}
       </div>
 
       <AboutProject />
-
       <ShareBlok />
     </div>
   );

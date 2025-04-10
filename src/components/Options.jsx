@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import { LuSun, LuMoon } from "react-icons/lu";
@@ -12,6 +12,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
   const [selectedOption, setSelectedOption] = useState("New");
   const [searchQuery, setSearchQuery] = useState("");
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const dropdownRef = useRef(null);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
@@ -38,9 +39,20 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
     setIsDarkTheme(!isDarkTheme);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="options" id="options">
-      <div className="options-dropdown">
+      <div className="options-dropdown" ref={dropdownRef}>
         <div className="options-dropdown-header" onClick={toggleDropdown}>
           <span className="options-title">Sort by:</span>
           <span className="options-selected">{selectedOption}</span>
@@ -106,6 +118,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
           <p className="options-switcher-title">Site theme:</p>
           <div className="options-switcher-box">
             <LuSun
+              onClick={toggleSwitcher}
               size={24}
               className={isDarkTheme ? "options-switcher-icon" : "options-switcher-icon-active"}
             />
@@ -120,6 +133,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
               <div className="options-switcher-toggle"></div>
             </label>
             <LuMoon
+              onClick={toggleSwitcher}
               size={24}
               className={isDarkTheme ? "options-switcher-icon-active" : "options-switcher-icon"}
             />

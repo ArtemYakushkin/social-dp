@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
@@ -6,6 +6,7 @@ import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import MobileMenu from "./MobileMenu";
+import NotificationsIcon from "./NotificationsIcon";
 
 import logo1 from "../assets/logo-1.svg";
 import logo2 from "../assets/logo-2.svg";
@@ -23,6 +24,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
@@ -37,6 +39,17 @@ const Navbar = () => {
       document.body.style.overflow = "";
     };
   }, [isRegisterModalOpen, isLoginModalOpen, isMobileMenuOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const openRegister = () => {
     setIsRegisterModalOpen(true);
@@ -94,6 +107,9 @@ const Navbar = () => {
               >
                 Support us
               </a>
+
+              <NotificationsIcon currentUser={user} />
+
               <div className="navbar-avatar">
                 {user.photoURL ? (
                   <img src={user.photoURL} alt="avatar" />
@@ -103,7 +119,7 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-              <div className="navbar-arrow" onClick={toggleDropdown}>
+              <div className="navbar-arrow" onClick={toggleDropdown} ref={dropdownRef}>
                 {isOpen ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />}
                 {isOpen && (
                   <div className="navbar-dropdown-list">

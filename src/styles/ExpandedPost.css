@@ -67,6 +67,7 @@
 .expPost-box-text {
     padding: 0 20px 0 20px;
     margin-bottom: 14px;
+    cursor: pointer;
 }
 
 .expPost-title {
@@ -266,6 +267,10 @@
         font-size: 16px;
         line-height: 25.6px;
         margin-bottom: 2px;
+    }
+
+    .expPost-bottom {
+        margin-top: 12px;
     }
 
     .expPost-more {

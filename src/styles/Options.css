@@ -6,12 +6,12 @@
     align-items: center;
     justify-content: space-between;
     padding: 22px 38px;
-    margin-bottom: 65px;
+    margin-bottom: 30px;
     scroll-margin-top: 30px;
 }
 
 .options-dropdown {
-    width: 157px;
+    width: 175px;
 }
 
 .options-dropdown-header {
@@ -244,6 +244,7 @@
 .options-switcher-icon {
     color: var(--accent-blue-color);
     opacity: 0.4;
+    cursor: pointer;
 }
 
 .options-switcher-icon-active {
@@ -317,6 +318,10 @@
         left: 30px;
         width: 100px;
         padding: 5px 0px;
+    }
+
+    .options-dropdown-item {
+        padding: 14px 7px 0px 7px;
     }
 
     .options-title {

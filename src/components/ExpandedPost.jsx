@@ -161,25 +161,12 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
           ) : (
             <img src={post.media[0]} alt="Post media" />
           )}
-          {/* ) : post.media[0].includes(".mp4") ? (
-          <video autoPlay loop>
-             <source src={post.media[0]} type="video/mp4" />
-            Your browser does not support video.
-          </video>
-          ) : (  <img src={post.media[0]} alt="Post media" />
-         )} */}
         </div>
-        <div className="expPost-box-text">
-          <p className="expPost-title" onClick={handleExpandClick}>
-            {post.title}
-          </p>
-          <p className="expPost-text" onClick={handleExpandClick}>
-            {post.text}
-          </p>
+        <div className="expPost-box-text" onClick={handleExpandClick}>
+          <p className="expPost-title">{post.title}</p>
+          <p className="expPost-text">{post.text}</p>
           <div className="expPost-more-box">
-            <span className="expPost-more" onClick={handleExpandClick}>
-              More...
-            </span>
+            <span className="expPost-more">More</span>
           </div>
         </div>
       </div>

@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import QuizModal from "./QuizModal";
 import UnregisteredModal from "./UnregisteredModal";
 
-// import SadRobot from "../assets/robby-base.svg";
-// import HappyRobot from "../assets/robby-funny.svg";
-// import HandRobot from "../assets/robby-hand.svg";
 import Star from "../assets/star.png";
 
 import "../styles/Quiz.css";
 
-const Quiz = ({ quizData, user }) => {
+const Quiz = ({ quizData, user, postId }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
+  const [isAnswered, setIsAnswered] = useState(false);
+
+  const quizKey = `quiz-${postId}-${quizData.question.replace(/\s+/g, "-")}-${
+    user?.uid || "guest"
+  }`;
+
+  useEffect(() => {
+    const stored = localStorage.getItem(quizKey);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setSelectedAnswer(parsed.selectedAnswer);
+      setIsAnswered(true);
+    }
+  }, [quizKey]);
 
   const handleAnswerClick = (index) => {
     if (!user) {
@@ -22,13 +33,23 @@ const Quiz = ({ quizData, user }) => {
       return;
     }
 
-    setSelectedAnswer(index);
+    if (isAnswered) return;
 
     if (index === quizData.correctAnswer) {
+      setSelectedAnswer(index);
+      setIsAnswered(true);
+
+      localStorage.setItem(
+        quizKey,
+        JSON.stringify({
+          selectedAnswer: index,
+          correct: true,
+        })
+      );
+
       setModalMessage(
         <div className="quiz-happy-wrapp">
           <div className="quiz-happy-img-box">
-            {/* <img className="quiz-happy-img-robot" src={HappyRobot} alt="robot" /> */}
             <img className="quiz-happy-img-robot" src="/image/robby-funny.svg" alt="robot" />
           </div>
           <div className="quiz-happy-content">
@@ -40,14 +61,13 @@ const Quiz = ({ quizData, user }) => {
           </div>
         </div>
       );
+      setIsQuizModalOpen(true);
     } else {
       setModalMessage(
         <div className="quiz-sad-wrapp">
           <div className="quiz-sad-img-box">
             <img className="quiz-sad-img-robot" src="/image/robby-base.svg" alt="robot" />
             <img className="quiz-sad-img-hand" src="/image/robby-hand.svg" alt="robot hand" />
-            {/* <img className="quiz-sad-img-robot" src={SadRobot} alt="robot" />
-            <img className="quiz-sad-img-hand" src={HandRobot} alt="robot hand" /> */}
           </div>
           <div className="quiz-sad-content">
             <h4 className="quiz-sad-title">Alas, not this time</h4>
@@ -57,8 +77,8 @@ const Quiz = ({ quizData, user }) => {
           </div>
         </div>
       );
+      setIsQuizModalOpen(true);
     }
-    setIsQuizModalOpen(true);
   };
 
   const closeModal = () => {
@@ -70,7 +90,13 @@ const Quiz = ({ quizData, user }) => {
       <h3 className="quiz-question">{quizData.question}</h3>
       <ul className="quiz-answers">
         {quizData.answers.map((answer, index) => (
-          <li className="quiz-answer" key={index} onClick={() => handleAnswerClick(index)}>
+          <li
+            key={index}
+            className={`quiz-answer ${
+              isAnswered && index === selectedAnswer ? "quiz-answer-selected" : ""
+            } ${isAnswered && index !== selectedAnswer ? "quiz-answer-disabled" : ""}`}
+            onClick={() => handleAnswerClick(index)}
+          >
             {answer}
           </li>
         ))}

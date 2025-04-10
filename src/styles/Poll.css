@@ -45,6 +45,16 @@
         background-color: var(--accent-orange-color);
         color: var(--text-white);
     }
+
+    &.poll-answer-button-selected {
+        background-color: var(--accent-orange-color);
+        color: var(--text-white);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 .poll-votes {

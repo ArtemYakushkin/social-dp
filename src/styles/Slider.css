@@ -11,28 +11,40 @@
     position: relative;
 }
 
-.aboutSlider-slider-container {
-    position: relative;
-    z-index: 2;
-}
-
-.aboutSlider-slider {
+.aboutSlider-slider-wrapper {
     position: relative;
     width: 100%;
     height: auto;
     margin: auto;
-    overflow: hidden;
+    z-index: 2;
 }
 
 .aboutSlider-slides {
     position: relative;
-    display: flex;
-    transition: transform 0.5s ease-in-out;
     width: 100%;
+    min-height: 529px;
 }
 
 .aboutSlider-slide {
-    flex: 1 0 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s ease;
+    pointer-events: none;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aboutSlider-slide-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 1;
 }
 
 .aboutSlider-prev,
@@ -85,12 +97,6 @@
     }
 }
 
-.aboutSlider-vector {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
 .aboutSlider-avatars {
     position: relative;
     max-height: 64px;
@@ -121,7 +127,7 @@
     margin-left: -8px;
 }
 
-.aboutSlider-slide {
+.aboutSlider-content {
     display: flex;
     align-items: center;
     gap: 78px;
@@ -183,6 +189,18 @@
     }
 }
 
+.aboutSlider-slide-img {
+    height: 529px;
+    border-radius: 30px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
 
 
 @media (min-width: 768px) and (max-width: 1259px) {
@@ -193,8 +211,13 @@
         background-repeat: no-repeat;
     }
 
-    .aboutSlider-slide {
-        display: block;
+    .aboutSlider-slides {
+        min-height: 570px;
+    }
+
+    .aboutSlider-content {
+        flex-direction: column;
+        gap: 0;
     }
 
     .aboutSlider-tab-title-box {
@@ -312,8 +335,13 @@
         margin-top: 81px;
     }
 
-    .aboutSlider-slide {
-        display: block;
+    .aboutSlider-slides {
+        min-height: 740px;
+    }
+
+    .aboutSlider-content {
+        flex-direction: column;
+        gap: 0;
     }
 
     .aboutSlider-mob-title {

@@ -67,7 +67,8 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Login successful!");
+      // toast.success("Login successful!");
+      console.log("Login successful!");
 
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
@@ -82,7 +83,8 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
         onCloseUnreg();
       }
     } catch (error) {
-      toast.error("Error during login.");
+      // toast.error("Error during login.");
+      console.log("Error during login.");
     } finally {
       setLoading(false);
     }

@@ -8,6 +8,7 @@ import {
   arrayUnion,
   collection,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 
@@ -19,6 +20,26 @@ import { db } from "../firebase";
 import { IoSend } from "react-icons/io5";
 
 import "../styles/CommentsForm.css";
+
+const notifyNewComment = async (postId, commentId, sender) => {
+  const postRef = doc(db, "posts", postId);
+  const postSnap = await getDoc(postRef);
+
+  if (postSnap.exists()) {
+    const post = postSnap.data();
+    if (post.authorId !== sender.id) {
+      await addDoc(collection(db, "notifications"), {
+        recipientId: post.author.uid,
+        type: "new_comment",
+        postId,
+        commentId,
+        sender,
+        message: `${sender.nickname} commented on your post`,
+        createdAt: serverTimestamp(),
+      });
+    }
+  }
+};
 
 const CommentsForm = ({ postId, onCommentAdded }) => {
   const [commentText, setCommentText] = useState("");
@@ -82,11 +103,25 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
         replies: [],
       };
 
+      // const commentRef = await addDoc(collection(db, "comments"), commentData);
+
+      // const postRef = doc(db, "posts", postId);
+      // await updateDoc(postRef, {
+      //   comments: arrayUnion(commentRef.id),
+      // });
+
       const commentRef = await addDoc(collection(db, "comments"), commentData);
 
       const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, {
         comments: arrayUnion(commentRef.id),
+      });
+
+      // 🔔 Уведомление автору поста
+      await notifyNewComment(postId, commentRef.id, {
+        id: user.uid,
+        nickname: user.displayName, // Убедись, что `user.nickname` есть
+        photoURL: user.photoURL,
       });
 
       setCommentText("");

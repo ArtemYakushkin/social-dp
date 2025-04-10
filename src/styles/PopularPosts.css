@@ -52,6 +52,10 @@
     right: -67px;
 }
 
+.popular-wrapper {
+    cursor: pointer;
+}
+
 @media (min-width: 768px) and (max-width: 1259px) {
     .popular {
         padding: 90px 0;

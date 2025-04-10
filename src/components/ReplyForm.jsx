@@ -6,6 +6,7 @@ import {
   updateDoc,
   arrayUnion,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
 import validator from "validator";
 import { toast } from "react-toastify";
@@ -18,6 +19,33 @@ import { db } from "../firebase";
 import { IoSend } from "react-icons/io5";
 
 import "../styles/ReplyForm.css";
+
+const notifyNewReply = async (postId, commentId, replyId, sender) => {
+  const commentRef = doc(db, "comments", commentId);
+  const commentSnap = await getDoc(commentRef);
+
+  if (commentSnap.exists()) {
+    const comment = commentSnap.data();
+
+    // Исправлено здесь: comment.author?.id
+    if (comment.author?.id && comment.author.id !== sender.id) {
+      await addDoc(collection(db, "notifications"), {
+        recipientId: comment.author.id,
+        type: "new_reply",
+        postId,
+        commentId,
+        replyId,
+        sender: {
+          id: sender.id,
+          nickname: sender.nickname || "Someone",
+          photoURL: sender.photoURL || null,
+        },
+        message: `${sender.nickname || "Someone"} replied to your comment`,
+        createdAt: serverTimestamp(),
+      });
+    }
+  }
+};
 
 const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
   const [replyText, setReplyText] = useState("");
@@ -54,6 +82,48 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
     return validator.matches(text, englishTextPattern);
   };
 
+  // const handleReplySubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+
+  //   if (!replyText.trim()) {
+  //     setError("Reply cannot be empty");
+  //     return;
+  //   }
+
+  //   if (!isValidReply(replyText)) {
+  //     setError("Reply must contain only English letters.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const replyRef = await addDoc(collection(db, "replys"), {
+  //       postId,
+  //       commentId,
+  //       text: replyText,
+  //       author: {
+  //         uid: user.uid,
+  //       },
+  //       createdAt: serverTimestamp(),
+  //     });
+
+  //     const commentRef = doc(db, "comments", commentId);
+  //     await updateDoc(commentRef, {
+  //       replies: arrayUnion(replyRef.id),
+  //     });
+
+  //     setReplyText("");
+  //     toast.success("Reply added successfully!");
+
+  //     if (onReplyAdded) {
+  //       onReplyAdded();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding reply: ", error);
+  //     setError("Error sending reply");
+  //   }
+  // };
+
   const handleReplySubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -75,6 +145,8 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
         text: replyText,
         author: {
           uid: user.uid,
+          nickname: user.displayName,
+          avatar: user.photoURL || null, // если используешь аватар
         },
         createdAt: serverTimestamp(),
       });
@@ -82,6 +154,13 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
       const commentRef = doc(db, "comments", commentId);
       await updateDoc(commentRef, {
         replies: arrayUnion(replyRef.id),
+      });
+
+      // 🛎 Отправка уведомления
+      await notifyNewReply(postId, commentId, replyRef.id, {
+        id: user.uid,
+        nickname: user.displayName,
+        photoURL: user.photoURL || null,
       });
 
       setReplyText("");

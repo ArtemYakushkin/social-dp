@@ -1,158 +1,208 @@
-.create-form {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    gap: 16px;
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.create {
+    padding: 30px 0px 60px 0px;
 }
 
-.create-label {
+.create-wrapp {
+    background-color: var(--bg-white);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0px 4px 16px 0px #2F7BF626;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 20px;
+}
+
+.create-input-container {
+    position: relative;
     width: 100%;
+    height: 54px;
+}
+
+.create-textarea-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
 }
 
 .create-input {
-    height: 32px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0 12px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid #EFF2F980;
+    background: #EFF2F980;
+    padding: 22px 18px 10px 18px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-input);
+
+    &:focus {
+        border: 1px solid var(--accent-blue-color);
+    }
 }
 
 .create-textarea {
     resize: none;
-    height: 100px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0 12px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid #EFF2F980;
+    background: #EFF2F980;
+    padding: 22px 18px 10px 18px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-input);
+
+    &:focus {
+        border: 1px solid var(--accent-blue-color);
+    }
 }
 
-.create-select {
+.create-placeholder {
+    position: absolute;
+    top: 3px;
+    left: 18px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16.8px;
+    color: var(--text-grey-light);
+}
+
+.create-tabs {
     display: flex;
     align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid var(--text-grey-light);
+}
+
+.create-tabs-btn {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-grey-light);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    transition: color 0.3s;
+}
+
+.create-tabs-btn-active {
+    color: var(--text-black);
     position: relative;
-    /* Для позиционирования псевдоэлемента */
-    /* border-bottom: 1px solid #00000052; */
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 3px;
+        background-color: var(--accent-blue-color);
+        bottom: -1px;
+        left: 0;
+    }
 }
 
-.create-select::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    /* Толщина бордера */
-    width: 100%;
-    /* Длина бордера */
-    background-color: #00000052;
-    z-index: 1;
-    /* Псевдоэлемент должен быть под кнопками */
-}
-
-.create-select-btn-activ {
-    font-weight: 600;
-    padding: 4px 12px;
-    width: 100px;
-    border-top: 1px solid #00000052;
-    border-left: 1px solid #00000052;
-    border-right: 1px solid #00000052;
-    border-bottom: none;
-    /* Убираем нижний бордер */
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    position: relative;
-    /* Для псевдоэлемента под кнопкой */
-    z-index: 2;
-    /* Псевдоэлемент кнопки выше псевдоэлемента контейнера */
-}
-
-.create-select-btn {
-    font-weight: 600;
-    padding: 4px 12px;
-    width: 100px;
-    border: none;
-    /* border-bottom: 1px solid #00000052; */
-    /* Добавляем бордер только снизу */
-    position: relative;
-    z-index: 2;
-}
-
-/* Убираем бордер только у активной кнопки */
-.create-select-btn-activ::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    /* Немного смещаем вниз, чтобы перекрыть бордер контейнера */
-    left: 0;
-    height: 1px;
-    width: 100%;
-    background-color: #ffffff;
-    /* Цвет фона контейнера */
-    z-index: 3;
-    /* Выше кнопки и псевдоэлемента контейнера */
-}
-
-.create-quiz {
+.create-quiz-section,
+.create-poll-section,
+.create-media-section {
+    border: 1px solid var(--text-grey-light);
+    border-radius: 10px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #00000052;
-}
-
-.create-quiz-btn {
-    color: #de5900e7;
-    font-weight: 600;
-    padding: 4px 12px;
-    border: 1px solid #de5900e7;
-    border-radius: 8px;
-}
-
-.create-quiz-group {
-    display: flex;
-    align-items: center;
     gap: 12px;
 }
 
-.create-quiz-input-text {
-    height: 32px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0 12px;
-    width: 300px;
+.create-quiz-answers {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.create-poll {
+.create-quiz-input-container {
+    position: relative;
+    width: 50%;
+    height: 54px;
+}
+
+.create-input-radio {
+    width: 20px;
+    height: 20px;
+}
+
+.create-text-correct {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.create-delete-btn {
+    width: 40px;
+    height: 40px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #00000052;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-error);
+}
+
+.create-addanswer-btn {
+    border: 1px solid var(--accent-blue-color);
+    color: var(--accent-blue-color);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 30px;
+    padding: 14px 36px;
+    align-self: flex-start;
 }
 
 .create-poll-group {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 24px;
+}
 
-    label {
-        display: flex;
-        align-items: center;
-        gap: 4px;
+.create-poll-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.create-media-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.create-media-img {
+    position: relative;
+    width: 100%;
+    height: 275px;
+    border-radius: 20px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 
-.create-group-add {
+.create-file-add {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 8px;
 }
 
 .create-input-add {
@@ -161,57 +211,206 @@
 }
 
 .create-label-add {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    background-color: transparent;
-    color: #de5900e7;
-    padding: 10px 20px;
-    border: 1px solid #de5900e7;
-    border-radius: 4px;
+    border: 1px solid var(--accent-blue-color);
+    color: var(--accent-blue-color);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 30px;
+    padding: 14px 36px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 12px;
+}
+
+.create-update-btn {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 30px;
+    padding: 14px 36px;
+    transition: all 0.25s ease;
+    color: var(--text-white);
+    background-color: var(--accent-blue-color);
+    align-self: center;
 
     &:hover {
-        border: 1px solid #de5900e7;
-        background-color: #de5900e7;
-        color: #ffffff;
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
     }
 }
 
-.create-preview-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+@media (min-width: 768px) and (max-width: 1259px) {
+
+    .create-wrapp {
+        padding: 20px;
+    }
+
+    .create-tabs-btn {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .create-quiz-section,
+    .create-poll-section,
+    .create-media-section {
+        padding: 12px;
+    }
+
+    .create-input-radio {
+        width: 16px;
+        height: 16px;
+    }
+
+    .create-text-correct {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .create-delete-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .create-addanswer-btn {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 26px;
+    }
+
+    .create-poll-group {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .create-poll-label {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .create-media-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .create-media-img {
+        height: 200px;
+    }
+
+    .create-media-delete-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .create-label-add {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 26px;
+    }
+
+    .create-update-btn {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 26px;
+    }
+
 }
 
-.create-image-preview {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+@media (max-width: 767px) {
 
-    &:hover {
-        transform: scale(1.05);
+    .create {
+        background-color: var(--bg-white);
+        display: flex;
+        flex-direction: column;
+        margin-top: 81px;
     }
-}
 
-.create-submit-btn {
-    background-color: #de5900e7;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: 1px solid #de5900e7;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 12px;
-
-    &:hover {
-        border: 1px solid #de5900e7;
-        background-color: transparent;
-        color: #de5900e7;
+    .create-wrapp-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
+
+    .create-tabs {
+        gap: 12px;
+    }
+
+    .create-tabs-btn {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .create-quiz-section,
+    .create-poll-section,
+    .create-media-section {
+        border: none;
+        border-bottom: 1px solid var(--text-grey-light);
+        border-radius: 0px;
+        padding: 0px 0px 20px 0px;
+    }
+
+    .create-quiz-answers {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        border: 1px solid var(--text-grey-light);
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .create-quiz-input-container {
+        width: 100%;
+    }
+
+    .create-quiz-answers-correct {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .create-quiz-answer-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-left: 14px;
+    }
+
+    .create-text-correct {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .create-addanswer-btn {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 26px;
+    }
+
+    .create-poll-label {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .create-media-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .create-media-img {
+        height: 180px;
+    }
+
+    .create-label-add {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 26px;
+    }
+
+    .create-update-btn {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 26px;
+        width: 100%;
+    }
+
 }

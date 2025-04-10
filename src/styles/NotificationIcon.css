@@ -1,0 +1,43 @@
+.notification-icon {
+    position: relative;
+    margin-right: 30px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--text-error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Nunito Sans;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    color: var(--text-white);
+}
+
+@media (max-width: 767px) {
+    .notification-icon {
+        margin-right: 0;
+        width: 40px;
+        height: 40px;
+    }
+
+    .notification-badge {
+        top: -7px;
+        right: -10px;
+    }
+}

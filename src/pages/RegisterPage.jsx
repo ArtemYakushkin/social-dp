@@ -134,7 +134,8 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
       const userRef = doc(collection(db, "users"), user.uid);
       await setDoc(userRef, userData, { merge: true });
 
-      toast.success("Registration successful!");
+      // toast.success("Registration successful!");
+      console.log("Registration successful!");
 
       if (onClose) {
         onClose();
@@ -145,7 +146,8 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
       if (error.code === "auth/email-already-in-use") {
         toast.error("User with this email already exists.");
       } else {
-        toast.error("Error during registration.");
+        // toast.error("Error during registration.");
+        console.log("Error during registration.");
       }
 
       if (error.message.includes("Error saving user data")) {

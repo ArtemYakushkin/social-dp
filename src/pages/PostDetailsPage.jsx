@@ -6,6 +6,8 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "fir
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { db } from "../firebase";
 import { useAuth } from "../auth/useAuth";
@@ -130,6 +132,23 @@ const PostDetailsPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const checkIfSaved = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        const savedPosts = userSnap.data().savedPosts || [];
+
+        if (savedPosts.includes(postId)) {
+          setIsSaved(true);
+        }
+      }
+    };
+
+    checkIfSaved();
+  }, [postId, auth.currentUser]);
+
   const handleSlideChange = (swiper) => {
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
@@ -165,6 +184,11 @@ const PostDetailsPage = () => {
   };
 
   const handleBack = () => {
+    navigate("/", { replace: true });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleGoBack = () => {
     navigate(-1);
   };
 
@@ -186,19 +210,23 @@ const PostDetailsPage = () => {
 
   const handleSavePost = async () => {
     const user = auth.currentUser;
-    if (user) {
-      try {
-        const userRef = doc(db, "users", user.uid);
 
-        await updateDoc(userRef, {
-          savedPosts: arrayUnion(postId),
-        });
-        setIsSaved(true);
-      } catch (error) {
-        console.error("Ошибка при сохранении поста: ", error);
-      }
-    } else {
-      alert("Вы должны быть зарегистрированы, чтобы сохранять посты");
+    if (!user) {
+      toast.info("You must be registered to save posts.");
+      return;
+    }
+
+    if (isSaved) return;
+
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        savedPosts: arrayUnion(postId),
+      });
+      setIsSaved(true);
+    } catch (error) {
+      console.error("Ошибка при сохранении поста: ", error);
+      toast.error(error);
     }
   };
 
@@ -220,7 +248,7 @@ const PostDetailsPage = () => {
                 <div className="details-wrapper">
                   <div className="container">
                     <div className="details-author-post-options">
-                      <button className="details-back" onClick={handleBack}>
+                      <button className="details-back" onClick={handleGoBack}>
                         <HiArrowLongLeft size={18} />
                         Go back
                       </button>
@@ -363,7 +391,7 @@ const PostDetailsPage = () => {
                   <div className="details-exam-box">
                     <div className="container">
                       {post.quiz && post.quiz.question && post.quiz.answers && (
-                        <Quiz quizData={post.quiz} user={user} />
+                        <Quiz quizData={post.quiz} user={user} postId={postId} />
                       )}
                       {post.poll && <Poll pollData={post.poll} postId={postId} />}
                     </div>
@@ -402,26 +430,17 @@ const PostDetailsPage = () => {
                           )}
                         </button>
                       </div>
-
-                      <div className="details-btn-viewComm-box">
-                        <button className="details-btn-viewComm" onClick={toggleCommentsVisibility}>
-                          {commentsVisible ? "Hide comments" : "View comments"}
-                          {commentsVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
-                        </button>
-                      </div>
                     </div>
                   </div>
 
-                  {commentsVisible && (
-                    <div className="details-comments-box">
-                      <CommentsForm postId={postId} onCommentAdded={handleCommentAdded} />
-                      <CommentsList
-                        postId={postId}
-                        user={user}
-                        onCommentDeleted={handleCommentDeleted}
-                      />
-                    </div>
-                  )}
+                  <div className="details-comments-box">
+                    <CommentsForm postId={postId} onCommentAdded={handleCommentAdded} />
+                    <CommentsList
+                      postId={postId}
+                      user={user}
+                      onCommentDeleted={handleCommentDeleted}
+                    />
+                  </div>
                 </div>
 
                 <div className="details-btn-return-box">
@@ -454,7 +473,7 @@ const PostDetailsPage = () => {
                       </div>
                     </div>
                     <div className="details-author-post-options">
-                      <button className="details-back" onClick={handleBack}>
+                      <button className="details-back" onClick={handleGoBack}>
                         {isTablet ? <HiArrowLongLeft size={24} /> : <HiArrowLongLeft size={28} />}
                         Go back
                       </button>
@@ -616,12 +635,34 @@ const PostDetailsPage = () => {
                       </button>
                     </div>
 
-                    <button className="details-btn-saved" onClick={handleSavePost}>
+                    {/* <button className="details-btn-saved" onClick={handleSavePost}>
                       {isSaved ? (
                         <BsBookmarkFill size={24} style={{ color: "var(--text-grey-dark)" }} />
                       ) : (
                         <BsBookmarkFill size={24} style={{ color: "var(--text-black)" }} />
                       )}
+                    </button> */}
+
+                    <button
+                      className="details-btn-saved"
+                      onClick={handleSavePost}
+                      disabled={!auth.currentUser || isSaved}
+                      style={{
+                        cursor: !auth.currentUser || isSaved ? "not-allowed" : "pointer",
+                        background: "transparent",
+                        border: "none",
+                      }}
+                    >
+                      <BsBookmarkFill
+                        size={24}
+                        style={{
+                          color:
+                            !auth.currentUser || isSaved
+                              ? "var(--text-grey-dark)"
+                              : "var(--text-black)",
+                          opacity: !auth.currentUser || isSaved ? 0.5 : 1,
+                        }}
+                      />
                     </button>
                   </div>
 
