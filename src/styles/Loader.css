@@ -7,7 +7,7 @@
 }
 
 .loader {
-    border: 16px solid var(--accent-blue-color);
+    border: 16px solid var(--bg-accent-blue-color);
     border-top: 16px solid var(--accent-dark-blue-color);
     border-radius: 50%;
     width: 80px;

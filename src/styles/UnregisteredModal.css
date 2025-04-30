@@ -21,8 +21,8 @@
     padding: 26px 20px 20px 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px 0px #00000026;
-    border-top: 14px solid var(--accent-blue-color);
-    background-color: var(--bg-white);
+    border-top: 14px solid var(--bg-accent-blue-color);
+    background-color: var(--bg-modal-box-content);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,7 +34,7 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 31.2px;
-    color: var(--accent-dark-blue-color);
+    color: var(--bg-accent-blue-color);
     text-align: center;
 }
 
@@ -63,8 +63,8 @@
 }
 
 .unreg-register {
-    color: var(--accent-blue-color);
-    border: 1px solid var(--accent-blue-color);
+    color: var(--bg-accent-blue-color);
+    border: 1px solid var(--bg-accent-blue-color);
 
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;
@@ -78,7 +78,7 @@
 
 .unreg-login {
     color: var(--text-white);
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
 
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;
@@ -110,7 +110,7 @@
     .unreg-content {
         max-width: 307px;
         padding: 16px 10px 10px 10px;
-        border-top: 10px solid var(--accent-blue-color);
+        border-top: 10px solid var(--bg-accent-blue-color);
         gap: 10px;
     }
 

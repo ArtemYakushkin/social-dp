@@ -172,15 +172,15 @@ const PopularPosts = () => {
                       <div className="expPost-footer">
                         <div className="expPost-icon-box">
                           <div className="expPost-icon">
-                            <FaRegHeart size={24} />
+                            <FaRegHeart size={24} color="var(--text-black)" />
                             <span>{post.likes.length}</span>
                           </div>
                           <div className="expPost-icon">
-                            <FiEye size={24} />
+                            <FiEye size={24} color="var(--text-black)" />
                             <span>{post.views}</span>
                           </div>
                           <div className="expPost-icon">
-                            <BiComment size={24} />
+                            <BiComment size={24} color="var(--text-black)" />
                             <span>{post.comments?.length || 0}</span>
                           </div>
                         </div>

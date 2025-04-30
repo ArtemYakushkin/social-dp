@@ -28,8 +28,8 @@
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    border: 1px solid #EFF2F980;
-    background: #EFF2F980;
+    background-color: var(--bg-register-input);
+    border: 1px solid var(--bg-register-input);
     padding: 22px 18px 10px 18px;
     font-weight: 400;
     font-size: 16px;
@@ -37,6 +37,7 @@
     color: var(--text-input);
 
     &:focus {
+        background-color: var(--bg-blue-hover);
         border: 1px solid var(--accent-blue-color);
     }
 }
@@ -46,8 +47,8 @@
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    border: 1px solid #EFF2F980;
-    background: #EFF2F980;
+    background-color: var(--bg-register-input);
+    border: 1px solid var(--bg-register-input);
     padding: 22px 18px 10px 18px;
     font-weight: 400;
     font-size: 16px;
@@ -55,6 +56,7 @@
     color: var(--text-input);
 
     &:focus {
+        background-color: var(--bg-blue-hover);
         border: 1px solid var(--accent-blue-color);
     }
 }
@@ -98,7 +100,7 @@
         content: '';
         width: 100%;
         height: 3px;
-        background-color: var(--accent-blue-color);
+        background-color: var(--bg-accent-blue-color);
         bottom: -1px;
         left: 0;
     }
@@ -148,8 +150,8 @@
 }
 
 .create-addanswer-btn {
-    border: 1px solid var(--accent-blue-color);
-    color: var(--accent-blue-color);
+    border: 1px solid var(--bg-accent-blue-color);
+    color: var(--bg-accent-blue-color);
     font-size: 20px;
     font-weight: 600;
     line-height: 24px;
@@ -171,6 +173,7 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
+    color: var(--text-black);
 }
 
 .create-media-list {
@@ -207,12 +210,11 @@
 
 .create-input-add {
     display: none;
-    /* Скрываем стандартный input */
 }
 
 .create-label-add {
-    border: 1px solid var(--accent-blue-color);
-    color: var(--accent-blue-color);
+    border: 1px solid var(--bg-accent-blue-color);
+    color: var(--bg-accent-blue-color);
     font-size: 20px;
     font-weight: 600;
     line-height: 24px;
@@ -229,7 +231,7 @@
     padding: 14px 36px;
     transition: all 0.25s ease;
     color: var(--text-white);
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     align-self: center;
 
     &:hover {
@@ -321,8 +323,6 @@
 
     .create {
         background-color: var(--bg-white);
-        display: flex;
-        flex-direction: column;
         margin-top: 81px;
     }
 

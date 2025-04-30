@@ -21,8 +21,6 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [view, setView] = useState("login");
-  // const [resetCode, setResetCode] = useState("");
-  // const [newPassword, setNewPassword] = useState("");
 
   useEffect(() => {
     const savedEmail =

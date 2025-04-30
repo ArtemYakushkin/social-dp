@@ -1,5 +1,6 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Navbar";
@@ -10,16 +11,34 @@ import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 import AboutPage from "../pages/AboutPage";
 import AuthorProfilePage from "../pages/AuthorProfilePage";
-import DashboardPage from "../pages/DashboardPage";
 import CreatePostPage from "../pages/CreatePostPage";
 import PostDetailsPage from "../pages/PostDetailsPage";
 import EditPostPage from "../pages/EditPostPage";
 import NotificationsPage from "../pages/NotificationsPage";
 import { AuthProvider } from "../auth/useAuth";
 
-const secretCode = process.env.REACT_APP_DASHBOARD_CODE;
+const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(",") || [];
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setAuthChecked(true);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (!authChecked) {
+    return <div>Loading...</div>; // Пока не проверили авторизацию
+  }
+
+  const isAllowed = user && allowedEmails.includes(user.email);
+
   return (
     <Router>
       <AuthProvider>
@@ -32,12 +51,14 @@ function App() {
           <Route path="/author/:uid" element={<AuthorProfilePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/post/:postId" element={<PostDetailsPage />} />
-          <Route path="/create-post" element={<CreatePostPage />} />
+          {/* <Route path="/create-post" element={<CreatePostPage />} /> */}
+          <Route
+            path="/create-post"
+            element={isAllowed ? <CreatePostPage /> : <Navigate to="/" />}
+          />
           <Route path="/edit-post/:postId" element={<EditPostPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
-
-          <Route path={`/dashboard/${secretCode}`} element={<DashboardPage />} />
-          <Route path={`/dashboard/${secretCode}/create`} element={<CreatePostPage />} />
+          <Route path={`/create`} element={<CreatePostPage />} />
         </Routes>
         <Footer />
         <ToastContainer

@@ -16,26 +16,102 @@ html {
 
 :root {
     --background: url('./assets/background.png') center / cover no-repeat;
-
     --bg-blue: #BCD8FF;
+    --bg-authorization: #BCD8FF;
+    --bg-register-form: #ffffff;
     --bg-white: #ffffff;
     --bg-dark-white: #FBFBFB;
     --bg-blue-inactive: #EFF2F9;
     --bg-blue-hover: #EFF2F980;
+    --bg-accent-blue-color: #2F7BF6;
+    --bg-navbar-overlay: #EFF2F9;
+    --bg-mobile-menu: #ffffff;
+    --bg-switcher: #ffffff;
+    --bg-about: #BCD8FF;
+    --bg-icon-wrapp: #EFF2F9;
+    --bg-howitwork: #EFF2F9;
+    --bg-letter: #FFFFFFB2;
+    --bg-scroll-thumb: #ADACAC;
+    --bg-scroll-track: #EFF2F9;
+    --bg-form-comment: #EFF2F9;
+    --bg-post-wrapp: #ffffff;
+    --bg-poll-quiz: #EFF2F94D;
+    --bg-author-info: #ffffff;
+    --bg-author-country: #EFF2F9;
 
-    --accent-blue-color: #2F7BF6;
+    --bg-modal-overlay: rgba(250, 250, 250, 0.5);
+    --bg-modal: #ffffff;
+    --bg-modal-shadow: 0px 0px 5px 0px rgba(37, 36, 37, 0.1);
+    --bg-modal-btn: #FBFBFB;
+    --bg-modal-btn-shadow: 0px 0px 5px 0px rgba(37, 36, 37, 0.1);
+    --bg-modal-box-content: #ffffff;
+
+    --register-background: none;
+    --register-shadow: 0px 4px 16px 0px #8DD3BB26;
+    --bg-register-input: #EFF2F9;
+    --bg-register-drop-list: #ffffff;
+
     --accent-dark-blue-color: #094EBE;
     --accent-yellow-color: #FFD90F;
     --accent-orange-color: #FDB730;
     --accent-green-color: #70C56F;
 
+    --text-accent-blue-color: #2F7BF6;
     --text-black: #252425;
+    --text-not-change: #787878;
     --text-grey-dark: #787878;
     --text-white: #ffffff;
     --text-input: #212121;
     --text-grey-light: #ADACAC;
     --text-error: #F63B3B;
     --text-inactive-grey: #BDBDBD;
+    --text-more-reply: #787878;
+    --text-author-country: #787878;
+    --text-icon-settings: #252425;
+}
+
+[data-theme="dark"] {
+    --background: url('./assets//background-dark.png') center / cover no-repeat;
+    --bg-white: #FFFFFF1A;
+    --bg-blue: #094EBE80;
+    --bg-dark-white: #FBFBFB33;
+    --bg-blue-inactive: #01111F80;
+    --bg-navbar-overlay: #01111F;
+    --bg-mobile-menu: #01111F;
+    --bg-switcher: #ffffff;
+    --bg-about: #094EBE33;
+    --bg-icon-wrapp: #EFF2F933;
+    --bg-howitwork: #ffffff06;
+    --bg-letter: #094EBE33;
+    --bg-scroll-thumb: #444444;
+    --bg-scroll-track: #092548;
+    --bg-form-comment: #EFF2F91A;
+    --bg-post-wrapp: #1f344c;
+    --bg-poll-quiz: #EFF2F91A;
+    --bg-author-info: #094EBE4D;
+    --bg-author-country: #EFF2F91A;
+
+    --bg-modal-overlay: #01111f71;
+    --bg-modal: #01111FCC;
+    --bg-modal-shadow: 0px 4px 16px 0px #2F7BF6;
+    --bg-modal-btn: #01111F;
+    --bg-modal-btn-shadow: 0px 0px 5px 0px #2524251A;
+    --bg-modal-box-content: #01111F;
+
+    --bg-authorization: #01111F;
+    --bg-register-form: #01111F;
+    --register-background: url(./assets/register-gradient.png);
+    --register-shadow: 0px 4px 16px 0px #2F7BF6;
+    --bg-register-input: #EFF2F933;
+    --bg-register-drop-list: #01111F;
+
+    --text-accent-blue-color: #ffffff;
+    --text-black: #ffffff;
+    --text-grey-dark: #ffffff;
+    --text-grey-light: #FFFFFF66;
+    --text-more-reply: #FFFFFF66;
+    --text-author-country: #FFFFFF66;
+    --text-input: #191919;
 }
 
 body {
@@ -54,19 +130,15 @@ body {
 
 /* Стиль для ползунка (ползущей части скроллбара) */
 ::-webkit-scrollbar-thumb {
-    background-color: var(--text-grey-light);
-    /* полупрозрачный черный */
+    background-color: var(--bg-scroll-thumb);
     border-radius: 90px;
-    /* закругленные края */
     border: 3px solid transparent;
     background-clip: padding-box;
 }
 
 /* Стиль для области трека */
 ::-webkit-scrollbar-track {
-    background-color: var(--bg-blue-inactive);
-    /* полупрозрачный фон трека */
-    border-radius: 90px;
+    background-color: var(--bg-scroll-track);
 }
 
 @media (min-width: 768px) and (max-width: 1259px) {
@@ -260,13 +332,13 @@ img {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     opacity: 0.3;
     cursor: pointer;
 }
 
 .expanded-bullet-active {
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     opacity: 1;
     cursor: pointer;
 }
@@ -355,7 +427,7 @@ img {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(250, 250, 250, 0.5);
+    background-color: var(--bg-modal-overlay);
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
@@ -366,9 +438,9 @@ img {
 
 .modal {
     position: relative;
-    background-color: var(--bg-white);
+    background-color: var(--bg-modal);
     border-radius: 30px;
-    box-shadow: 0px 0px 30px 0px #2524254D;
+    box-shadow: var(--bg-modal-shadow);
 }
 
 .modal-btn-close {
@@ -378,8 +450,8 @@ img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--bg-dark-white);
-    box-shadow: 0px 0px 5px 0px rgba(37, 36, 37, 0.1);
+    background-color: var(--bg-modal-btn);
+    box-shadow: var(--bg-modal-btn-shadow);
     display: flex;
     align-items: center;
     justify-content: center;

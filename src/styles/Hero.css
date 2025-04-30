@@ -18,7 +18,7 @@
     font-weight: 700;
     font-size: 85px;
     line-height: 93.5px;
-    color: var(--accent-blue-color);
+    color: var(--text-accent-blue-color);
     margin-bottom: 20px;
 }
 
@@ -48,7 +48,7 @@
     font-size: 20px;
     line-height: 24px;
     color: var(--text-white);
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     border-radius: 30px;
 
     &:hover {

@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     max-height: 0;
-    background: var(--bg-white);
+    background: var(--bg-mobile-menu);
     overflow: hidden;
     z-index: 1000;
     box-shadow: 0px 4px 16px 0px #094EBE40;

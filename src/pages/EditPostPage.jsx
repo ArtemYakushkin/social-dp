@@ -407,7 +407,7 @@ const EditPostPage = () => {
                         style={{
                           color:
                             quiz.correctAnswer === index
-                              ? "var(--accent-blue-color)"
+                              ? "var(--bg-accent-blue-color)"
                               : "var(--text-black)",
                         }}
                       >

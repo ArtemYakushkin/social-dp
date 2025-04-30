@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useMediaQuery } from "react-responsive";
+
+import { ThemeContext } from "../context/ThemeContext";
 
 import { LuSun, LuMoon } from "react-icons/lu";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -11,13 +13,16 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("New");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
   const dropdownRef = useRef(null);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
 
   const options = ["New", "Comment", "Like"];
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const isDarkTheme = theme === "dark";
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -33,10 +38,6 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
     const query = e.target.value;
     setSearchQuery(query);
     onSearch(query);
-  };
-
-  const toggleSwitcher = () => {
-    setIsDarkTheme(!isDarkTheme);
   };
 
   useEffect(() => {
@@ -109,7 +110,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
 
       {isMobile ? (
         <div className="options-switcher">
-          <button className="options-switcher-btn" onClick={toggleSwitcher}>
+          <button className="options-switcher-btn" onClick={toggleTheme}>
             {isDarkTheme ? <LuSun size={24} /> : <LuMoon size={24} />}
           </button>
         </div>
@@ -118,7 +119,7 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
           <p className="options-switcher-title">Site theme:</p>
           <div className="options-switcher-box">
             <LuSun
-              onClick={toggleSwitcher}
+              onClick={toggleTheme}
               size={24}
               className={isDarkTheme ? "options-switcher-icon" : "options-switcher-icon-active"}
             />
@@ -128,12 +129,12 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
                 type="checkbox"
                 id="theme-toggle"
                 checked={isDarkTheme}
-                onChange={toggleSwitcher}
+                onChange={toggleTheme}
               />
               <div className="options-switcher-toggle"></div>
             </label>
             <LuMoon
-              onClick={toggleSwitcher}
+              onClick={toggleTheme}
               size={24}
               className={isDarkTheme ? "options-switcher-icon-active" : "options-switcher-icon"}
             />

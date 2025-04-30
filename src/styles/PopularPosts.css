@@ -58,7 +58,7 @@
 
 @media (min-width: 768px) and (max-width: 1259px) {
     .popular {
-        padding: 90px 0;
+        padding: 90px 0px 151px 0px;
     }
 
     .popular-title {
@@ -69,22 +69,21 @@
     }
 
     .popular-custom-btn {
-        background-color: #2F7BF6;
-        z-index: 10;
+        top: 580px;
     }
 
     .popular-custom-btn-prev {
-        left: -21px;
+        left: 288px;
     }
 
     .popular-custom-btn-next {
-        right: -21px;
+        right: 288px;
     }
 }
 
 @media (max-width: 767px) {
     .popular {
-        padding: 90px 0;
+        padding: 90px 0px 151px 0px;
     }
 
     .popular-title {
@@ -95,15 +94,14 @@
     }
 
     .popular-custom-btn {
-        background-color: #2F7BF6;
-        z-index: 10;
+        top: 580px;
     }
 
     .popular-custom-btn-prev {
-        left: -21px;
+        left: 110px;
     }
 
     .popular-custom-btn-next {
-        right: -21px;
+        right: 110px;
     }
 }

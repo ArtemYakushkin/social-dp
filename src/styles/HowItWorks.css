@@ -1,5 +1,5 @@
 .how {
-    background-color: var(--bg-blue-inactive);
+    background-color: var(--bg-howitwork);
     padding: 120px 0;
     height: 980px;
     background-image: url(../assets/vector-how.png);
@@ -31,6 +31,7 @@
     position: relative;
     display: inline-block;
     background-color: var(--bg-dark-white);
+    border: 2px solid var(--text-white);
     padding: 30px 40px;
     border-radius: 20px;
     max-width: 500px;
@@ -71,6 +72,7 @@
     right: 88px;
     top: 31px;
     display: inline-block;
+    border: 2px solid var(--text-white);
     background-color: var(--bg-dark-white);
     padding: 30px 40px;
     border-radius: 20px;
@@ -97,6 +99,7 @@
     left: 88px;
     top: 70px;
     display: inline-block;
+    border: 2px solid var(--text-white);
     background-color: var(--accent-dark-blue-color);
     padding: 30px 40px;
     border-radius: 20px;
@@ -126,7 +129,7 @@
 
 .how-btn {
     padding: 20px 56px;
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     border-radius: 30px;
     font-weight: 600;
     font-size: 20px;

@@ -80,7 +80,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -110,7 +110,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -147,7 +147,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -173,7 +173,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-slide-textBox">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -206,7 +206,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-tab-wrapper aboutSlider-tab-wrapper-slide1">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -240,7 +240,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-tab-wrapper aboutSlider-tab-wrapper-slide2">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -269,7 +269,7 @@ const AboutSlider = () => {
       <div className="aboutSlider-tab-wrapper aboutSlider-tab-wrapper-slide3">
         <div className="aboutSlider-avatars">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -312,7 +312,7 @@ const AboutSlider = () => {
         <br /> Dear Penfriend project?
         <div className="aboutSlider-avatars aboutSlider-avatars-slide1">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -344,7 +344,7 @@ const AboutSlider = () => {
         Interactives and bonus system
         <div className="aboutSlider-avatars aboutSlider-avatars-slide2">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -377,7 +377,7 @@ const AboutSlider = () => {
         Advantages of the platform
         <div className="aboutSlider-avatars aboutSlider-avatars-slide3">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />
@@ -405,7 +405,7 @@ const AboutSlider = () => {
         Join today and make friends!
         <div className="aboutSlider-avatars aboutSlider-avatars-slide4">
           <div className="aboutSlider-avatars-add">
-            <GoPlus size={32} color="var(--bg-white)" />
+            <GoPlus size={32} color="var(--text-white)" />
           </div>
           <div className="aboutSlider-avatars-photo">
             <img src={avatar1} alt="" />

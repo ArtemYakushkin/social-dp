@@ -5,6 +5,7 @@
     height: 52px;
     border-radius: 50%;
     background-color: var(--bg-white);
+    color: var(--text-black);
     display: flex;
     align-items: center;
     justify-content: center;

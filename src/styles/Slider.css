@@ -1,7 +1,7 @@
 .aboutSlider {
     position: relative;
     padding: 120px 0 120px 0;
-    background-color: var(--bg-blue);
+    background-color: var(--bg-about);
     background-image: url(../assets/vector.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -116,7 +116,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--bg-white);
+    border: 1px solid var(--text-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,7 +177,7 @@
     border-radius: 30px;
     padding: 16px 46px;
     color: var(--text-white);
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     margin-top: 40px;
 
     &:hover {
@@ -321,7 +321,7 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--accent-blue-color);
+        background: var(--bg-accent-blue-color);
     }
 }
 
@@ -436,6 +436,6 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--accent-blue-color);
+        background: var(--bg-accent-blue-color);
     }
 }

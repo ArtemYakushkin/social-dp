@@ -11,7 +11,7 @@
 .profile-info {
     position: relative;
     width: 100%;
-    background-color: var(--bg-white);
+    background-color: var(--bg-author-info);
     border-radius: 30px;
     overflow: hidden;
     padding-bottom: 30px;
@@ -27,7 +27,7 @@
     border-radius: 50%;
     overflow: hidden;
     background-color: var(--bg-blue-inactive);
-    border: 8px solid var(--bg-white);
+    border: 8px solid var(--text-white);
     box-shadow: 0px 4px 16px 0px #2F7BF626;
 
     img {
@@ -98,13 +98,13 @@
 .profile-item {
     padding: 4px 20px;
     border-radius: 20px;
-    background-color: var(--bg-blue-inactive);
+    background-color: var(--bg-author-country);
 
     p {
         font-weight: 400;
         font-size: 16px;
         line-height: 22.4px;
-        color: var(--text-grey-dark);
+        color: var(--text-author-country);
     }
 
     span {
@@ -123,12 +123,31 @@
 
 .profile-btn-edit {
     padding: 14px 36px;
-    border: 1px solid var(--accent-blue-color);
+    border: 1px solid var(--text-accent-blue-color);
     border-radius: 30px;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
-    color: var(--accent-blue-color);
+    color: var(--text-accent-blue-color);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        border: 1px solid var(--accent-dark-blue-color);
+        color: var(--accent-dark-blue-color);
+    }
+}
+
+.profile-btn-create {
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-white);
+    background-color: var(--bg-accent-blue-color);
 
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;
@@ -141,7 +160,7 @@
 }
 
 .profile-btn-set {
-    color: var(--text-black);
+    color: var(--text-icon-settings);
 }
 
 .profile-tabs {
@@ -249,6 +268,11 @@
         margin: 0 20px;
     }
 
+    .profile-btn-create {
+        width: 640px;
+        margin: 20px 20px 0 20px;
+    }
+
     .profile-tabs {
         gap: 0px;
         margin-bottom: 40px;
@@ -302,7 +326,6 @@
         padding: 10px 20px;
         border-radius: 5px;
         background-color: #EFF2F9CC;
-        ;
     }
 
     .profile-btn-set {
@@ -350,6 +373,11 @@
     }
 
     .profile-btn-edit {
+        width: 329px;
+        margin-bottom: 20px;
+    }
+
+    .profile-btn-create {
         width: 329px;
     }
 

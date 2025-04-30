@@ -369,6 +369,7 @@ const AuthorProfile = () => {
                     <div className="app-line-box">
                       <div></div>
                     </div>
+
                     <ul className="app-status">
                       <li className="app-item">
                         <p>

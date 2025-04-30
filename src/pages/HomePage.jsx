@@ -27,6 +27,10 @@ const HomePage = () => {
   const postsPerPage = 6;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("viewMode", viewMode);
   }, [viewMode]);
 

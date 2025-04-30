@@ -28,7 +28,7 @@ const QuizModal = ({ isOpen, onClose, message }) => {
       <div className="modal">
         <div>{message}</div>
         <button className="modal-btn-close" onClick={onClose}>
-          <IoIosClose size={30} color="var(--text-grey-light)" />
+          <IoIosClose size={30} color="var(--text-grey-dark)" />
         </button>
       </div>
     </div>

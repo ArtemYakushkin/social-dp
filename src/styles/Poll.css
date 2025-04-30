@@ -1,6 +1,6 @@
 .poll {
     padding: 30px;
-    background-color: color-mix(in srgb, var(--bg-blue-inactive), rgba(255, 255, 255, 0.3));
+    background-color: var(--bg-poll-quiz);
 }
 
 .poll-question {
@@ -34,7 +34,7 @@
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
-    color: var(--accent-blue-color);
+    color: var(--bg-accent-blue-color);
 
     &:hover {
         background-color: var(--accent-orange-color);
@@ -66,7 +66,7 @@
 
 .poll-progress-bar {
     width: 100%;
-    background-color: var(--bg-white);
+    background-color: var(--text-white);
     border-radius: 90px;
     overflow: hidden;
     height: 10px;
@@ -75,7 +75,7 @@
 
 .poll-progress {
     height: 100%;
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     border-radius: 10px;
     transition: width 0.5s ease;
     position: relative;

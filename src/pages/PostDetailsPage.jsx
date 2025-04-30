@@ -28,7 +28,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
-import { BsBookmarkFill } from "react-icons/bs";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -423,10 +423,10 @@ const PostDetailsPage = () => {
                           <span>{commentsCount}</span>
                         </div>
                         <button className="details-btn-saved" onClick={handleSavePost}>
-                          {isSaved ? (
-                            <BsBookmarkFill size={24} style={{ color: "var(--text-grey-dark)" }} />
+                          {!auth.currentUser || isSaved ? (
+                            <FaBookmark size={24} />
                           ) : (
-                            <BsBookmarkFill size={24} style={{ color: "var(--text-black)" }} />
+                            <FaRegBookmark size={24} />
                           )}
                         </button>
                       </div>
@@ -635,34 +635,19 @@ const PostDetailsPage = () => {
                       </button>
                     </div>
 
-                    {/* <button className="details-btn-saved" onClick={handleSavePost}>
-                      {isSaved ? (
-                        <BsBookmarkFill size={24} style={{ color: "var(--text-grey-dark)" }} />
-                      ) : (
-                        <BsBookmarkFill size={24} style={{ color: "var(--text-black)" }} />
-                      )}
-                    </button> */}
-
                     <button
                       className="details-btn-saved"
                       onClick={handleSavePost}
                       disabled={!auth.currentUser || isSaved}
                       style={{
                         cursor: !auth.currentUser || isSaved ? "not-allowed" : "pointer",
-                        background: "transparent",
-                        border: "none",
                       }}
                     >
-                      <BsBookmarkFill
-                        size={24}
-                        style={{
-                          color:
-                            !auth.currentUser || isSaved
-                              ? "var(--text-grey-dark)"
-                              : "var(--text-black)",
-                          opacity: !auth.currentUser || isSaved ? 0.5 : 1,
-                        }}
-                      />
+                      {!auth.currentUser || isSaved ? (
+                        <FaBookmark size={24} />
+                      ) : (
+                        <FaRegBookmark size={24} />
+                      )}
                     </button>
                   </div>
 

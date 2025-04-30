@@ -91,7 +91,7 @@ const NotificationsPage = () => {
                   );
                 })
               ) : (
-                <p>No new notifications</p>
+                <p style={{ color: "var(--text-black)" }}>No new notifications</p>
               )}
             </ul>
           </div>

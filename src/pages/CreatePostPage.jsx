@@ -73,64 +73,6 @@ const CreatePostPage = () => {
     setPoll({ ...poll, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!user) {
-  //     alert("You must be logged in to create a post.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const mediaUrls = await Promise.all(
-  //       selectedFiles.map(async (file) => {
-  //         const storageRef = ref(storage, `posts/${file.name}`);
-  //         await uploadBytes(storageRef, file);
-  //         return getDownloadURL(storageRef);
-  //       })
-  //     );
-
-  //     const postData = {
-  //       title,
-  //       text,
-  //       media: mediaUrls,
-  //       createdAt: Timestamp.now().toDate().toISOString(),
-  //       comments: [],
-  //       likes: [],
-  //       views: 0,
-  //       author: {
-  //         uid: user.uid,
-  //       },
-  //     };
-
-  //     if (activeTab === "Quiz") {
-  //       postData.quiz = quiz;
-  //     } else if (activeTab === "Poll") {
-  //       postData.poll = poll;
-  //     }
-
-  //     const postRef = await addDoc(collection(db, "posts"), postData);
-
-  //     const userRef = doc(db, "users", user.uid);
-  //     await updateDoc(userRef, {
-  //       createdPosts: arrayUnion({
-  //         id: postRef.id,
-  //       }),
-  //     });
-
-  //     toast.success("Post created successfully");
-  //     setTitle("");
-  //     setText("");
-  //     setSelectedFiles([]);
-  //     setPreviewImages([]);
-  //     setQuiz({ question: "", answers: [], correctAnswer: null });
-  //     setPoll({ question: "", answers: ["Yes", "No"] });
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error("Error creating post:", error);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 

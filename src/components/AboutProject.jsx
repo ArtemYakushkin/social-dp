@@ -11,8 +11,6 @@ import leter from "../assets/letter.png";
 import leterTablet from "../assets/tablet/letter-tablet.png";
 import leterMobile from "../assets/mobile/letter-mobile.png";
 
-import { FaArrowRight } from "react-icons/fa6";
-
 import "../styles/AboutProject.css";
 
 const AboutProject = () => {
@@ -80,8 +78,7 @@ const AboutProject = () => {
               people from all over the world
             </p>
             <div className="ap-slide-bubble">
-              <p className="ap-slide-speech">Swipe right and find out how it works</p>
-              <FaArrowRight size={24} style={{ color: "var(--accent-blue-color)" }} />
+              <p className="ap-slide-speech">Swipe right and find out how it works</p>{" "}
             </div>
           </div>
           <img className="ap-slide-img-leter" src={getImage()} alt="letter" />

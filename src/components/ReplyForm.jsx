@@ -27,7 +27,6 @@ const notifyNewReply = async (postId, commentId, replyId, sender) => {
   if (commentSnap.exists()) {
     const comment = commentSnap.data();
 
-    // Исправлено здесь: comment.author?.id
     if (comment.author?.id && comment.author.id !== sender.id) {
       await addDoc(collection(db, "notifications"), {
         recipientId: comment.author.id,
@@ -82,48 +81,6 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
     return validator.matches(text, englishTextPattern);
   };
 
-  // const handleReplySubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
-
-  //   if (!replyText.trim()) {
-  //     setError("Reply cannot be empty");
-  //     return;
-  //   }
-
-  //   if (!isValidReply(replyText)) {
-  //     setError("Reply must contain only English letters.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const replyRef = await addDoc(collection(db, "replys"), {
-  //       postId,
-  //       commentId,
-  //       text: replyText,
-  //       author: {
-  //         uid: user.uid,
-  //       },
-  //       createdAt: serverTimestamp(),
-  //     });
-
-  //     const commentRef = doc(db, "comments", commentId);
-  //     await updateDoc(commentRef, {
-  //       replies: arrayUnion(replyRef.id),
-  //     });
-
-  //     setReplyText("");
-  //     toast.success("Reply added successfully!");
-
-  //     if (onReplyAdded) {
-  //       onReplyAdded();
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding reply: ", error);
-  //     setError("Error sending reply");
-  //   }
-  // };
-
   const handleReplySubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -146,7 +103,7 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
         author: {
           uid: user.uid,
           nickname: user.displayName,
-          avatar: user.photoURL || null, // если используешь аватар
+          avatar: user.photoURL || null,
         },
         createdAt: serverTimestamp(),
       });
@@ -156,7 +113,6 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
         replies: arrayUnion(replyRef.id),
       });
 
-      // 🛎 Отправка уведомления
       await notifyNewReply(postId, commentId, replyRef.id, {
         id: user.uid,
         nickname: user.displayName,
@@ -203,7 +159,7 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
           />
           {error && <p className="reply-error">{error}</p>}
           <button className="reply-form-btn" type="submit">
-            <IoSend size={isTablet || isMobile ? "24" : "30"} color="var(--accent-blue-color)" />
+            <IoSend size={isTablet || isMobile ? "24" : "30"} color="var(--bg-accent-blue-color)" />
           </button>
         </form>
       ) : (

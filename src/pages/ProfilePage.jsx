@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
+import { getAuth } from "firebase/auth";
 
 import { useAuth } from "../auth/useAuth";
 import { db } from "../firebase";
@@ -23,6 +24,7 @@ import { LiaIdCardSolid } from "react-icons/lia";
 
 import "react-quill/dist/quill.snow.css";
 import "../styles/ProfilePage.css";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const { user } = useAuth();
@@ -39,12 +41,22 @@ const ProfilePage = () => {
   const [isModalSetting, setIsModalSetting] = useState(false);
   const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "about");
   const [postCount, setPostCount] = useState(0);
-
-  console.log(user);
+  const [author, setAuthor] = useState(null);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+
+  const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(",") || [];
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      setAuthor(authUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("activeTab", activeTab);
@@ -52,8 +64,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (user) {
-      setNickname(user.displayName); // Update nickname from user object
-      setAvatar(user.photoURL || avatarPlaceholder); // Update avatar from user object
+      setNickname(user.displayName);
+      setAvatar(user.photoURL || avatarPlaceholder);
 
       const loadUserProfileData = async () => {
         try {
@@ -96,6 +108,8 @@ const ProfilePage = () => {
 
     fetchUserPosts();
   }, [user]);
+
+  const isAllowed = author && allowedEmails.includes(author.email);
 
   return (
     <>
@@ -158,6 +172,11 @@ const ProfilePage = () => {
                 <button className="profile-btn-edit" onClick={() => setIsModalOpen(true)}>
                   Edit profile information
                 </button>
+                {isAllowed && (
+                  <Link to="/create-post">
+                    <button className="profile-btn-create">Create a post</button>
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -180,7 +199,7 @@ const ProfilePage = () => {
                     }`}
                     onClick={() => setActiveTab("posts")}
                   >
-                    <HiOutlineClipboardDocumentList size={24} /> ({postCount})
+                    <HiOutlineClipboardDocumentList size={24} />
                   </button>
                 )}
                 <button
@@ -276,9 +295,15 @@ const ProfilePage = () => {
                   </button>
                 </div>
               </div>
+
               <button className="profile-btn-edit" onClick={() => setIsModalOpen(true)}>
                 Edit profile information
               </button>
+              {isAllowed && (
+                <Link to="/create-post">
+                  <button className="profile-btn-create">Create a post</button>
+                </Link>
+              )}
             </div>
 
             <div className="profile-tabs">
@@ -299,7 +324,7 @@ const ProfilePage = () => {
                   }`}
                   onClick={() => setActiveTab("posts")}
                 >
-                  <HiOutlineClipboardDocumentList size={24} /> Posts ({postCount})
+                  <HiOutlineClipboardDocumentList size={24} /> Posts
                 </button>
               )}
               <button
@@ -397,6 +422,11 @@ const ProfilePage = () => {
                     <button className="profile-btn-edit" onClick={() => setIsModalOpen(true)}>
                       Edit profile information
                     </button>
+                    {isAllowed && (
+                      <Link to="/create-post">
+                        <button className="profile-btn-create">Create a post</button>
+                      </Link>
+                    )}
                     <button className="profile-btn-set" onClick={() => setIsModalSetting(true)}>
                       <FiSettings size={28} />
                     </button>
@@ -424,7 +454,7 @@ const ProfilePage = () => {
                     }`}
                     onClick={() => setActiveTab("posts")}
                   >
-                    <HiOutlineClipboardDocumentList size={24} /> Posts ({postCount})
+                    <HiOutlineClipboardDocumentList size={24} /> Posts
                   </button>
                 )}
                 <button

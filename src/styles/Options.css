@@ -49,7 +49,7 @@
     top: 70px;
     left: 110px;
     width: 154px;
-    background-color: var(--bg-white);
+    background-color: var(--bg-register-drop-list);
     padding: 10px 0px;
     border-radius: 10px;
     z-index: 10;
@@ -100,7 +100,7 @@
     position: absolute;
     top: 50%;
     right: 25px;
-    color: var(--text-grey-light);
+    color: var(--bg-accent-blue-color);
     transform: translateY(-50%);
 }
 
@@ -111,9 +111,9 @@
 
 .options-choise-title {
     font-weight: 400;
-    font-size: 18px;
-    line-height: 28.8px;
-    color: var(--text-black);
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-grey-light);
     margin-right: 12px;
 }
 
@@ -147,7 +147,7 @@
     div {
         width: 11px;
         height: 11px;
-        background-color: var(--accent-blue-color);
+        background-color: var(--bg-accent-blue-color);
         border-radius: 2px;
     }
 }
@@ -179,7 +179,7 @@
     div {
         width: 24px;
         height: 6px;
-        background-color: var(--accent-blue-color);
+        background-color: var(--bg-accent-blue-color);
         border-radius: 2px;
     }
 }
@@ -192,9 +192,9 @@
 
 .options-switcher-title {
     font-weight: 400;
-    font-size: 18px;
-    line-height: 28.8px;
-    color: var(--text-black);
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-grey-light);
 }
 
 .options-switcher-box {
@@ -223,7 +223,7 @@
     position: relative;
     width: 40px;
     height: 20px;
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -233,7 +233,7 @@
         position: absolute;
         width: 16px;
         height: 16px;
-        background-color: var(--bg-white);
+        background-color: var(--bg-switcher);
         border-radius: 50%;
         top: 2px;
         left: 2px;
@@ -242,13 +242,13 @@
 }
 
 .options-switcher-icon {
-    color: var(--accent-blue-color);
+    color: var(--bg-accent-blue-color);
     opacity: 0.4;
     cursor: pointer;
 }
 
 .options-switcher-icon-active {
-    color: var(--accent-blue-color);
+    color: var(--bg-accent-blue-color);
 }
 
 
@@ -293,7 +293,7 @@
 
     .options-search-icon {
         right: 8px;
-        color: var(--accent-blue-color);
+        color: var(--bg-accent-blue-color);
     }
 
     .options-choise-title {
@@ -350,7 +350,7 @@
 
     .options-search-icon {
         right: 5px;
-        color: var(--accent-blue-color);
+        color: var(--bg-accent-blue-color);
     }
 
     .options-choise-title {
@@ -362,7 +362,7 @@
     }
 
     .options-switcher-btn {
-        color: var(--accent-blue-color);
+        color: var(--bg-accent-blue-color);
     }
 
 }

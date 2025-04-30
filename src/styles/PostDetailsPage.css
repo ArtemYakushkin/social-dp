@@ -5,7 +5,7 @@
 .details-wrapper {
     width: 100%;
     padding: 30px 0;
-    background-color: var(--bg-white);
+    background-color: var(--bg-post-wrapp);
     box-shadow: 0px 4px 16px 0px #2F7BF626;
     border-radius: 30px;
     margin-bottom: 60px;
@@ -67,13 +67,13 @@
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
-    color: var(--accent-blue-color);
+    color: var(--text-accent-blue-color);
     text-decoration: underline;
 }
 
 .details-edit-post-btn {
     padding: 14px 36px;
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     border-radius: 30px;
     font-weight: 600;
     font-size: 20px;
@@ -160,7 +160,7 @@
     gap: 6px;
     padding: 6px 8px;
     border-radius: 5px;
-    background-color: var(--bg-blue-inactive);
+    background-color: var(--bg-icon-wrapp);
 
     span {
         font-weight: 400;
@@ -185,7 +185,7 @@
     gap: 5px;
 
     &:hover {
-        color: var(--accent-blue-color);
+        color: var(--bg-accent-blue-color);
     }
 }
 
@@ -195,7 +195,8 @@
     justify-content: center;
     padding: 6px 8px;
     border-radius: 5px;
-    background-color: var(--bg-blue-inactive);
+    background-color: var(--bg-icon-wrapp);
+    color: var(--text-black);
     margin-left: auto;
     margin-right: 40px;
 }
@@ -230,12 +231,12 @@
 
 .details-btn-return {
     padding: 20px 56px;
-    border: 1px solid var(--accent-blue-color);
+    border: 1px solid var(--text-accent-blue-color);
     border-radius: 30px;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
-    color: var(--accent-blue-color);
+    color: var(--text-accent-blue-color);
 
     &:hover {
         box-shadow: 0px 4px 4px 0px #2F7BF640;

@@ -101,6 +101,7 @@
 @media (max-width: 767px) {
     .notifi {
         padding: 90px 0;
+        margin-top: 81px;
     }
 
     .notifi-wrapp {

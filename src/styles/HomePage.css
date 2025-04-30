@@ -33,7 +33,7 @@
     line-height: 24px;
     color: var(--text-white);
     padding: 20px 56px;
-    background-color: var(--accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
     border-radius: 30px;
 
     &:hover {
