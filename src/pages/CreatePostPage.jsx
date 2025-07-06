@@ -150,9 +150,11 @@ const CreatePostPage = () => {
           recipientId: doc.id,
           type: "new_post",
           postId,
+          postTitle: title,
           sender: senderData,
-          message: `${senderData.nickname} published a new post`,
+          message: `${senderData.nickname} published a new post "${title}"`,
           createdAt: serverTimestamp(),
+          read: false,
         });
       }
     });

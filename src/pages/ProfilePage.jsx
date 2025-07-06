@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  orderBy,
+} from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 import { getAuth } from "firebase/auth";
+import ReactQuill from "react-quill";
+import Modal from "react-modal";
 
 import { useAuth } from "../auth/useAuth";
 import { db } from "../firebase";
@@ -10,9 +22,10 @@ import ModalProfileEdit from "../components/ModalProfileEdit";
 import ProfilePosts from "../components/ProfilePosts";
 import SavedPosts from "../components/SavedPosts";
 import ModalUpdateCredentials from "../components/ModalUpdateCredentials";
+import ModalImageBig from "../components/ModalImageBig";
 
 import avatarPlaceholder from "../assets/avatar.png";
-import coverPlaceholder from "../assets/cover-img.jpg";
+import coverPlaceholder from "../assets/cover-img.png";
 import facebook from "../assets/facebook.png";
 import instagram from "../assets/instagram.png";
 import telegram from "../assets/telegram.png";
@@ -21,10 +34,13 @@ import { FiSettings } from "react-icons/fi";
 import { LuBookmark } from "react-icons/lu";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { LiaIdCardSolid } from "react-icons/lia";
+import { BiMessageRoundedDots } from "react-icons/bi";
+import { RiInformationLine } from "react-icons/ri";
 
 import "react-quill/dist/quill.snow.css";
 import "../styles/ProfilePage.css";
-import { Link } from "react-router-dom";
+
+Modal.setAppElement("#root");
 
 const ProfilePage = () => {
   const { user } = useAuth();
@@ -39,12 +55,19 @@ const ProfilePage = () => {
   const [telegramLink, setTelegramLink] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSetting, setIsModalSetting] = useState(false);
+  const [isModalImage, setIsModalImage] = useState(false);
   const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "about");
   const [postCount, setPostCount] = useState(0);
   const [author, setAuthor] = useState(null);
+  const [tempAboutMe, setTempAboutMe] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isEditingAbout, setIsEditingAbout] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [modalImageUrl, setModalImageUrl] = useState(null);
+
+  const navigate = useNavigate();
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
 
   const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(",") || [];
@@ -109,7 +132,54 @@ const ProfilePage = () => {
     fetchUserPosts();
   }, [user]);
 
+  useEffect(() => {
+    if (!user) return;
+
+    const messagesRef = collection(db, "authorMessages");
+
+    const q = query(messagesRef, where("authorId", "==", user.uid), orderBy("createdAt", "desc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const msgs = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMessages(msgs);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
   const isAllowed = author && allowedEmails.includes(author.email);
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
+
+  const handlePublishAboutMe = async () => {
+    const englishOnlyRegex = /^[\x00-\x7F\s.,!?'"()\-:;]+$/;
+
+    const plainText = stripHtml(tempAboutMe).trim();
+
+    if (plainText && !englishOnlyRegex.test(plainText)) {
+      setErrors({ aboutMe: "Please use English characters only." });
+      return;
+    }
+
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, { aboutMe: tempAboutMe });
+
+      setAboutMe(tempAboutMe);
+      setIsEditingAbout(false);
+      setErrors({});
+    } catch (error) {
+      console.error("Error updating About Me:", error);
+      setErrors({ aboutMe: "Failed to save. Please try again." });
+    }
+  };
 
   return (
     <>
@@ -190,6 +260,14 @@ const ProfilePage = () => {
                 >
                   <LiaIdCardSolid size={24} /> About
                 </button>
+                <button
+                  className={`profile-tabs-btn ${
+                    activeTab === "message" ? "profile-tabs-btn-active" : ""
+                  }`}
+                  onClick={() => setActiveTab("message")}
+                >
+                  <BiMessageRoundedDots size={24} />
+                </button>
                 {postCount === 0 ? (
                   <></>
                 ) : (
@@ -215,14 +293,133 @@ const ProfilePage = () => {
               <div className="profile-tabs-content">
                 {activeTab === "about" && (
                   <div className="profile-about">
-                    <h2>About Me</h2>
-                    <p
-                      className="profile-about-text"
-                      dangerouslySetInnerHTML={{
-                        __html: aboutMe,
-                      }}
-                    ></p>
+                    <div className="profile-about-header">
+                      <h2 className="profile-about-title">About Me</h2>
+                      <button
+                        className="profile-about-btn-edit"
+                        onClick={() => {
+                          setTempAboutMe(aboutMe);
+                          setIsEditingAbout(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                    {stripHtml(aboutMe).trim() ? (
+                      <p
+                        className="profile-about-text"
+                        dangerouslySetInnerHTML={{
+                          __html: aboutMe,
+                        }}
+                      ></p>
+                    ) : (
+                      <p className="profile-about-text-not-yet">
+                        You haven't written anything about yourself yet.
+                      </p>
+                    )}
+                    {isEditingAbout && (
+                      <div className="profile-about-container">
+                        <div className="profile-about-box">
+                          <ReactQuill value={tempAboutMe} onChange={setTempAboutMe} theme="snow" />
+                        </div>
+                        {errors.aboutMe && (
+                          <span className="profile-about-error">{errors.aboutMe}</span>
+                        )}
+                        <div className="profile-about-actions">
+                          <button
+                            className="profile-about-actions-btn profile-about-actions-btn-close"
+                            onClick={() => setIsEditingAbout(false)}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="profile-about-actions-btn profile-about-actions-btn-publish"
+                            onClick={handlePublishAboutMe}
+                          >
+                            Publish
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
+                )}
+
+                {activeTab === "message" && (
+                  <>
+                    {messages.length > 0 ? (
+                      <div className="profile-message">
+                        <ul className="profile-message-list">
+                          {messages.map((msg) => (
+                            <li className="profile-message-item" key={msg.id}>
+                              <div
+                                className="profile-message-avatar"
+                                onClick={() => navigate(`/author/${msg.senderId}`)}
+                              >
+                                {msg.senderAvatar ? (
+                                  <img src={msg.senderAvatar} alt="Avatar" />
+                                ) : (
+                                  <div className="profile-message-avatar-initial">
+                                    {msg.senderNickname
+                                      ? msg.senderNickname.charAt(0).toUpperCase()
+                                      : "U"}
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="profile-message-content">
+                                <div className="profile-message-info">
+                                  <p className="profile-message-author">{msg.senderNickname}</p>
+                                  <p className="profile-message-date">
+                                    {msg.createdAt && msg.createdAt.toDate
+                                      ? msg.createdAt.toDate().toLocaleString("ru-RU", {
+                                          timeZone: "Europe/Moscow",
+                                          year: "numeric",
+                                          month: "2-digit",
+                                          day: "2-digit",
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })
+                                      : "Date not available"}
+                                  </p>
+                                </div>
+
+                                <p className="profile-message-text">{msg.message}</p>
+
+                                {msg.gif && (
+                                  <div
+                                    className="profile-message-media"
+                                    onClick={() => {
+                                      setModalImageUrl(msg.gif);
+                                      setIsModalImage(true);
+                                    }}
+                                  >
+                                    <img src={msg.gif} alt="gif" />
+                                  </div>
+                                )}
+
+                                {msg.image && (
+                                  <div
+                                    className="profile-message-media"
+                                    onClick={() => {
+                                      setModalImageUrl(msg.image);
+                                      setIsModalImage(true);
+                                    }}
+                                  >
+                                    <img src={msg.image} alt="message" />
+                                  </div>
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      <div className="profile-message-noyet-box">
+                        <RiInformationLine size={24} />
+                        <p className="profile-message-noyet">No one has written to you yet.</p>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {activeTab === "posts" && (
@@ -248,29 +445,28 @@ const ProfilePage = () => {
 
               <img className="profile-cover" src={cover || coverPlaceholder} alt="Profile Cover" />
 
-              <div className="profile-personal">
-                <h1 className="profile-nickname">{nickname}</h1>
-                <div className="profile-social">
-                  {(facebookLink || instagramLink || telegramLink) && (
-                    <p className="profile-contacts">Contacts:</p>
-                  )}
-                  {facebookLink && (
-                    <a href={facebookLink} target="_blank" rel="noopener noreferrer">
-                      <img src={facebook} alt="facebook" />
-                    </a>
-                  )}
-                  {instagramLink && (
-                    <a href={instagramLink} target="_blank" rel="noopener noreferrer">
-                      <img src={instagram} alt="instagram" />
-                    </a>
-                  )}
-                  {telegramLink && (
-                    <a href={telegramLink} target="_blank" rel="noopener noreferrer">
-                      <img src={telegram} alt="telegram" />
-                    </a>
-                  )}
-                </div>
+              <div className="profile-social">
+                {(facebookLink || instagramLink || telegramLink) && (
+                  <p className="profile-contacts">Contacts:</p>
+                )}
+                {facebookLink && (
+                  <a href={facebookLink} target="_blank" rel="noopener noreferrer">
+                    <img src={facebook} alt="facebook" />
+                  </a>
+                )}
+                {instagramLink && (
+                  <a href={instagramLink} target="_blank" rel="noopener noreferrer">
+                    <img src={instagram} alt="instagram" />
+                  </a>
+                )}
+                {telegramLink && (
+                  <a href={telegramLink} target="_blank" rel="noopener noreferrer">
+                    <img src={telegram} alt="telegram" />
+                  </a>
+                )}
               </div>
+
+              <h1 className="profile-nickname">{nickname}</h1>
 
               <div className="profile-line-box">
                 <div></div>
@@ -315,6 +511,14 @@ const ProfilePage = () => {
               >
                 <LiaIdCardSolid size={24} /> About
               </button>
+              <button
+                className={`profile-tabs-btn ${
+                  activeTab === "message" ? "profile-tabs-btn-active" : ""
+                }`}
+                onClick={() => setActiveTab("message")}
+              >
+                <BiMessageRoundedDots size={24} /> Messages
+              </button>
               {postCount === 0 ? (
                 <></>
               ) : (
@@ -340,14 +544,133 @@ const ProfilePage = () => {
             <div className="profile-tabs-content">
               {activeTab === "about" && (
                 <div className="profile-about">
-                  <h2>About Me</h2>
-                  <p
-                    className="profile-about-text"
-                    dangerouslySetInnerHTML={{
-                      __html: aboutMe,
-                    }}
-                  ></p>
+                  <div className="profile-about-header">
+                    <h2 className="profile-about-title">About Me</h2>
+                    <button
+                      className="profile-about-btn-edit"
+                      onClick={() => {
+                        setTempAboutMe(aboutMe);
+                        setIsEditingAbout(true);
+                      }}
+                    >
+                      Edit information
+                    </button>
+                  </div>
+                  {stripHtml(aboutMe).trim() ? (
+                    <p
+                      className="profile-about-text"
+                      dangerouslySetInnerHTML={{
+                        __html: aboutMe,
+                      }}
+                    ></p>
+                  ) : (
+                    <p className="profile-about-text-not-yet">
+                      You haven't written anything about yourself yet.
+                    </p>
+                  )}
+                  {isEditingAbout && (
+                    <div className="profile-about-container">
+                      <div className="profile-about-box">
+                        <ReactQuill value={tempAboutMe} onChange={setTempAboutMe} theme="snow" />
+                      </div>
+                      {errors.aboutMe && (
+                        <span className="profile-about-error">{errors.aboutMe}</span>
+                      )}
+                      <div className="profile-about-actions">
+                        <button
+                          className="profile-about-actions-btn profile-about-actions-btn-close"
+                          onClick={() => setIsEditingAbout(false)}
+                        >
+                          Close
+                        </button>
+                        <button
+                          className="profile-about-actions-btn profile-about-actions-btn-publish"
+                          onClick={handlePublishAboutMe}
+                        >
+                          Publish
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
+              )}
+
+              {activeTab === "message" && (
+                <>
+                  {messages.length > 0 ? (
+                    <div className="profile-message">
+                      <ul className="profile-message-list">
+                        {messages.map((msg) => (
+                          <li className="profile-message-item" key={msg.id}>
+                            <div
+                              className="profile-message-avatar"
+                              onClick={() => navigate(`/author/${msg.senderId}`)}
+                            >
+                              {msg.senderAvatar ? (
+                                <img src={msg.senderAvatar} alt="Avatar" />
+                              ) : (
+                                <div className="profile-message-avatar-initial">
+                                  {msg.senderNickname
+                                    ? msg.senderNickname.charAt(0).toUpperCase()
+                                    : "U"}
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="profile-message-content">
+                              <div className="profile-message-info">
+                                <p className="profile-message-author">{msg.senderNickname}</p>
+                                <p className="profile-message-date">
+                                  {msg.createdAt && msg.createdAt.toDate
+                                    ? msg.createdAt.toDate().toLocaleString("ru-RU", {
+                                        timeZone: "Europe/Moscow",
+                                        year: "numeric",
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                      })
+                                    : "Date not available"}
+                                </p>
+                              </div>
+
+                              <p className="profile-message-text">{msg.message}</p>
+
+                              {msg.gif && (
+                                <div
+                                  className="profile-message-media"
+                                  onClick={() => {
+                                    setModalImageUrl(msg.gif);
+                                    setIsModalImage(true);
+                                  }}
+                                >
+                                  <img src={msg.gif} alt="gif" />
+                                </div>
+                              )}
+
+                              {msg.image && (
+                                <div
+                                  className="profile-message-media"
+                                  onClick={() => {
+                                    setModalImageUrl(msg.image);
+                                    setIsModalImage(true);
+                                  }}
+                                >
+                                  <img src={msg.image} alt="message" />
+                                </div>
+                              )}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="profile-message-noyet-box">
+                      <RiInformationLine size={24} />
+                      <p className="profile-message-noyet">No one has written to you yet.</p>
+                    </div>
+                  )}
+                </>
               )}
 
               {activeTab === "posts" && (
@@ -445,6 +768,14 @@ const ProfilePage = () => {
                 >
                   <LiaIdCardSolid size={24} /> About
                 </button>
+                <button
+                  className={`profile-tabs-btn ${
+                    activeTab === "message" ? "profile-tabs-btn-active" : ""
+                  }`}
+                  onClick={() => setActiveTab("message")}
+                >
+                  <BiMessageRoundedDots size={24} /> Messages
+                </button>
                 {postCount === 0 ? (
                   <></>
                 ) : (
@@ -470,14 +801,133 @@ const ProfilePage = () => {
               <div className="profile-tabs-content">
                 {activeTab === "about" && (
                   <div className="profile-about">
-                    <h2>About Me</h2>
-                    <p
-                      className="profile-about-text"
-                      dangerouslySetInnerHTML={{
-                        __html: aboutMe,
-                      }}
-                    ></p>
+                    <div className="profile-about-header">
+                      <h2 className="profile-about-title">About Me</h2>
+                      <button
+                        className="profile-about-btn-edit"
+                        onClick={() => {
+                          setTempAboutMe(aboutMe);
+                          setIsEditingAbout(true);
+                        }}
+                      >
+                        Edit information
+                      </button>
+                    </div>
+                    {stripHtml(aboutMe).trim() ? (
+                      <p
+                        className="profile-about-text"
+                        dangerouslySetInnerHTML={{
+                          __html: aboutMe,
+                        }}
+                      ></p>
+                    ) : (
+                      <p className="profile-about-text-not-yet">
+                        You haven't written anything about yourself yet.
+                      </p>
+                    )}
+                    {isEditingAbout && (
+                      <div className="profile-about-container">
+                        <div className="profile-about-box">
+                          <ReactQuill value={tempAboutMe} onChange={setTempAboutMe} theme="snow" />
+                        </div>
+                        {errors.aboutMe && (
+                          <span className="profile-about-error">{errors.aboutMe}</span>
+                        )}
+                        <div className="profile-about-actions">
+                          <button
+                            className="profile-about-actions-btn profile-about-actions-btn-close"
+                            onClick={() => setIsEditingAbout(false)}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="profile-about-actions-btn profile-about-actions-btn-publish"
+                            onClick={handlePublishAboutMe}
+                          >
+                            Publish
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
+                )}
+
+                {activeTab === "message" && (
+                  <>
+                    {messages.length > 0 ? (
+                      <div className="profile-message">
+                        <ul className="profile-message-list">
+                          {messages.map((msg) => (
+                            <li className="profile-message-item" key={msg.id}>
+                              <div
+                                className="profile-message-avatar"
+                                onClick={() => navigate(`/author/${msg.senderId}`)}
+                              >
+                                {msg.senderAvatar ? (
+                                  <img src={msg.senderAvatar} alt="Avatar" />
+                                ) : (
+                                  <div className="profile-message-avatar-initial">
+                                    {msg.senderNickname
+                                      ? msg.senderNickname.charAt(0).toUpperCase()
+                                      : "U"}
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="profile-message-content">
+                                <div className="profile-message-info">
+                                  <p className="profile-message-author">{msg.senderNickname}</p>
+                                  <p className="profile-message-date">
+                                    {msg.createdAt && msg.createdAt.toDate
+                                      ? msg.createdAt.toDate().toLocaleString("ru-RU", {
+                                          timeZone: "Europe/Moscow",
+                                          year: "numeric",
+                                          month: "2-digit",
+                                          day: "2-digit",
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })
+                                      : "Date not available"}
+                                  </p>
+                                </div>
+
+                                <p className="profile-message-text">{msg.message}</p>
+
+                                {msg.gif && (
+                                  <div
+                                    className="profile-message-media"
+                                    onClick={() => {
+                                      setModalImageUrl(msg.gif);
+                                      setIsModalImage(true);
+                                    }}
+                                  >
+                                    <img src={msg.gif} alt="gif" />
+                                  </div>
+                                )}
+
+                                {msg.image && (
+                                  <div
+                                    className="profile-message-media"
+                                    onClick={() => {
+                                      setModalImageUrl(msg.image);
+                                      setIsModalImage(true);
+                                    }}
+                                  >
+                                    <img src={msg.image} alt="message" />
+                                  </div>
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      <div className="profile-message-noyet-box">
+                        <RiInformationLine size={24} />
+                        <p className="profile-message-noyet">No one has written to you yet.</p>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {activeTab === "posts" && (
@@ -522,7 +972,16 @@ const ProfilePage = () => {
             onClose={() => setIsModalOpen(false)}
           />
         )}
+
         {isModalSetting && <ModalUpdateCredentials onClose={() => setIsModalSetting(false)} />}
+
+        {isModalImage && (
+          <ModalImageBig
+            imageUrl={modalImageUrl}
+            onClose={() => setIsModalImage(false)}
+            isOpen={isModalImage}
+          />
+        )}
       </div>
       <PopularPosts />
     </>

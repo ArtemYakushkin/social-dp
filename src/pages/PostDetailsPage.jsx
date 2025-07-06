@@ -20,8 +20,6 @@ import PopularPosts from "../components/PopularPosts";
 import ShareBlock from "../components/ShareBlok";
 import UnregisteredModal from "../components/UnregisteredModal";
 
-import avatar from "../assets/avatar.png";
-
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -261,7 +259,13 @@ const PostDetailsPage = () => {
                     <div className="details-author-box">
                       <div className="details-author-info">
                         <div className="details-author-img" onClick={handleAvatarClick}>
-                          <img src={author?.avatar || avatar} alt="" />
+                          {author?.avatar ? (
+                            <img src={author.avatar} alt="Post author" />
+                          ) : (
+                            <div className="details-avatar-placeholder">
+                              {author?.nickname ? author.nickname.charAt(0).toUpperCase() : "U"}
+                            </div>
+                          )}
                         </div>
                         <div className="details-author-nickname-box">
                           <p className="details-author-nickname" onClick={handleAvatarClick}>
@@ -461,7 +465,13 @@ const PostDetailsPage = () => {
                   <div className="details-author-box">
                     <div className="details-author-info">
                       <div className="details-author-img" onClick={handleAvatarClick}>
-                        <img src={author?.avatar || avatar} alt="" />
+                        {author?.avatar ? (
+                          <img src={author.avatar} alt="Post author" />
+                        ) : (
+                          <div className="details-avatar-placeholder">
+                            {author?.nickname ? author.nickname.charAt(0).toUpperCase() : "U"}
+                          </div>
+                        )}
                       </div>
                       <div className="details-author-nickname-box">
                         <p className="details-author-nickname" onClick={handleAvatarClick}>

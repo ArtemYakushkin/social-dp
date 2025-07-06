@@ -25,7 +25,7 @@ const QuizModal = ({ isOpen, onClose, message }) => {
 
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className="modal">
+      <div className="modal quiz-modal">
         <div>{message}</div>
         <button className="modal-btn-close" onClick={onClose}>
           <IoIosClose size={30} color="var(--text-grey-dark)" />

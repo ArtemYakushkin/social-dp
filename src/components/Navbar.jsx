@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 import { useAuth } from "../auth/useAuth";
+import { ThemeContext } from "../context/ThemeContext";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import MobileMenu from "./MobileMenu";
 import NotificationsIcon from "./NotificationsIcon";
+import ModalLogout from "./ModalLogout";
 
 import logo1 from "../assets/logo-1.svg";
 import logo2 from "../assets/logo-2.svg";
@@ -15,6 +17,7 @@ import logo2mob from "../assets/mobile/logo-2-mobile.svg";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FiLogOut, FiUser } from "react-icons/fi";
+import { LuSun, LuMoon } from "react-icons/lu";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -23,8 +26,12 @@ const Navbar = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const isDarkTheme = theme === "dark";
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
@@ -75,7 +82,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="container">
         <div className="navbar-content">
-          <Link to={"/"} className="navbar-logo">
+          <Link to={"/"} className="navbar-logo" onClick={closeMenu}>
             {isMobile ? (
               <>
                 <img className="logo-img-1" src={logo1mob} alt="logo" />
@@ -110,7 +117,7 @@ const Navbar = () => {
 
               <NotificationsIcon currentUser={user} />
 
-              <div className="navbar-avatar">
+              <div className="navbar-avatar" onClick={() => navigate("/profile")}>
                 {user.photoURL ? (
                   <img src={user.photoURL} alt="avatar" />
                 ) : (
@@ -126,11 +133,25 @@ const Navbar = () => {
                     <div className="navbar-dropdown-nickname-box">
                       <p className="navbar-nickname">{user.displayName || "User"}</p>
                     </div>
+
                     <div className="navbar-dropdown-item" onClick={() => navigate("/profile")}>
                       <FiUser style={{ color: "var(--text-grey-dark)" }} size={24} />
                       <p className="navbar-dropdown-item-text">Profile</p>
                     </div>
-                    <div className="navbar-dropdown-item" onClick={logout}>
+
+                    <div className="navbar-dropdown-item" onClick={toggleTheme}>
+                      {isDarkTheme ? (
+                        <LuSun size={24} style={{ color: "var(--text-grey-dark)" }} />
+                      ) : (
+                        <LuMoon size={24} style={{ color: "var(--text-grey-dark)" }} />
+                      )}
+                      <p className="navbar-dropdown-item-text">Change theme to dark</p>
+                    </div>
+
+                    <div
+                      className="navbar-dropdown-item"
+                      onClick={() => setIsLogoutModalOpen(true)}
+                    >
                       <FiLogOut
                         style={{ color: "var(--text-grey-dark)", transform: "rotate(180deg)" }}
                         size={24}
@@ -168,7 +189,13 @@ const Navbar = () => {
               >
                 Register
               </button>
-              <button className="navbar-btn navbar-login" onClick={() => setIsLoginModalOpen(true)}>
+              <button
+                className="navbar-btn navbar-login"
+                onClick={() => {
+                  setIsLoginModalOpen(true);
+                  closeMenu();
+                }}
+              >
                 Sign in
               </button>
 
@@ -210,7 +237,14 @@ const Navbar = () => {
         user={user}
         logout={logout}
         closeMenu={closeMenu}
+        onClose={() => setIsLogoutModalOpen(false)}
+        openLogout={() => setIsLogoutModalOpen(true)}
+        modalLogout={isLogoutModalOpen}
       />
+
+      {isLogoutModalOpen && (
+        <ModalLogout logout={logout} onClose={() => setIsLogoutModalOpen(false)} />
+      )}
     </div>
   );
 };

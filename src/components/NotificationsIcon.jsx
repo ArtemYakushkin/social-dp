@@ -12,7 +12,12 @@ const NotificationsIcon = ({ currentUser }) => {
 
   useEffect(() => {
     if (!currentUser) return;
-    const q = query(collection(db, "notifications"), where("recipientId", "==", currentUser.uid));
+
+    const q = query(
+      collection(db, "notifications"),
+      where("recipientId", "==", currentUser.uid),
+      where("read", "==", false)
+    );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setNotifications(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));

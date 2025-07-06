@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import validator from "validator";
 import countryList from "react-select-country-list";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -10,7 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../firebase";
 import Loader from "../components/Loader";
 
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { PiEyeClosed, PiEye } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
 import { VscError } from "react-icons/vsc";
@@ -29,14 +27,12 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [avatarFile, setAvatarFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState({});
+  const [error, setError] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const countries = countryList().getData();
   const professions = ["Teacher", "Student"];
   const dropdownHeaderRef = useRef(null);
-
-  const handleCloseModal = () => {
-    if (onClose) onClose();
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -93,6 +89,8 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage({});
+    setError({});
+    setSuccessMessage("");
     if (!validateFields()) return;
 
     setLoading(true);
@@ -134,8 +132,7 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
       const userRef = doc(collection(db, "users"), user.uid);
       await setDoc(userRef, userData, { merge: true });
 
-      // toast.success("Registration successful!");
-      console.log("Registration successful!");
+      setSuccessMessage("Registration successful!");
 
       if (onClose) {
         onClose();
@@ -144,14 +141,11 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
     } catch (error) {
       console.error("Registration error:", error);
       if (error.code === "auth/email-already-in-use") {
-        toast.error("User with this email already exists.");
+        setError({ general: "User with this email already exists." });
+      } else if (error.message.includes("Error saving user data")) {
+        setError({ general: "Failed to save user data." });
       } else {
-        // toast.error("Error during registration.");
-        console.log("Error during registration.");
-      }
-
-      if (error.message.includes("Error saving user data")) {
-        toast.error("Failed to save user data.");
+        setError({ general: "Error during registration." });
       }
     } finally {
       setLoading(false);
@@ -159,7 +153,7 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
   };
 
   return (
-    <div className={`register ${isVisible ? "register-active" : ""}`} onClick={handleCloseModal}>
+    <div className={`register ${isVisible ? "register-active" : ""}`}>
       {loading ? (
         <Loader />
       ) : (
@@ -168,6 +162,10 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
           onSubmit={handleSubmit}
           onClick={(e) => e.stopPropagation()}
         >
+          <button className="modal-btn-close" onClick={onClose}>
+            <IoIosClose size={30} color="var(--text-grey-dark)" />
+          </button>
+
           <div className="register-form-scroll">
             <h3 className="register-title title-h3">Register</h3>
             <div className="register-fields">
@@ -370,9 +368,14 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
                 <p className="register-upload-subtext">*optional (you can add an avatar later)</p>
               </div>
             </div>
+
+            {successMessage && <p className="register-success-message">{successMessage}</p>}
+            {error.general && <p className="register-error-message">{error.general}</p>}
+
             <button className="register-btn" type="submit">
               Register
             </button>
+
             <div className="register-link-box">
               <p className="register-link-text">Already have an account?</p>
               <p className="register-link" onClick={openLogin}>

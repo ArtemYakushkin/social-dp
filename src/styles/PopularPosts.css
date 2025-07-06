@@ -54,11 +54,12 @@
 
 .popular-wrapper {
     cursor: pointer;
+    transform: scale(0.95);
 }
 
 @media (min-width: 768px) and (max-width: 1259px) {
     .popular {
-        padding: 90px 0px 151px 0px;
+        padding: 90px 0px 90px 0px;
     }
 
     .popular-title {
@@ -69,21 +70,25 @@
     }
 
     .popular-custom-btn {
-        top: 580px;
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: transparent;
     }
 
     .popular-custom-btn-prev {
-        left: 288px;
+        left: -35px;
     }
 
     .popular-custom-btn-next {
-        right: 288px;
+        right: -35px;
     }
 }
 
 @media (max-width: 767px) {
     .popular {
-        padding: 90px 0px 151px 0px;
+        padding: 90px 0px 90px 0px;
     }
 
     .popular-title {
@@ -94,14 +99,16 @@
     }
 
     .popular-custom-btn {
-        top: 580px;
+        width: 32px;
+        height: 32px;
+        z-index: 20;
     }
 
     .popular-custom-btn-prev {
-        left: 110px;
+        left: -15px;
     }
 
     .popular-custom-btn-next {
-        right: 110px;
+        right: -15px;
     }
 }

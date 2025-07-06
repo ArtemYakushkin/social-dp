@@ -77,14 +77,16 @@ const Options = ({ onSearch, onSort, viewMode, setViewMode }) => {
       </div>
 
       <div className="options-search">
-        <FiSearch className="options-search-icon" size={24} />
-        <input
-          className="options-search-input"
-          type="text"
-          placeholder={isTablet || isMobile ? "" : "Search post"}
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
+        <label>
+          <input
+            className="options-search-input"
+            type="text"
+            placeholder={isTablet || isMobile ? "" : "Search post"}
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <FiSearch className="options-search-icon" size={24} />
+        </label>
       </div>
 
       <div className="options-choise">

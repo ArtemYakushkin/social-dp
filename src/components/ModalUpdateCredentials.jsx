@@ -79,12 +79,10 @@ const ModalUpdateCredentials = ({ onClose }) => {
 
       setErrors(errorMessage);
     }
-
-    // setLoading(false);
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay">
       <div className="modal muc-modal" onClick={(e) => e.stopPropagation()}>
         <button className="modal-btn-close" onClick={onClose}>
           <IoIosClose size={30} color="var(--text-grey-light)" />

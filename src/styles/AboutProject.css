@@ -2,6 +2,9 @@
     position: relative;
     background-color: var(--bg-about);
     padding: 120px 0;
+    background-image: url(../assets/about-vector-1.png), url(../assets/about-vector-2.png);
+    background-repeat: no-repeat, no-repeat;
+    background-position: left bottom, right 100px;
 }
 
 .ap-title {
@@ -12,93 +15,45 @@
     margin-bottom: 40px;
 }
 
-.ap-slide {
+.ap-video-container {
     position: relative;
-    z-index: 1;
     width: 100%;
-    min-height: 467px;
-    padding: 83px 98px 0 0;
-    background-image: url(../assets/stroke.png), url(../assets/map-letter.png);
-    background-repeat: no-repeat, no-repeat;
-    background-position: center, center;
-    background-size: contain, contain;
-    margin-bottom: 82px;
+    aspect-ratio: 16 / 9;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: transparent;
 }
 
-.ap-slide-info {
-    position: relative;
-    padding: 65px 80px;
-    border-radius: 200px;
-    background-color: var(--bg-accent-blue-color);
+.ap-video-element {
+    width: 100%;
+    object-fit: cover;
+}
+
+.ap-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 18px;
-    width: fit-content;
-    margin-left: auto;
-}
-
-.ap-slide-title {
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 38.4px;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--text-input);
     color: var(--text-white);
-    text-align: center;
-    display: inline-block;
-}
-
-.ap-slide-text {
-    width: 610px;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    color: var(--text-white);
-    text-align: center;
-}
-
-.ap-slide-bubble {
-    position: absolute;
-    bottom: -77px;
-    right: 60px;
-    padding: 30px 67px;
-    border-radius: 100px;
-    background-color: var(--accent-yellow-color);
-
-    &::after {
-        content: '';
-        position: absolute;
-        right: -32px;
-        top: 13%;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 30px 0 30px 63px;
-        border-color: transparent transparent transparent var(--accent-yellow-color);
-    }
-}
-
-.ap-slide-speech {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    color: var(--bg-accent-blue-color);
-}
-
-.ap-slide-img-leter {
-    position: absolute;
-    bottom: -60px;
-    left: 50px;
 }
 
 .ap-btn-box {
     display: flex;
     justify-content: center;
     gap: 16px;
+    margin-top: 82px;
 }
 
 .ap-btn {
     padding: 20px 56px;
-
     border-radius: 30px;
     font-weight: 600;
     font-size: 20px;
@@ -127,6 +82,9 @@
 @media (min-width: 768px) and (max-width: 1259px) {
     .ap {
         padding: 90px 0;
+        background-image: none, url(../assets/about-vector-2.png);
+        background-repeat: no-repeat, no-repeat;
+        background-position: left bottom, right 100px;
     }
 
     .ap-title {
@@ -136,84 +94,10 @@
         margin-bottom: 52px;
     }
 
-    .ap-slide {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        min-height: 308px;
-        padding: 85px 0px 0px 82px;
-        background-image: url(../assets/tablet/frame-tablet.png), url(../assets/tablet/map-background.png);
-        background-repeat: no-repeat, no-repeat;
-        background-position: center, center;
-        background-size: contain, contain;
-        margin-bottom: 93px;
-    }
-
-    .ap-slide-info {
-        position: relative;
-        padding: 0px;
-        border-radius: 0px;
-        background-color: transparent;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        width: fit-content;
-        margin-left: 0px;
-        margin-bottom: 0;
-    }
-
-    .ap-slide-title {
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 31.2px;
-        color: var(--text-black);
-        text-align: start;
-        margin-bottom: 0px;
-        display: inline-block;
-    }
-
-    .ap-slide-text {
-        width: 287px;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 16.8px;
-        color: var(--text-black);
-        text-align: start;
-    }
-
-    .ap-slide-bubble {
-        width: 192px;
-        display: flex;
-        align-items: end;
-        position: relative;
-        bottom: 0px;
-        right: 0px;
-        padding: 0px;
-        border-radius: 0px;
-        background-color: transparent;
-
-        &::after {
-            display: none;
-        }
-    }
-
-    .ap-slide-speech {
-        max-width: 164px;
-        font-size: 16px;
-        line-height: 16px;
-    }
-
-    .ap-slide-img-leter {
-        position: absolute;
-        bottom: -60px;
-        left: 335px;
-    }
-
     .ap-btn-box {
         flex-direction: column;
         align-items: center;
-        margin-top: 0;
+        margin-top: 93px;
     }
 }
 
@@ -230,84 +114,15 @@
         margin-bottom: 34px;
     }
 
-    .ap-slide {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        min-height: 198px;
-        padding: 38px 0px 0px 28px;
-        background-image: url(../assets/mobile/frame-mobile.png), url(../assets/mobile/map-background.png);
-        background-repeat: no-repeat, no-repeat;
-        background-position: center, center;
-        background-size: contain, contain;
-        margin-bottom: 42px;
-    }
-
-    .ap-slide-info {
-        position: relative;
-        padding: 0px;
-        border-radius: 0px;
-        background-color: transparent;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        width: fit-content;
-        margin-left: 0px;
-        margin-bottom: 0;
-    }
-
-    .ap-slide-title {
-        font-weight: 700;
-        font-size: 22px;
-        line-height: 26.4px;
-        color: var(--text-black);
-        text-align: start;
-        margin-bottom: 0px;
-        display: inline-block;
-    }
-
-    .ap-slide-text {
-        width: 272px;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 14.4px;
-        color: var(--text-black);
-        text-align: start;
-    }
-
-    .ap-slide-bubble {
-        width: 155px;
-        display: flex;
-        align-items: end;
-        position: relative;
-        bottom: 0px;
-        right: 0px;
-        padding: 0px;
-        border-radius: 0px;
-        background-color: transparent;
-
-        &::after {
-            display: none;
-        }
-    }
-
-    .ap-slide-speech {
-        max-width: 130px;
-        font-size: 14px;
-        line-height: 16.8px;
-    }
-
-    .ap-slide-img-leter {
-        position: absolute;
-        bottom: -23px;
-        left: 187px;
+    .ap-play-button {
+        width: 60px;
+        height: 60px;
     }
 
     .ap-btn-box {
         flex-direction: column;
         align-items: center;
-        margin-top: 0;
+        margin-top: 42px;
     }
 
     .ap-btn {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
-import Robot from "../assets/robby-hello2.svg";
 
 import { IoIosClose } from "react-icons/io";
 
@@ -53,7 +52,7 @@ const UnregisteredModal = ({ isOpen, onClose }) => {
 
         <div className="unreg-wrapp">
           <div className="unreg-img-box">
-            <img className="unreg-img-robot" src={Robot} alt="robot" />
+            <img className="unreg-img-robot" src="/image/robby-hello2.svg" alt="robot" />
           </div>
           <div className="unreg-content">
             <h4 className="unreg-title">Please note</h4>

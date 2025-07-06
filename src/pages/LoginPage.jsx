@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import validator from "validator";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
 import { auth } from "../firebase";
@@ -10,6 +8,7 @@ import Loader from "../components/Loader";
 import { PiEyeClosed, PiEye } from "react-icons/pi";
 import { VscError } from "react-icons/vsc";
 import { FaCheck } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 
 import "../styles/LoginPage.css";
 
@@ -17,6 +16,8 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -32,10 +33,6 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
       setPassword(savedPassword);
     }
   }, []);
-
-  const handleCloseModal = () => {
-    if (onClose) onClose();
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -59,14 +56,15 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage({});
+    setError("");
+    setSuccessMessage("");
     if (!validateFields()) return;
 
     setLoading(true);
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // toast.success("Login successful!");
-      console.log("Login successful!");
+      setSuccessMessage("Login successful!");
 
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
@@ -81,34 +79,40 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
         onCloseUnreg();
       }
     } catch (error) {
-      // toast.error("Error during login.");
-      console.log("Error during login.");
+      setError("Error during login. Please check your credentials.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleResetPassword = async () => {
+    setError("");
+    setSuccessMessage("");
+
     if (!validator.isEmail(email)) {
-      toast.error("Please enter a valid email");
+      setError("Please enter a valid email.");
       return;
     }
 
     try {
       await sendPasswordResetEmail(auth, email);
-      toast.success("Reset email sent!");
+      setSuccessMessage("Reset email sent!");
       setView("confirmReset");
     } catch (error) {
-      toast.error("Error sending reset email.");
+      setError("Error sending reset email.");
     }
   };
 
   return (
-    <div className={`login ${isVisible ? "login-active" : ""}`} onClick={handleCloseModal}>
+    <div className={`login ${isVisible ? "login-active" : ""}`}>
       {loading ? (
         <Loader />
       ) : view === "login" ? (
         <form className="login-form" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
+          <button className="modal-btn-close" onClick={onClose}>
+            <IoIosClose size={30} color="var(--text-grey-dark)" />
+          </button>
+
           <h3 className="login-title">Sign in</h3>
           <div className="login-fields-basic">
             <div className="login-input-group">
@@ -177,6 +181,9 @@ const LoginPage = ({ isVisible, onClose, openRegister, onCloseUnreg }) => {
               Forgot your password?
             </p>
           </div>
+
+          {successMessage && <p className="login-success-message">{successMessage}</p>}
+          {error && <p className="login-error-message">{error}</p>}
 
           <button className="login-btn" type="submit">
             Sign in

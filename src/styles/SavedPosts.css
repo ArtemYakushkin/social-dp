@@ -1,9 +1,22 @@
+.saved-no-posts-box {
+    padding: 20px 10px 20px 13px;
+    background-color: var(--bg-blue-inactive);
+    border-radius: 10px;
+    border-left: 7px solid var(--bg-accent-blue-color);
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bg-accent-blue-color);
+    box-shadow: var(--shadow-dropdown);
+}
+
 .saved-no-posts {
+    margin-top: 2px;
     font-weight: 400;
-    font-size: 18px;
-    line-height: 28.8px;
+    font-size: 16px;
+    line-height: 16px;
     color: var(--text-black);
-    text-align: center;
 }
 
 .saved-list {
@@ -12,21 +25,27 @@
     gap: 30px;
 }
 
-.saved-item {
+.saved-link {
+    display: flex;
     width: 100%;
     border-radius: 30px;
     background-color: var(--bg-white);
     box-shadow: 0px 4px 16px 0px #2F7BF626;
     overflow: hidden;
-    transition: transform 0.3s;
-
-    &:hover {
-        transform: scale(1.05);
-    }
 }
 
-.saved-link {
+.saved-remove-box {
     display: flex;
+    justify-content: end;
+    margin-top: 10px;
+    padding-right: 20px;
+}
+
+.saved-remove-btn {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--bg-accent-blue-color);
 }
 
 .saved-left {

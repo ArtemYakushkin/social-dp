@@ -181,7 +181,7 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
   if (comments.length === 0) {
     return (
       <div className="container">
-        <p className="comment-notcomment-text">There are no comments yet.</p>
+        <p className="comment-notcomment-text">There are no comments yet</p>
       </div>
     );
   }

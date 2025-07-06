@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useMediaQuery } from "react-responsive";
@@ -7,26 +7,23 @@ import { useAuth } from "../auth/useAuth";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 
-import leter from "../assets/letter.png";
-import leterTablet from "../assets/tablet/letter-tablet.png";
-import leterMobile from "../assets/mobile/letter-mobile.png";
+import { MdOutlinePlayCircleOutline } from "react-icons/md";
+
+import poster from "../assets/Cover_video.png";
+import video from "../assets/Promo_Dear_Penfriend.mp4";
 
 import "../styles/AboutProject.css";
 
 const AboutProject = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const videoRef = useRef(null);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
-
-  const getImage = () => {
-    if (isMobile) return leterMobile;
-    if (isTablet) return leterTablet;
-    return leter;
-  };
+  // const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
 
   useEffect(() => {
     if (isRegisterModalOpen || isLoginModalOpen) {
@@ -40,6 +37,27 @@ const AboutProject = () => {
     };
   }, [isRegisterModalOpen, isLoginModalOpen]);
 
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    const handleVideoPlay = () => setIsPlaying(true);
+    const handleVideoPause = () => setIsPlaying(false);
+    const handleVideoEnd = () => {
+      setIsPlaying(false);
+      videoElement.currentTime = 0; // сбрасываем на начало
+    };
+
+    videoElement.addEventListener("play", handleVideoPlay);
+    videoElement.addEventListener("pause", handleVideoPause);
+    videoElement.addEventListener("ended", handleVideoEnd);
+
+    return () => {
+      videoElement.removeEventListener("play", handleVideoPlay);
+      videoElement.removeEventListener("pause", handleVideoPause);
+      videoElement.removeEventListener("ended", handleVideoEnd);
+    };
+  }, []);
+
   const openLogin = () => {
     setIsLoginModalOpen(true);
     setIsRegisterModalOpen(false);
@@ -48,6 +66,11 @@ const AboutProject = () => {
   const openRegister = () => {
     setIsRegisterModalOpen(true);
     setIsLoginModalOpen(false);
+  };
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+    videoRef.current.play();
   };
 
   const handleRegisterClick = () => {
@@ -70,20 +93,20 @@ const AboutProject = () => {
       <div className="container">
         <h2 className="ap-title">About the project</h2>
 
-        <div className="ap-slide">
-          <div className="ap-slide-info">
-            <h4 className="ap-slide-title">What is a Dear Penfriend?</h4>
-            <p className="ap-slide-text">
-              This is a social network for those who want to communicate while learning English with
-              people from all over the world
-            </p>
-            <div className="ap-slide-bubble">
-              <p className="ap-slide-speech">Swipe right and find out how it works</p>{" "}
-            </div>
-          </div>
-          <img className="ap-slide-img-leter" src={getImage()} alt="letter" />
+        <div className="ap-video-container">
+          <video
+            ref={videoRef}
+            src={video}
+            poster={poster}
+            className="ap-video-element"
+            controls={isPlaying}
+          />
+          {!isPlaying && (
+            <button onClick={handlePlay} className="ap-play-button">
+              <MdOutlinePlayCircleOutline size={isMobile ? "60" : "100"} />
+            </button>
+          )}
         </div>
-
         <div className="ap-btn-box">
           <button className="ap-btn ap-btn-learn" onClick={() => navigate("/about")}>
             Learn more about project

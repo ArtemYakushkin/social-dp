@@ -519,59 +519,44 @@ const AboutSlider = () => {
             )}
           </div>
 
-          {/* <div className="aboutSlider-slider">
-            <div
-              className="aboutSlider-slides"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          {/* {!(isMobile || isTablet) && ( */}
+          <>
+            <button
+              className="aboutSlider-prev"
+              onClick={handlePrev}
+              disabled={currentSlide === 0}
+              style={{
+                opacity: currentSlide === 0 ? 0.5 : 1,
+                cursor: currentSlide === 0 ? "default" : "pointer",
+              }}
             >
-              {slides.map((slide, index) => (
-                <div className="aboutSlider-slide" key={index}>
-                  {slide}
-                </div>
-              ))}
-            </div>
-          </div> */}
+              <MdOutlineArrowBackIos size={22} style={{ color: "var(--text-white)" }} />
+            </button>
+            <button
+              className="aboutSlider-next"
+              onClick={handleNext}
+              disabled={currentSlide === slideCount - 1}
+              style={{
+                opacity: currentSlide === slideCount - 1 ? 0.5 : 1,
+                cursor: currentSlide === slideCount - 1 ? "default" : "pointer",
+              }}
+            >
+              <MdOutlineArrowForwardIos size={22} style={{ color: "var(--text-white)" }} />
+            </button>
+          </>
+          {/* )} */}
 
-          {!(isMobile || isTablet) && (
-            <>
-              <button
-                className="aboutSlider-prev"
-                onClick={handlePrev}
-                disabled={currentSlide === 0}
-                style={{
-                  opacity: currentSlide === 0 ? 0.5 : 1,
-                  cursor: currentSlide === 0 ? "default" : "pointer",
-                }}
-              >
-                <MdOutlineArrowBackIos size={22} style={{ color: "var(--text-white)" }} />
-              </button>
-              <button
-                className="aboutSlider-next"
-                onClick={handleNext}
-                disabled={currentSlide === slideCount - 1}
-                style={{
-                  opacity: currentSlide === slideCount - 1 ? 0.5 : 1,
-                  cursor: currentSlide === slideCount - 1 ? "default" : "pointer",
-                }}
-              >
-                <MdOutlineArrowForwardIos size={22} style={{ color: "var(--text-white)" }} />
-              </button>
-            </>
-          )}
-
-          {(isMobile || isTablet) && (
-            <div className="aboutSlider-pagination">
-              {Array.from({ length: slideCount }).map((_, index) => (
-                <span
-                  key={index}
-                  className={`aboutSlider-pagination-dot ${
-                    currentSlide === index ? "aboutSlider-pagination-dot-active" : ""
-                  }`}
-                  onClick={() => setCurrentSlide(index)}
-                ></span>
-              ))}
-            </div>
-          )}
+          <div className="aboutSlider-pagination">
+            {Array.from({ length: slideCount }).map((_, index) => (
+              <span
+                key={index}
+                className={`aboutSlider-pagination-dot ${
+                  currentSlide === index ? "aboutSlider-pagination-dot-active" : ""
+                }`}
+                onClick={() => setCurrentSlide(index)}
+              ></span>
+            ))}
+          </div>
         </div>
 
         {isRegisterModalOpen && (

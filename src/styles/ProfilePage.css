@@ -15,12 +15,12 @@
     border-radius: 30px;
     overflow: hidden;
     padding-bottom: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .profile-avatar-img {
     position: absolute;
-    top: 199px;
+    top: 189px;
     left: 38px;
     width: 282px;
     height: 282px;
@@ -39,13 +39,15 @@
 
 .profile-cover {
     width: 100%;
-    max-height: 368px;
+    height: 368px;
     object-fit: cover;
-    margin-bottom: 55px;
+    margin-bottom: 46px;
 }
 
 .profile-personal {
-    margin: 0px 38px 26px 320px;
+    margin-left: 345px;
+    margin-bottom: 26px;
+    margin-right: 38px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -160,7 +162,7 @@
 }
 
 .profile-btn-set {
-    color: var(--text-icon-settings);
+    color: var(--text-black);
 }
 
 .profile-tabs {
@@ -193,7 +195,7 @@
         content: '';
         width: 100%;
         height: 3px;
-        background-color: var(--accent-blue-color);
+        background-color: var(--bg-accent-blue-color);
         bottom: -1px;
         left: 0;
     }
@@ -204,23 +206,221 @@
     background-color: var(--bg-white);
     border-radius: 30px;
     box-shadow: 0px 4px 16px 0px #2F7BF626;
+}
 
-    h2 {
-        font-weight: 700;
-        font-size: 28px;
-        line-height: 33.6px;
-        color: var(--text-black);
-        margin-bottom: 24px;
+.profile-about-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.profile-about-title {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 33.6px;
+    color: var(--text-black);
+}
+
+.profile-about-btn-edit {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-decoration: underline;
+    color: var(--bg-accent-blue-color);
+}
+
+.profile-about-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.profile-about-text-not-yet {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-grey-light);
+}
+
+.profile-about-container {
+    position: relative;
+    margin-top: 24px;
+}
+
+.profile-about-box {
+    margin-bottom: 30px;
+}
+
+.profile-about-error {
+    position: absolute;
+    bottom: 63px;
+    left: 0px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16.8px;
+    color: var(--text-error);
+}
+
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    background-color: var(--bg-blue-inactive) !important;
+}
+
+.ql-container.ql-snow {
+    height: 145px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    color: var(--text-black) !important;
+}
+
+.ql-header.ql-picker {
+    display: none;
+}
+
+.ql-formats.ql-clean {
+    display: none;
+}
+
+.profile-about-actions {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 12px;
+}
+
+.profile-about-actions-btn {
+    padding: 14px 36px;
+    border-radius: 30px;
+    border: 1px solid var(--bg-accent-blue-color);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+
+    &.profile-about-actions-btn-close {
+        color: var(--bg-accent-blue-color);
     }
 
-    p {
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 28.8px;
-        color: var(--text-black);
+    &.profile-about-actions-btn-publish {
+        background-color: var(--bg-accent-blue-color);
+        color: var(--text-white);
     }
 }
 
+.profile-message {
+    padding: 40px;
+    border: 1px solid var(--bg-blue);
+    border-radius: 30px;
+}
+
+.profile-message-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-message-item {
+    display: flex;
+    gap: 13px;
+}
+
+.profile-message-avatar {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.profile-message-avatar-initial {
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--text-white);
+}
+
+.profile-message-content {
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 15px;
+    background-color: var(--bg-form-comment);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.profile-message-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-message-author {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-black);
+}
+
+.profile-message-date {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-grey-light);
+}
+
+.profile-message-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.profile-message-media {
+    width: 326px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.profile-message-noyet-box {
+    padding: 20px 10px 20px 13px;
+    background-color: var(--bg-blue-inactive);
+    border-radius: 10px;
+    border-left: 7px solid var(--bg-accent-blue-color);
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bg-accent-blue-color);
+    box-shadow: var(--shadow-dropdown);
+}
+
+.profile-message-noyet {
+    margin-top: 2px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--text-black);
+}
 
 
 @media (min-width: 768px) and (max-width: 1259px) {
@@ -228,28 +428,30 @@
         padding-bottom: 90px;
     }
 
-    .profile-info {
-        margin-bottom: 30px;
-    }
-
     .profile-avatar-img {
         top: 162px;
         left: 20px;
         width: 176px;
         height: 176px;
-        border: 5px solid var(--bg-white);
+        border: 5px solid var(--text-white);
     }
 
     .profile-cover {
-        max-height: 250px;
-        margin-bottom: 95px;
+        width: 100%;
+        height: 250px;
+        margin-bottom: 30px;
     }
 
-    .profile-personal {
-        margin: 0px 20px 10px 20px;
+    .profile-social {
+        height: 30px;
+        justify-content: flex-end;
+        margin-right: 20px;
+        margin-bottom: 35px;
     }
 
     .profile-nickname {
+        margin-left: 20px;
+        margin-bottom: 10px;
         font-size: 40px;
         line-height: 46px;
     }
@@ -285,12 +487,64 @@
         line-height: 16px;
     }
 
-    .profile-about {
-        h2 {
-            font-size: 22px;
-            line-height: 20.8px;
-        }
+    .profile-about-title {
+        font-size: 22px;
+        line-height: 26.4px;
     }
+
+    .profile-about-btn-edit {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .profile-about-container {
+        margin-top: 0px;
+    }
+
+    .profile-message {
+        padding: 0px;
+        border: none;
+        border-radius: 0px;
+    }
+
+    .profile-message-list {
+        gap: 20px;
+    }
+
+    .profile-message-item {
+        gap: 8px;
+    }
+
+    .profile-message-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-message-info {
+        flex-direction: column;
+        align-items: start;
+        gap: 4px;
+    }
+
+    .profile-message-author {
+        font-size: 14px;
+        line-height: 19.6px;
+    }
+
+    .profile-message-date {
+        font-size: 10px;
+        line-height: 12px;
+    }
+
+    .profile-message-text {
+        font-size: 14px;
+        line-height: 16.8px;
+    }
+
+    .profile-message-media {
+        width: 226px;
+    }
+
 }
 
 @media (max-width: 767px) {
@@ -314,7 +568,7 @@
         left: 24px;
         width: 176px;
         height: 176px;
-        border: 5px solid var(--bg-white);
+        border: 5px solid var(--text-white);
     }
 
     .profile-settings {
@@ -331,12 +585,14 @@
     .profile-btn-set {
         width: 28px;
         height: 28px;
+        color: var(--text-input);
+
     }
 
     .profile-cover {
         height: 250px;
         max-height: 250px;
-        margin-bottom: 90px;
+        margin-bottom: 22px;
     }
 
     .profile-social-container {
@@ -344,14 +600,9 @@
     }
 
     .profile-social {
-        position: absolute;
-        top: -68px;
-        right: 24px;
+        height: 30px;
         justify-content: flex-end;
-    }
-
-    .profile-contacts {
-        display: none;
+        margin-bottom: 38px;
     }
 
     .profile-nickname {
@@ -400,11 +651,82 @@
 
     .profile-about {
         padding: 40px 20px;
-
-        h2 {
-            font-size: 22px;
-            line-height: 26.4px;
-            margin-bottom: 20px;
-        }
     }
+
+    .profile-about-header {
+        margin-bottom: 20px;
+    }
+
+    .profile-about-title {
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .profile-about-btn-edit {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .profile-about-error {
+        bottom: 47px;
+    }
+
+    .profile-about-actions {
+        justify-content: center;
+    }
+
+    .profile-about-actions-btn {
+        padding: 10px 26px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .profile-message {
+        padding: 0px;
+        border: none;
+        border-radius: 0px;
+    }
+
+    .profile-message-list {
+        gap: 20px;
+    }
+
+    .profile-message-item {
+        gap: 8px;
+    }
+
+    .profile-message-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-message-content {
+        padding: 13px;
+    }
+
+    .profile-message-info {
+        flex-direction: column;
+        align-items: start;
+        gap: 4px;
+    }
+
+    .profile-message-author {
+        font-size: 14px;
+        line-height: 19.6px;
+    }
+
+    .profile-message-date {
+        font-size: 10px;
+        line-height: 12px;
+    }
+
+    .profile-message-text {
+        font-size: 14px;
+        line-height: 19.6px;
+    }
+
+    .profile-message-media {
+        width: 200px;
+    }
+
 }

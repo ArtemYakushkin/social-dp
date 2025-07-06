@@ -45,6 +45,11 @@
 
 /* ---------------------- */
 
+.quiz-modal {
+    background-image: var(--quiz-modal-background);
+    background-size: cover;
+}
+
 .quiz-happy-wrapp {
     padding: 20px;
 }

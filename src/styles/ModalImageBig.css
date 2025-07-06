@@ -1,0 +1,43 @@
+.modal-imgBig-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-modal-overlay);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal-imgBig {
+    position: relative;
+    background-color: var(--bg-modal);
+    border-radius: 30px;
+    box-shadow: var(--bg-modal-shadow);
+    padding: 26px 20px 20px 20px;
+}
+
+.modal-imgBig-btn-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bg-modal-btn);
+    box-shadow: var(--bg-modal-btn-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-imgBig-image {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 15px;
+}

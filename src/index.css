@@ -20,8 +20,10 @@ html {
     --bg-authorization: #BCD8FF;
     --bg-register-form: #ffffff;
     --bg-white: #ffffff;
+    --bg-dropdown-navbar: #ffffff;
     --bg-dark-white: #FBFBFB;
     --bg-blue-inactive: #EFF2F9;
+    --bg-blue-inactive-hover: #EFF2F966;
     --bg-blue-hover: #EFF2F980;
     --bg-accent-blue-color: #2F7BF6;
     --bg-navbar-overlay: #EFF2F9;
@@ -34,10 +36,12 @@ html {
     --bg-scroll-thumb: #ADACAC;
     --bg-scroll-track: #EFF2F9;
     --bg-form-comment: #EFF2F9;
+    --bg-form-comment-options: #ADACAC1A;
     --bg-post-wrapp: #ffffff;
     --bg-poll-quiz: #EFF2F94D;
     --bg-author-info: #ffffff;
     --bg-author-country: #EFF2F9;
+    --shadow-dropdown: 0px 0px 10px 0px #01010114;
 
     --bg-modal-overlay: rgba(250, 250, 250, 0.5);
     --bg-modal: #ffffff;
@@ -50,6 +54,8 @@ html {
     --register-shadow: 0px 4px 16px 0px #8DD3BB26;
     --bg-register-input: #EFF2F9;
     --bg-register-drop-list: #ffffff;
+
+    --quiz-modal-background: none;
 
     --accent-dark-blue-color: #094EBE;
     --accent-yellow-color: #FFD90F;
@@ -72,9 +78,10 @@ html {
 
 [data-theme="dark"] {
     --background: url('./assets//background-dark.png') center / cover no-repeat;
-    --bg-white: #FFFFFF1A;
+    --bg-white: #4242421a;
+    --bg-dropdown-navbar: #061728fa;
     --bg-blue: #094EBE80;
-    --bg-dark-white: #FBFBFB33;
+    --bg-dark-white: #fbfbfb5e;
     --bg-blue-inactive: #01111F80;
     --bg-navbar-overlay: #01111F;
     --bg-mobile-menu: #01111F;
@@ -86,10 +93,12 @@ html {
     --bg-scroll-thumb: #444444;
     --bg-scroll-track: #092548;
     --bg-form-comment: #EFF2F91A;
+    --bg-form-comment-options: #ADACAC1A;
     --bg-post-wrapp: #1f344c;
     --bg-poll-quiz: #EFF2F91A;
     --bg-author-info: #094EBE4D;
     --bg-author-country: #EFF2F91A;
+    --shadow-dropdown: 0px 0px 10px 0px #ffffff3a;
 
     --bg-modal-overlay: #01111f71;
     --bg-modal: #01111FCC;
@@ -103,7 +112,9 @@ html {
     --register-background: url(./assets/register-gradient.png);
     --register-shadow: 0px 4px 16px 0px #2F7BF6;
     --bg-register-input: #EFF2F933;
-    --bg-register-drop-list: #01111F;
+    --bg-register-drop-list: #01111F80;
+
+    --quiz-modal-background: url(./assets/quiz-modal-gradient.png);
 
     --text-accent-blue-color: #ffffff;
     --text-black: #ffffff;
@@ -223,6 +234,7 @@ img {
 @media (max-width: 767px) {
     .container {
         max-width: 375px;
+        width: 100%;
         padding: 0 24px;
     }
 }

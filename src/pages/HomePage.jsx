@@ -108,23 +108,25 @@ const HomePage = () => {
           setViewMode={setViewMode}
         />
 
-        <div className={viewMode === "grid" ? "home-list-grid" : "home-list-list"}>
-          {isLoading ? (
-            <Loader />
-          ) : currentPosts.length > 0 ? (
-            currentPosts.map((post) => <PostCard key={post.id} post={post} viewMode={viewMode} />)
-          ) : (
-            <h3 className="home-no-post-text">No posts found</h3>
+        <div className="home-content">
+          <div className={viewMode === "grid" ? "home-list-grid" : "home-list-list"}>
+            {isLoading ? (
+              <Loader />
+            ) : currentPosts.length > 0 ? (
+              currentPosts.map((post) => <PostCard key={post.id} post={post} viewMode={viewMode} />)
+            ) : (
+              <h3 className="home-no-post-text">No posts found</h3>
+            )}
+          </div>
+
+          {!isLoading && visibleCount < filteredPosts.length && (
+            <div className="home-see-more-container">
+              <button className="home-btn-see-more" onClick={handleSeeMore}>
+                See more
+              </button>
+            </div>
           )}
         </div>
-
-        {!isLoading && visibleCount < filteredPosts.length && (
-          <div className="home-see-more-container">
-            <button className="home-btn-see-more" onClick={handleSeeMore}>
-              See more
-            </button>
-          </div>
-        )}
       </div>
 
       <AboutProject />

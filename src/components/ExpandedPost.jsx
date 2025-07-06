@@ -1,24 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import avatar from "../assets/avatar.png";
+import { db } from "../firebase";
 
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 
 import "../styles/ExpandedPost.css";
 
 const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author }) => {
+  const auth = getAuth();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isSaved, setIsSaved] = useState(false);
 
   const swiperRef = useRef(null);
   const paginationRef = useRef(null);
@@ -39,6 +46,30 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
     }
   }, []);
 
+  useEffect(() => {
+    const fetchSavedPosts = async () => {
+      const user = auth.currentUser;
+
+      if (!user) {
+        setIsSaved(false);
+        return;
+      }
+
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const savedPosts = userDoc.data().savedPosts || [];
+          setIsSaved(savedPosts.includes(post.id));
+        }
+      } catch (error) {
+        console.error("Error fetching saved posts: ", error);
+      }
+    };
+
+    fetchSavedPosts();
+  }, [post.id, auth.currentUser]);
+
   const handleSlideChange = (swiper) => {
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
@@ -53,11 +84,39 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
     navigate(`/post/${post.id}`);
   };
 
+  const handleSavePost = async () => {
+    const user = auth.currentUser;
+
+    if (!user) {
+      toast.info("You must be registered to save posts.");
+      return;
+    }
+
+    if (isSaved) return;
+
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        savedPosts: arrayUnion(post.id),
+      });
+      setIsSaved(true);
+    } catch (error) {
+      console.error("Ошибка при сохранении поста: ", error);
+      toast.error(error);
+    }
+  };
+
   return (
     <div className="expPost">
       <div className="expPost-header">
         <div className="expPost-avatar" onClick={handleAvatarClick}>
-          <img src={author?.avatar || avatar} alt="Post author" />
+          {author?.avatar ? (
+            <img src={author.avatar} alt="Post author" />
+          ) : (
+            <div className="expPost-avatar-placeholder">
+              {author?.nickname ? author.nickname.charAt(0).toUpperCase() : "U"}
+            </div>
+          )}
         </div>
         <div className="expPost-info-post">
           <p className="expPost-author" onClick={handleAvatarClick}>
@@ -195,6 +254,22 @@ const ExpandedPost = ({ post, liked, likesCount, viewsCount, handleLike, author 
               <span>{post.comments?.length || 0}</span>
             </div>
           </div>
+
+          <button
+            className="details-btn-saved"
+            onClick={() => {
+              if (!auth.currentUser) {
+                toast.info("You must be registered to save posts.");
+              } else if (!isSaved) {
+                handleSavePost();
+              }
+            }}
+            style={{
+              cursor: !auth.currentUser || isSaved ? "not-allowed" : "pointer",
+            }}
+          >
+            {isSaved ? <FaBookmark size={24} /> : <FaRegBookmark size={24} />}
+          </button>
         </div>
       </div>
     </div>

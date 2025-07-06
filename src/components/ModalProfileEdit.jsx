@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactQuill from "react-quill";
 import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
@@ -7,9 +6,9 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { db, storage } from "../firebase";
 
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
 
-import coverPlaceholder from "../assets/cover-img.jpg";
+import coverPlaceholder from "../assets/cover-img.png";
 import avatarPlaceholder from "../assets/avatar.png";
 import telegram from "../assets/telegram.png";
 import instagram from "../assets/instagram.png";
@@ -41,6 +40,16 @@ const ModalProfileEdit = ({
   isOpen,
   onClose,
 }) => {
+  const [tempNickname, setTempNickname] = useState("");
+  const [tempCountry, setTempCountry] = useState("");
+  const [tempProfession, setTempProfession] = useState("");
+  const [tempAvatar, setTempAvatar] = useState(avatar);
+  const [tempCover, setTempCover] = useState(cover);
+  const [tempAboutMe, setTempAboutMe] = useState("");
+  const [tempFacebookLink, setTempFacebookLink] = useState("");
+  const [tempInstagramLink, setTempInstagramLink] = useState("");
+  const [tempTelegramLink, setTempTelegramLink] = useState("");
+
   const [newAvatar, setNewAvatar] = useState(null);
   const [newCover, setNewCover] = useState(null);
   const [errors, setErrors] = useState({});
@@ -51,6 +60,16 @@ const ModalProfileEdit = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+
+      setTempNickname(nickname);
+      setTempCountry(country);
+      setTempProfession(profession);
+      setTempAvatar(avatar);
+      setTempCover(cover);
+      setTempAboutMe(aboutMe);
+      setTempFacebookLink(facebookLink);
+      setTempInstagramLink(instagramLink);
+      setTempTelegramLink(telegramLink);
     } else {
       document.body.style.overflow = "";
     }
@@ -62,31 +81,42 @@ const ModalProfileEdit = ({
 
   if (!isOpen) return null;
 
-  const handleOverlayClick = (e) => {
-    if (e.target.id === "modal-overlay") {
-      onClose();
-    }
-  };
-
-  const validateLinks = () => {
+  const validateForm = () => {
     let isValid = true;
     let newErrors = {};
 
     const fbRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/[a-zA-Z0-9(\.\?)?]+/;
     const instaRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_.-]+\/?$/;
     const tgRegex = /^(https?:\/\/)?t\.me\/[a-zA-Z0-9_]+\/?$/;
+    const englishRegex = /^[\x20-\x7E]*$/;
 
-    if (facebookLink && !fbRegex.test(facebookLink)) {
+    if (!englishRegex.test(tempNickname)) {
+      newErrors.nickname = "Nickname must contain only English letters.";
+      isValid = false;
+    }
+
+    if (!englishRegex.test(tempCountry)) {
+      newErrors.country = "Country must contain only English letters.";
+      isValid = false;
+    }
+
+    const plainTextAboutMe = tempAboutMe.replace(/<[^>]*>?/gm, "");
+    if (!englishRegex.test(plainTextAboutMe)) {
+      newErrors.aboutMe = "About Me must contain only English text, numbers, and symbols.";
+      isValid = false;
+    }
+
+    if (tempFacebookLink && !fbRegex.test(tempFacebookLink)) {
       newErrors.facebookLink = "Invalid Facebook URL";
       isValid = false;
     }
 
-    if (instagramLink && !instaRegex.test(instagramLink)) {
+    if (tempInstagramLink && !instaRegex.test(tempInstagramLink)) {
       newErrors.instagramLink = "Invalid Instagram URL";
       isValid = false;
     }
 
-    if (telegramLink && !tgRegex.test(telegramLink)) {
+    if (tempTelegramLink && !tgRegex.test(tempTelegramLink)) {
       newErrors.telegramLink = "Invalid Telegram URL";
       isValid = false;
     }
@@ -100,14 +130,14 @@ const ModalProfileEdit = ({
     if (value.startsWith("@")) {
       value = `https://t.me/${value.substring(1)}`;
     }
-    setTelegramLink(value);
+    setTempTelegramLink(value);
   };
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setNewAvatar(file);
-      setAvatar(URL.createObjectURL(file));
+      setTempAvatar(URL.createObjectURL(file));
     }
   };
 
@@ -115,20 +145,20 @@ const ModalProfileEdit = ({
     const file = event.target.files[0];
     if (file) {
       setNewCover(file);
-      setCover(URL.createObjectURL(file));
+      setTempCover(URL.createObjectURL(file));
     }
   };
 
   const handleSave = async () => {
-    if (!validateLinks()) {
-      toast.error("Please correct the invalid links.");
+    if (!validateForm()) {
+      toast.error("Please correct the errors in the form.");
       return;
     }
 
     try {
       if (user) {
-        let avatarURL = avatar;
-        let coverURL = cover;
+        let avatarURL = tempAvatar;
+        let coverURL = tempCover;
 
         if (newAvatar) {
           const storageRef = ref(storage, `avatars/${user.uid}`);
@@ -142,23 +172,31 @@ const ModalProfileEdit = ({
           coverURL = await getDownloadURL(coverRef);
         }
 
-        await updateProfile(user, { displayName: nickname, photoURL: avatarURL });
+        await updateProfile(user, { displayName: tempNickname, photoURL: avatarURL });
 
         const userDocRef = doc(db, "users", user.uid);
         await updateDoc(userDocRef, {
-          nickname,
-          country,
-          profession,
+          nickname: tempNickname,
+          country: tempCountry,
+          profession: tempProfession,
           avatar: avatarURL,
-          aboutMe,
+          aboutMe: tempAboutMe,
           cover: coverURL,
-          facebook: facebookLink || "",
-          instagram: instagramLink || "",
-          telegram: telegramLink || "",
+          facebook: tempFacebookLink || "",
+          instagram: tempInstagramLink || "",
+          telegram: tempTelegramLink || "",
         });
 
+        setNickname(tempNickname);
+        setCountry(tempCountry);
+        setProfession(tempProfession);
         setAvatar(avatarURL);
         setCover(coverURL);
+        setAboutMe(tempAboutMe);
+        setFacebookLink(tempFacebookLink);
+        setInstagramLink(tempInstagramLink);
+        setTelegramLink(tempTelegramLink);
+
         toast.success("Profile updated successfully!");
         setIsModalOpen(false);
       }
@@ -168,8 +206,12 @@ const ModalProfileEdit = ({
     }
   };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const handleProfessionChange = (profession) => {
-    setProfession(profession);
+    setTempProfession(profession);
     setShowDropdown(false);
 
     if (dropdownHeaderRef.current) {
@@ -178,8 +220,12 @@ const ModalProfileEdit = ({
   };
 
   return (
-    <div className="modal-overlay mpe-overlay" id="modal-overlay" onClick={handleOverlayClick}>
+    <div className="modal-overlay mpe-overlay" id="modal-overlay">
       <div className="modal mpe-modal">
+        <button className="modal-btn-close" onClick={onClose}>
+          <IoIosClose size={30} color="var(--text-grey-dark)" />
+        </button>
+
         <div className="mpe-scroll">
           <div className="mpe-description">
             <h2 className="mpe-title">Edit Profile</h2>
@@ -205,7 +251,7 @@ const ModalProfileEdit = ({
               </div>
             </div>
             <div className="mpe-cover-img">
-              <img src={cover || coverPlaceholder} alt="Profile Cover" />
+              <img src={tempCover || coverPlaceholder} alt="Profile Cover" />
             </div>
           </div>
 
@@ -227,7 +273,7 @@ const ModalProfileEdit = ({
                 </div>
               </div>
               <div className="mpe-avatar-img">
-                <img src={avatar || avatarPlaceholder} alt={`${nickname}'s avatar`} />
+                <img src={tempAvatar || avatarPlaceholder} alt={`${nickname}'s avatar`} />
               </div>
             </div>
 
@@ -239,20 +285,22 @@ const ModalProfileEdit = ({
                     <input
                       className="mpe-input"
                       type="text"
-                      value={nickname}
-                      onChange={(e) => setNickname(e.target.value)}
+                      value={tempNickname}
+                      onChange={(e) => setTempNickname(e.target.value)}
                     />
                     <span className="mpe-placeholder">Nickname</span>
+                    {errors.nickname && <span className="mpe-input-error">{errors.nickname}</span>}
                   </div>
 
                   <div className="mpe-input-container">
                     <input
                       className="mpe-input"
                       type="text"
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
+                      value={tempCountry}
+                      onChange={(e) => setTempCountry(e.target.value)}
                     />
                     <span className="mpe-placeholder">Country</span>
+                    {errors.country && <span className="mpe-input-error">{errors.country}</span>}
                   </div>
 
                   <div className="mpe-input-container">
@@ -294,7 +342,7 @@ const ModalProfileEdit = ({
                     <input
                       className="mpe-social-input"
                       type="text"
-                      value={telegramLink}
+                      value={tempTelegramLink}
                       onChange={handleTelegramChange}
                       placeholder="@Dear Penfriend"
                     />
@@ -309,8 +357,8 @@ const ModalProfileEdit = ({
                     <input
                       className="mpe-social-input"
                       type="text"
-                      value={instagramLink}
-                      onChange={(e) => setInstagramLink(e.target.value)}
+                      value={tempInstagramLink}
+                      onChange={(e) => setTempInstagramLink(e.target.value)}
                       placeholder="https://www.instagram.com/a..."
                     />
                     {errors.instagramLink && (
@@ -324,8 +372,8 @@ const ModalProfileEdit = ({
                     <input
                       className="mpe-social-input"
                       type="text"
-                      value={facebookLink}
-                      onChange={(e) => setFacebookLink(e.target.value)}
+                      value={tempFacebookLink}
+                      onChange={(e) => setTempFacebookLink(e.target.value)}
                       placeholder="https://www.facebook.com/an..."
                     />
                     {errors.facebookLink && (
@@ -337,12 +385,8 @@ const ModalProfileEdit = ({
             </div>
           </div>
 
-          <div className="mpe-about-box">
-            <ReactQuill value={aboutMe} onChange={setAboutMe} theme="snow" />
-          </div>
-
           <div className="mpe-btn-box">
-            <button className="mpe-btn mpe-btn-cancel" onClick={() => setIsModalOpen(false)}>
+            <button className="mpe-btn mpe-btn-cancel" onClick={handleCancel}>
               Cancel changes
             </button>
             <button className="mpe-btn mpe-btn-save" onClick={handleSave}>

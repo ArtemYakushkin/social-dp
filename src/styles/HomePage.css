@@ -1,8 +1,11 @@
+.home-content {
+    padding-bottom: 120px;
+}
+
 .home-list-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
-    margin-bottom: 50px;
 }
 
 .home-list-list {
@@ -10,7 +13,6 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin-bottom: 50px;
 }
 
 .home-no-post-text {
@@ -24,7 +26,7 @@
 .home-see-more-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 120px;
+    margin-top: 50px;
 }
 
 .home-btn-see-more {
@@ -48,32 +50,37 @@
 
 
 @media (min-width: 768px) and (max-width: 1259px) {
+    .home-content {
+        padding-bottom: 90px;
+    }
+
     .home-list-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 26px;
-        margin-bottom: 40px;
     }
 
     .home-list-list {
         gap: 20px;
-        margin-bottom: 40px;
     }
 
     .home-see-more-container {
-        margin-bottom: 90px;
+        margin-top: 40px;
     }
 
 }
 
 @media (max-width: 767px) {
+    .home-content {
+        padding-bottom: 90px;
+    }
+
     .home-list-grid {
         grid-template-columns: repeat(1, minmax(0, 1fr));
         gap: 20px;
-        margin-bottom: 40px;
     }
 
     .home-see-more-container {
-        margin-bottom: 90px;
+        margin-top: 40px;
     }
 
 }

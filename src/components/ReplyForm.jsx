@@ -34,13 +34,15 @@ const notifyNewReply = async (postId, commentId, replyId, sender) => {
         postId,
         commentId,
         replyId,
+        commentText: comment.text,
         sender: {
           id: sender.id,
           nickname: sender.nickname || "Someone",
           photoURL: sender.photoURL || null,
         },
-        message: `${sender.nickname || "Someone"} replied to your comment`,
+        message: `${sender.nickname || "Someone"} replied to your comment "${comment.text}"`,
         createdAt: serverTimestamp(),
+        read: false,
       });
     }
   }

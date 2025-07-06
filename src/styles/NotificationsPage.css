@@ -1,5 +1,5 @@
 .notifi {
-    padding: 120px 0;
+    padding: 30px 0 90px 0;
 }
 
 .notifi-wrapp {
@@ -9,12 +9,80 @@
     box-shadow: 0px 4px 16px 0px #2F7BF626;
 }
 
+.notifi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
 .notifi-title {
     font-weight: 700;
     font-size: 28px;
     line-height: 33.6px;
     color: var(--text-black);
-    margin-bottom: 30px;
+}
+
+.notifi-dropdown {
+    width: 195px;
+    position: relative;
+}
+
+.notifi-dropdown-header {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    cursor: pointer;
+}
+
+.notifi-dropdown-title {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-grey-light);
+    margin-right: 20px;
+}
+
+.notifi-dropdown-selected {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--text-black);
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.notifi-dropdown-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--text-black);
+    cursor: pointer;
+}
+
+.notifi-dropdown-list {
+    position: absolute;
+    top: 35px;
+    left: 40px;
+    width: 154px;
+    background-color: var(--bg-register-drop-list);
+    box-shadow: var(--shadow-dropdown);
+    padding: 10px 0px;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.notifi-dropdown-item {
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-black);
+    cursor: pointer;
+    padding: 5px 14px;
+
+    &:hover {
+        background-color: var(--bg-blue-hover);
+    }
 }
 
 .notifi-list {
@@ -25,14 +93,19 @@
 
 .notifi-item {
     min-height: 66px;
-    padding: 10px 20px;
+    padding: 10px 14px 10px 20px;
     border-radius: 10px;
     display: flex;
     gap: 18px;
-    cursor: pointer;
+    align-items: start;
+    background-color: var(--bg-blue-inactive);
+
+    &.read {
+        background-color: transparent;
+    }
 
     &:hover {
-        background-color: var(--bg-blue-inactive);
+        background-color: var(--bg-blue-inactive-hover);
     }
 }
 
@@ -42,6 +115,11 @@
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
 
     img {
         width: 100%;
@@ -50,10 +128,17 @@
     }
 }
 
+.notifi-avatar-placeholder {
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--text-white);
+}
+
 .notifi-text {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .notifi-message {
@@ -61,6 +146,7 @@
     font-size: 18px;
     line-height: 25.2px;
     color: var(--text-black);
+    margin-bottom: 12px;
 }
 
 .notifi-nickname {
@@ -74,10 +160,59 @@
     color: var(--text-grey-light);
 }
 
-@media (min-width: 768px) and (max-width: 1259px) {
-    .notifi {
-        padding: 90px 0;
+.notifi-dots {
+    flex-shrink: 0;
+    width: 76px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.notifi-actions-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-accent-blue-color);
+}
+
+.notifi-point-read {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--bg-accent-blue-color);
+}
+
+.notifi-more-btn-box {
+    display: flex;
+    justify-content: center;
+}
+
+.notifi-more-btn {
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    border-radius: 30px;
+    padding: 14px 36px;
+    color: var(--text-accent-blue-color);
+    border: 1px solid var(--text-accent-blue-color);
+    transition: all 0.25s ease;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
     }
+
+    &:active {
+        border: 1px solid var(--accent-dark-blue-color);
+        color: var(--accent-dark-blue-color);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1259px) {
 
     .notifi-wrapp {
         padding: 40px 30px;
@@ -99,19 +234,40 @@
 }
 
 @media (max-width: 767px) {
+
     .notifi {
-        padding: 90px 0;
         margin-top: 81px;
+        padding-top: 0;
     }
 
     .notifi-wrapp {
-        padding: 40px 24px;
+        padding: 40px 0;
+        background-color: var(--bg-white);
+        border-radius: 0px;
+        box-shadow: none;
+    }
+
+    .notifi-header {
+        margin-bottom: 20px;
     }
 
     .notifi-title {
         font-size: 22px;
         line-height: 26.4px;
-        margin-bottom: 20px;
+    }
+
+    .notifi-dropdown {
+        width: 120px;
+    }
+
+    .notifi-dropdown-title {
+        display: none;
+    }
+
+    .notifi-dropdown-list {
+        top: 30px;
+        left: 0px;
+        width: 120px;
     }
 
     .notifi-list {
@@ -120,6 +276,14 @@
 
     .notifi-item {
         padding: 10px;
+        border-radius: 10px;
+        flex-direction: column;
+        align-items: start;
+        gap: 12px;
+    }
+
+    .notifi-content {
+        display: flex;
         gap: 15px;
     }
 
@@ -128,9 +292,8 @@
         height: 30px;
     }
 
-    .notifi-text {
-        justify-content: center;
-        gap: 8px;
+    .notifi-avatar-placeholder {
+        font-size: 22px;
     }
 
     .notifi-message {
@@ -138,10 +301,14 @@
         line-height: 19.2px;
     }
 
-    .notifi-date {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 16.8px;
-        color: var(--text-grey-light);
+    .notifi-more-btn-box {
+        display: flex;
+        justify-content: center;
     }
+
+    .notifi-more-btn {
+        margin-top: 20px;
+        padding: 10px 26px;
+    }
+
 }

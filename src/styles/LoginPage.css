@@ -256,6 +256,24 @@
     cursor: pointer;
 }
 
+.login-error-message {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-error);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.login-success-message {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--accent-green-color);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
 .login-btn {
     width: 100%;
     background-color: var(--bg-accent-blue-color);
@@ -318,16 +336,16 @@
 
 @media (max-width: 767px) {
 
-    .login {
+    /* .login {
         padding: 00px;
-    }
+    } */
 
     .login-form {
         width: 100%;
         max-width: 375px;
         max-height: 90vh;
         padding: 40px 24px;
-        border-radius: 0px;
+        /* border-radius: 0px; */
     }
 
     .login-title {

@@ -31,8 +31,7 @@
     left: 0;
     width: 100%;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 2s ease;
+    transition: opacity 1.5s ease;
     pointer-events: none;
     z-index: 0;
     display: flex;
@@ -42,9 +41,8 @@
 
 .aboutSlider-slide-active {
     opacity: 1;
-    visibility: visible;
     pointer-events: auto;
-    z-index: 1;
+    z-index: 2;
 }
 
 .aboutSlider-prev,
@@ -201,6 +199,28 @@
     }
 }
 
+.aboutSlider-pagination {
+    position: absolute;
+    right: 290px;
+    bottom: -20px;
+    display: flex;
+    gap: 16px;
+}
+
+.aboutSlider-pagination-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2F7BF64D;
+}
+
+.aboutSlider-pagination-dot-active {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bg-accent-blue-color);
+}
+
 
 
 @media (min-width: 768px) and (max-width: 1259px) {
@@ -303,8 +323,8 @@
 
     .aboutSlider-pagination {
         position: absolute;
+        right: 0;
         left: 50%;
-        transform: translateX(-50%);
         bottom: -20px;
         display: flex;
         gap: 16px;
@@ -322,6 +342,33 @@
         height: 8px;
         border-radius: 50%;
         background: var(--bg-accent-blue-color);
+    }
+
+    .aboutSlider-prev,
+    .aboutSlider-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: transparent;
+        z-index: 10;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    .aboutSlider-prev {
+        left: -32px;
+    }
+
+    .aboutSlider-next {
+        right: -32px;
     }
 }
 
@@ -418,9 +465,9 @@
 
     .aboutSlider-pagination {
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: -20px;
+        right: 130px;
+        top: 422px;
+        bottom: 0px;
         display: flex;
         gap: 16px;
     }
@@ -437,5 +484,31 @@
         height: 8px;
         border-radius: 50%;
         background: var(--bg-accent-blue-color);
+    }
+
+    .aboutSlider-prev,
+    .aboutSlider-next {
+        position: absolute;
+        top: 284px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #2F7BF64D;
+        z-index: 10;
+
+        &:hover {
+            background-color: #2F7BF659;
+        }
+    }
+
+    .aboutSlider-prev {
+        left: -10px;
+    }
+
+    .aboutSlider-next {
+        right: -10px;
     }
 }

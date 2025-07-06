@@ -39,7 +39,7 @@
 
 .app-cover {
     width: 100%;
-    max-height: 368px;
+    height: 368px;
     object-fit: cover;
     margin-bottom: 46px;
 }
@@ -71,7 +71,6 @@
     font-size: 16px;
     line-height: 22.4px;
     color: var(--text-grey-light);
-
 }
 
 .app-line-box {
@@ -169,7 +168,13 @@
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
-    word-break: break-word;
+}
+
+.app-about-text-not-yet {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-grey-light);
 }
 
 .app-post-list {
@@ -184,11 +189,6 @@
     background-color: var(--bg-white);
     box-shadow: 0px 4px 16px 0px #2F7BF626;
     overflow: hidden;
-    transition: transform 0.3s;
-
-    &:hover {
-        transform: scale(1.1);
-    }
 }
 
 .app-post-image {
@@ -270,11 +270,12 @@
 
     .app-cover {
         width: 100%;
-        max-height: 250px;
+        height: 250px;
         margin-bottom: 30px;
     }
 
     .app-social {
+        height: 30px;
         justify-content: flex-end;
         margin-right: 20px;
         margin-bottom: 35px;
@@ -374,6 +375,7 @@
     }
 
     .app-social {
+        height: 30px;
         justify-content: flex-end;
         margin-bottom: 38px;
     }

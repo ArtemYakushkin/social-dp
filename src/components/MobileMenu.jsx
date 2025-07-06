@@ -5,12 +5,14 @@ import { MdOutlineRocketLaunch } from "react-icons/md";
 import { RiHandHeartLine } from "react-icons/ri";
 import { FiLogOut, FiUser } from "react-icons/fi";
 
+import ModalLogout from "./ModalLogout";
+
 import "../styles/MobileMenu.css";
 
-const MobileMenu = ({ isOpen, user, logout, closeMenu }) => {
+const MobileMenu = ({ isOpen, user, closeMenu, openLogout, modalLogout }) => {
   const handleExit = () => {
-    logout();
     closeMenu();
+    openLogout();
   };
 
   return (
@@ -77,6 +79,8 @@ const MobileMenu = ({ isOpen, user, logout, closeMenu }) => {
           </ul>
         </div>
       )}
+
+      {modalLogout && <ModalLogout />}
     </div>
   );
 };

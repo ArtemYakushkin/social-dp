@@ -6,8 +6,9 @@ import { useMediaQuery } from "react-responsive";
 import { db } from "../firebase";
 import Loader from "../components/Loader";
 import PopularPosts from "../components/PopularPosts";
+import AuthorMessagesForm from "../components/AuthorMessagesForm";
 
-import coverPlaceholder from "../assets/cover-img.jpg";
+import coverPlaceholder from "../assets/cover-img.png";
 import avatarPlaceholder from "../assets/avatar.png";
 import facebook from "../assets/facebook.png";
 import instagram from "../assets/instagram.png";
@@ -21,7 +22,7 @@ import "../styles/AboutProfilePage.css";
 const AuthorProfile = () => {
   const { uid } = useParams();
   const [author, setAuthor] = useState(null);
-  const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "about");
+  const [activeTab, setActiveTab] = useState("about");
   const [authorPosts, setAuthorPosts] = useState([]);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -81,6 +82,12 @@ const AuthorProfile = () => {
       fetchAuthorPosts();
     }
   }, [activeTab, author?.createdPosts]);
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
 
   return (
     <>
@@ -149,7 +156,7 @@ const AuthorProfile = () => {
                       }`}
                       onClick={() => setActiveTab("about")}
                     >
-                      <LiaIdCardSolid size={24} /> About author
+                      <LiaIdCardSolid size={24} /> About
                     </button>
                     {author.createdPosts.length === 0 ? (
                       <></>
@@ -160,7 +167,7 @@ const AuthorProfile = () => {
                         }`}
                         onClick={() => setActiveTab("posts")}
                       >
-                        <HiOutlineClipboardDocumentList size={24} /> Author's posts (
+                        <HiOutlineClipboardDocumentList size={24} /> Posts (
                         {author.createdPosts.length})
                       </button>
                     )}
@@ -168,15 +175,24 @@ const AuthorProfile = () => {
 
                   <div className="profile-tabs-content">
                     {activeTab === "about" && (
-                      <div className="app-about">
-                        <h2 className="app-about-title">About author</h2>
-                        <p
-                          className="app-about-text"
-                          dangerouslySetInnerHTML={{
-                            __html: author.aboutMe,
-                          }}
-                        ></p>
-                      </div>
+                      <>
+                        <div className="app-about">
+                          <h2 className="app-about-title">About author</h2>
+                          {stripHtml(author.aboutMe).trim() ? (
+                            <p
+                              className="app-about-text"
+                              dangerouslySetInnerHTML={{
+                                __html: author.aboutMe,
+                              }}
+                            ></p>
+                          ) : (
+                            <p className="app-about-text-not-yet">
+                              {author.nickname} has not yet written anything about himself.
+                            </p>
+                          )}
+                        </div>
+                        <AuthorMessagesForm authorId={uid} />
+                      </>
                     )}
 
                     {activeTab === "posts" && (
@@ -269,7 +285,7 @@ const AuthorProfile = () => {
                     className={`app-tabs-btn ${activeTab === "about" ? "app-tabs-btn-active" : ""}`}
                     onClick={() => setActiveTab("about")}
                   >
-                    <LiaIdCardSolid size={24} /> About author
+                    <LiaIdCardSolid size={24} /> About
                   </button>
                   {author.createdPosts.length === 0 ? (
                     <></>
@@ -280,7 +296,7 @@ const AuthorProfile = () => {
                       }`}
                       onClick={() => setActiveTab("posts")}
                     >
-                      <HiOutlineClipboardDocumentList size={24} /> Author's posts (
+                      <HiOutlineClipboardDocumentList size={24} /> Posts (
                       {author.createdPosts.length})
                     </button>
                   )}
@@ -290,12 +306,19 @@ const AuthorProfile = () => {
                   {activeTab === "about" && (
                     <div className="app-about">
                       <h2 className="app-about-title">About author</h2>
-                      <p
-                        className="app-about-text"
-                        dangerouslySetInnerHTML={{
-                          __html: author.aboutMe,
-                        }}
-                      ></p>
+                      {stripHtml(author.aboutMe).trim() ? (
+                        <p
+                          className="app-about-text"
+                          dangerouslySetInnerHTML={{
+                            __html: author.aboutMe,
+                          }}
+                        ></p>
+                      ) : (
+                        <p className="app-about-text-not-yet">
+                          {author.nickname} has not yet written anything about himself.
+                        </p>
+                      )}
+                      <AuthorMessagesForm authorId={uid} />
                     </div>
                   )}
 
@@ -337,11 +360,13 @@ const AuthorProfile = () => {
                         alt={`${author.nickname}'s avatar`}
                       />
                     </div>
+
                     <img
                       className="app-cover"
                       src={author.cover || coverPlaceholder}
                       alt={`${author.cover}'s`}
                     />
+
                     <div className="app-personal">
                       <h1 className="app-nickname">{author.nickname}</h1>
                       <div className="app-social">
@@ -393,7 +418,7 @@ const AuthorProfile = () => {
                       }`}
                       onClick={() => setActiveTab("about")}
                     >
-                      <LiaIdCardSolid size={24} /> About author
+                      <LiaIdCardSolid size={24} /> About
                     </button>
                     {author.createdPosts.length === 0 ? (
                       <></>
@@ -404,7 +429,7 @@ const AuthorProfile = () => {
                         }`}
                         onClick={() => setActiveTab("posts")}
                       >
-                        <HiOutlineClipboardDocumentList size={24} /> Author's posts (
+                        <HiOutlineClipboardDocumentList size={24} /> Posts (
                         {author.createdPosts.length})
                       </button>
                     )}
@@ -416,12 +441,19 @@ const AuthorProfile = () => {
                     {activeTab === "about" && (
                       <div className="app-about">
                         <h2 className="app-about-title">About author</h2>
-                        <p
-                          className="app-about-text"
-                          dangerouslySetInnerHTML={{
-                            __html: author.aboutMe,
-                          }}
-                        ></p>
+                        {stripHtml(author.aboutMe).trim() ? (
+                          <p
+                            className="app-about-text"
+                            dangerouslySetInnerHTML={{
+                              __html: author.aboutMe,
+                            }}
+                          ></p>
+                        ) : (
+                          <p className="app-about-text-not-yet">
+                            {author.nickname} has not yet written anything about himself.
+                          </p>
+                        )}
+                        <AuthorMessagesForm authorId={uid} />
                       </div>
                     )}
 
