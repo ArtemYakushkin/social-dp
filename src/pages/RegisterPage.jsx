@@ -13,6 +13,8 @@ import { PiEyeClosed, PiEye } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
 import { VscError } from "react-icons/vsc";
 
+import coverPlaceholder from "../assets/cover-img.png";
+
 import "../styles/RegisterPage.css";
 
 const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
@@ -116,7 +118,7 @@ const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
         avatar: avatarURL || "",
         country,
         profession: selectedProfession,
-        cover: "",
+        cover: "" || coverPlaceholder,
         aboutMe: "",
         createdPosts: [],
         createdComments: [],
