@@ -8,7 +8,6 @@ import Loader from "../components/Loader";
 import PopularPosts from "../components/PopularPosts";
 import AuthorMessagesForm from "../components/AuthorMessagesForm";
 
-import coverPlaceholder from "../assets/cover-img.png";
 import avatarPlaceholder from "../assets/avatar.png";
 import facebook from "../assets/facebook.png";
 import instagram from "../assets/instagram.png";
@@ -27,8 +26,6 @@ const AuthorProfile = () => {
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
-
-  console.log("coverPlaceholder", coverPlaceholder);
 
   useEffect(() => {
     localStorage.setItem("activeTab", activeTab);
@@ -105,11 +102,10 @@ const AuthorProfile = () => {
                       alt={`${author.nickname}'s avatar`}
                     />
                   </div>
-                  <img
-                    className="app-cover"
-                    src={author.cover || coverPlaceholder}
-                    alt={`${author.cover}'s`}
-                  />
+
+                  <div className="app-cover">
+                    {author.cover && <img src={author.cover} alt={`${author.cover}'s`} />}
+                  </div>
 
                   <div className="container">
                     <div className="app-social">
@@ -236,11 +232,9 @@ const AuthorProfile = () => {
                     />
                   </div>
 
-                  <img
-                    className="app-cover"
-                    src={author.cover || coverPlaceholder}
-                    alt={`${author.cover}'s`}
-                  />
+                  <div className="app-cover">
+                    {author.cover && <img src={author.cover} alt={`${author.cover}'s`} />}
+                  </div>
 
                   <div className="app-social">
                     {(author.facebook || author.instagram || author.telegram) && (
@@ -363,17 +357,9 @@ const AuthorProfile = () => {
                       />
                     </div>
 
-                    {/* <img
-                      className="app-cover"
-                      src={author.cover || coverPlaceholder}
-                      alt={`${author.cover}'s`}
-                    /> */}
-
-                    <img
-                      className="app-cover"
-                      src={author.cover?.trim() ? author.cover : coverPlaceholder}
-                      alt={`${author.nickname || "User"}'s cover`}
-                    />
+                    <div className="app-cover">
+                      {author.cover && <img src={author.cover} alt={`${author.cover}'s`} />}
+                    </div>
 
                     <div className="app-personal">
                       <h1 className="app-nickname">{author.nickname}</h1>

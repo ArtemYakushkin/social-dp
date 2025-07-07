@@ -168,22 +168,34 @@ const ModalProfileEdit = ({
 
     try {
       if (user) {
-        let avatarURL = tempAvatar;
-        let coverURL = tempCover;
+        let avatarURL = avatar; // из пропсов — URL из Firebase или placeholder
+        let coverURL = cover; // из пропсов — URL из Firebase или placeholder
 
+        // Загружаем новую аватарку, если выбрана
         if (newAvatar) {
-          const storageRef = ref(storage, `avatars/${user.uid}`);
-          await uploadBytes(storageRef, newAvatar);
-          avatarURL = await getDownloadURL(storageRef);
+          const avatarRef = ref(storage, `avatars/${user.uid}`);
+          await uploadBytes(avatarRef, newAvatar);
+          avatarURL = await getDownloadURL(avatarRef);
         }
 
+        // Загружаем новую обложку, если выбрана
         if (newCover) {
           const coverRef = ref(storage, `covers/${user.uid}`);
           await uploadBytes(coverRef, newCover);
           coverURL = await getDownloadURL(coverRef);
         }
 
-        await updateProfile(user, { displayName: tempNickname, photoURL: avatarURL });
+        // Обновляем только displayName и photoURL, если действительно новая аватарка
+        if (newAvatar) {
+          await updateProfile(user, {
+            displayName: tempNickname,
+            photoURL: avatarURL,
+          });
+        } else {
+          await updateProfile(user, {
+            displayName: tempNickname,
+          });
+        }
 
         const userDocRef = doc(db, "users", user.uid);
         await updateDoc(userDocRef, {
@@ -191,13 +203,14 @@ const ModalProfileEdit = ({
           country: tempCountry,
           profession: tempProfession,
           avatar: avatarURL || avatarPlaceholder,
-          aboutMe: tempAboutMe,
           cover: coverURL || coverPlaceholder,
+          aboutMe: tempAboutMe,
           facebook: tempFacebookLink || "",
           instagram: tempInstagramLink || "",
           telegram: tempTelegramLink || "",
         });
 
+        // Обновляем локальное состояние
         setNickname(tempNickname);
         setCountry(tempCountry);
         setProfession(tempProfession);
@@ -262,7 +275,7 @@ const ModalProfileEdit = ({
               </div>
             </div>
             <div className="mpe-cover-img">
-              <img src={tempCover || coverPlaceholder} alt="Profile Cover" />
+              {tempCover && <img src={tempCover} alt="Profile Cover" />}
             </div>
           </div>
 
