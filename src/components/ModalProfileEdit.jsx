@@ -77,7 +77,18 @@ const ModalProfileEdit = ({
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [
+    isOpen,
+    nickname,
+    country,
+    profession,
+    avatar,
+    cover,
+    aboutMe,
+    facebookLink,
+    instagramLink,
+    telegramLink,
+  ]);
 
   if (!isOpen) return null;
 
@@ -179,9 +190,9 @@ const ModalProfileEdit = ({
           nickname: tempNickname,
           country: tempCountry,
           profession: tempProfession,
-          avatar: avatarURL,
+          avatar: avatarURL || avatarPlaceholder,
           aboutMe: tempAboutMe,
-          cover: coverURL,
+          cover: coverURL || coverPlaceholder,
           facebook: tempFacebookLink || "",
           instagram: tempInstagramLink || "",
           telegram: tempTelegramLink || "",
