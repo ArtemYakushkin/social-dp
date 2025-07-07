@@ -176,6 +176,11 @@
     font-size: 18px;
     line-height: 28.8px;
     color: var(--text-black);
+
+    span {
+        background-color: transparent !important;
+        color: var(--text-black) !important;
+    }
 }
 
 .app-about-text-not-yet {
