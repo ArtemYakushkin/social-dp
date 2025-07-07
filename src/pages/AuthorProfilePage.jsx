@@ -28,6 +28,8 @@ const AuthorProfile = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
 
+  console.log("coverPlaceholder", coverPlaceholder);
+
   useEffect(() => {
     localStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
