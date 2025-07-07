@@ -363,10 +363,16 @@ const AuthorProfile = () => {
                       />
                     </div>
 
-                    <img
+                    {/* <img
                       className="app-cover"
                       src={author.cover || coverPlaceholder}
                       alt={`${author.cover}'s`}
+                    /> */}
+
+                    <img
+                      className="app-cover"
+                      src={author.cover?.trim() ? author.cover : coverPlaceholder}
+                      alt={`${author.nickname || "User"}'s cover`}
                     />
 
                     <div className="app-personal">
