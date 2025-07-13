@@ -3,12 +3,12 @@ import React from "react";
 const ModalLogout = ({ logout, onClose }) => {
   return (
     <div className="modal-overlay" id="modal-overlay">
-      <div className="modal mcd-modal">
-        <div className="mcd-wrapp">
-          <h2 className="mcd-title">Are you sure you want to log out of your account?</h2>
-          <div className="mcd-actions">
+      <div className="modal mdr-modal">
+        <div className="mdr-wrapp">
+          <h2 className="mdr-title">Are you sure you want to log out of your account?</h2>
+          <div className="mdr-actions">
             <button
-              className="mcd-btn mcd-btn-yes"
+              className="mdr-btn mdr-btn-yes"
               onClick={() => {
                 logout();
                 onClose();
@@ -16,7 +16,7 @@ const ModalLogout = ({ logout, onClose }) => {
             >
               Yes
             </button>
-            <button className="mcd-btn mcd-btn-no" onClick={onClose}>
+            <button className="mdr-btn mdr-btn-no" onClick={onClose}>
               No
             </button>
           </div>
