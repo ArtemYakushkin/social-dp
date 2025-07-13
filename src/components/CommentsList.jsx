@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   collection,
@@ -20,9 +20,9 @@ import { db } from "../firebase";
 import Loader from "./Loader";
 import ReplyForm from "./ReplyForm";
 import ReplyList from "./ReplyList";
-import ModalDeleteComment from "./ModalDeleteComment";
-import ModalEditComment from "./ModalEditComment";
 import UnregisteredModal from "./UnregisteredModal";
+import ModalEdit from "./ModalEdit";
+import ModalDelete from "./ModalDelete";
 
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -34,14 +34,13 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeCommentId, setActiveCommentId] = useState(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [commentToDelete, setCommentToDelete] = useState(null);
-  const [commentToEdit, setCommentToEdit] = useState(null);
-  const [repliesCounts, setRepliesCounts] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [editedText, setEditedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const navigate = useNavigate();
-  const deletedComments = useMemo(() => new Set(), []);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
@@ -56,48 +55,28 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
 
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       const fetchedComments = [];
-      const newRepliesCounts = {};
 
       for (const docSnap of querySnapshot.docs) {
-        if (!deletedComments.has(docSnap.id)) {
-          const data = docSnap.data();
-          const authorRef = doc(db, "users", data.author.id);
-          const authorSnap = await getDoc(authorRef);
-          const authorData = authorSnap.exists()
-            ? authorSnap.data()
-            : { avatar: null, nickname: "Unknown Author" };
+        const data = docSnap.data();
+        const authorRef = doc(db, "users", data.author.id);
+        const authorSnap = await getDoc(authorRef);
+        const authorData = authorSnap.exists()
+          ? authorSnap.data()
+          : { avatar: null, nickname: "Unknown Author" };
 
-          fetchedComments.push({
-            id: docSnap.id,
-            ...data,
-            author: { ...authorData, id: data.author.id },
-          });
-
-          newRepliesCounts[docSnap.id] = data.replies?.length || 0;
-        }
+        fetchedComments.push({
+          id: docSnap.id,
+          ...data,
+          author: { ...authorData, id: data.author.id },
+        });
       }
 
       setComments(fetchedComments);
-      setRepliesCounts(newRepliesCounts);
       setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [postId, deletedComments]);
-
-  const handleReplyAdded = (commentId) => {
-    setRepliesCounts((prevCounts) => ({
-      ...prevCounts,
-      [commentId]: (prevCounts[commentId] || 0) + 1,
-    }));
-  };
-
-  const handleReplyDeleted = (commentId) => {
-    setRepliesCounts((prevCounts) => ({
-      ...prevCounts,
-      [commentId]: Math.max((prevCounts[commentId] || 0) - 1, 0),
-    }));
-  };
+  }, [postId]);
 
   const handleLike = async (commentId, likes) => {
     if (!user || !user.uid) {
@@ -123,60 +102,50 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
     }
   };
 
-  const handleDeleteComment = (commentId) => {
-    setCommentToDelete(commentId);
-    setIsDeleteModalOpen(true);
-  };
+  const handleSaveEdit = async () => {
+    if (!selectedComment) return;
 
-  const handleConfirmDelete = async () => {
     try {
-      await deleteDoc(doc(db, "comments", commentToDelete));
+      const commentRef = doc(db, "comments", selectedComment.id);
+      await updateDoc(commentRef, { text: editedText });
 
-      const postRef = doc(db, "posts", postId);
-      await updateDoc(postRef, {
-        comments: arrayRemove(commentToDelete),
-      });
-
-      setComments((prevComments) => prevComments.filter((c) => c.id !== commentToDelete));
-
-      if (onCommentDeleted) {
-        onCommentDeleted(commentToDelete);
-      }
+      setComments((prev) =>
+        prev.map((c) => (c.id === selectedComment.id ? { ...c, text: editedText } : c))
+      );
     } catch (error) {
-      console.error("Error deleting comment:", error);
+      console.error("Error editing comment:", error);
     } finally {
-      setIsDeleteModalOpen(false);
+      setIsEditing(false);
+      setSelectedComment(null);
+      setEditedText("");
     }
   };
 
-  const handleEditComment = (commentId, newText) => {
-    setCommentToEdit({ id: commentId, text: newText });
-    setIsEditModalOpen(true);
-  };
+  const handleConfirmDelete = async () => {
+    if (!selectedComment) return;
 
-  const handleSaveEdit = async (newText) => {
     try {
-      const commentRef = doc(db, "comments", commentToEdit.id);
-      await updateDoc(commentRef, {
-        text: newText,
+      await deleteDoc(doc(db, "comments", selectedComment.id));
+      const postRef = doc(db, "posts", postId);
+      await updateDoc(postRef, {
+        comments: arrayRemove(selectedComment.id),
       });
-      setComments((prevComments) =>
-        prevComments.map((c) => (c.id === commentToEdit.id ? { ...c, text: newText } : c))
-      );
+
+      setComments((prev) => prev.filter((c) => c.id !== selectedComment.id));
+      if (onCommentDeleted) onCommentDeleted(selectedComment.id);
     } catch (error) {
-      console.error("Error updating comment:", error);
+      console.error("Error deleting comment:", error);
     } finally {
-      setIsEditModalOpen(false);
+      setIsDeleting(false);
+      setSelectedComment(null);
     }
   };
 
   const toggleReplyList = (commentId) => {
-    setActiveCommentId((prevActiveId) => (prevActiveId === commentId ? null : commentId));
+    setActiveCommentId((prev) => (prev === commentId ? null : commentId));
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
   if (comments.length === 0) {
     return (
@@ -217,13 +186,20 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                             <div className="comment-options-btn-box">
                               <button
                                 className="comment-options-btn"
-                                onClick={() => handleEditComment(comment.id, comment.text)}
+                                onClick={() => {
+                                  setIsEditing(true);
+                                  setSelectedComment(comment);
+                                  setEditedText(comment.text);
+                                }}
                               >
                                 <AiOutlineEdit size={20} />
                               </button>
                               <button
                                 className="comment-options-btn"
-                                onClick={() => handleDeleteComment(comment.id)}
+                                onClick={() => {
+                                  setIsDeleting(true);
+                                  setSelectedComment(comment);
+                                }}
                               >
                                 <AiOutlineDelete size={20} />
                               </button>
@@ -269,17 +245,8 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                   </div>
                   {activeCommentId === comment.id && (
                     <div className="comment-list-reply-container">
-                      <ReplyForm
-                        commentId={comment.id}
-                        postId={postId}
-                        user={user}
-                        onReplyAdded={() => handleReplyAdded(comment.id)}
-                      />
-                      <ReplyList
-                        commentId={comment.id}
-                        currentUser={user}
-                        onReplyDeleted={() => handleReplyDeleted(comment.id)}
-                      />
+                      <ReplyForm commentId={comment.id} postId={postId} user={user} />
+                      <ReplyList commentId={comment.id} currentUser={user} />
                     </div>
                   )}
                   <div className="comment-bottom-section">
@@ -293,18 +260,14 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                           <div className="comment-list-frame-icon">
                             <FaMinus size={14} />
                           </div>
-                          <p className="comment-list-btn-text">
-                            hide {repliesCounts[comment.id] || 0} replies
-                          </p>
+                          <p className="comment-list-btn-text">hide replies</p>
                         </>
                       ) : (
                         <>
                           <div className="comment-list-frame-icon">
                             <FaPlus size={14} />
                           </div>
-                          <p className="comment-list-btn-text">
-                            {repliesCounts[comment.id] || 0} more replies
-                          </p>
+                          <p className="comment-list-btn-text">more replies</p>
                         </>
                       )}
                     </button>
@@ -362,13 +325,20 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                       <>
                         <button
                           className="comment-options-btn"
-                          onClick={() => handleEditComment(comment.id, comment.text)}
+                          onClick={() => {
+                            setIsEditing(true);
+                            setSelectedComment(comment);
+                            setEditedText(comment.text);
+                          }}
                         >
                           Edit comment
                         </button>
                         <button
                           className="comment-options-btn"
-                          onClick={() => handleDeleteComment(comment.id)}
+                          onClick={() => {
+                            setIsDeleting(true);
+                            setSelectedComment(comment);
+                          }}
                         >
                           Delete comment
                         </button>
@@ -389,17 +359,8 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                 </div>
                 {activeCommentId === comment.id && (
                   <div className="comment-list-reply-container">
-                    <ReplyForm
-                      commentId={comment.id}
-                      postId={postId}
-                      user={user}
-                      onReplyAdded={() => handleReplyAdded(comment.id)}
-                    />
-                    <ReplyList
-                      commentId={comment.id}
-                      currentUser={user}
-                      onReplyDeleted={() => handleReplyDeleted(comment.id)}
-                    />
+                    <ReplyForm commentId={comment.id} postId={postId} user={user} />
+                    <ReplyList commentId={comment.id} currentUser={user} />
                   </div>
                 )}
                 <div className="comment-bottom-section">
@@ -410,18 +371,14 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
                         <div className="comment-list-frame-icon">
                           <FaMinus size={14} />
                         </div>
-                        <p className="comment-list-btn-text">
-                          hide {repliesCounts[comment.id] || 0} replies
-                        </p>
+                        <p className="comment-list-btn-text">hide replies</p>
                       </>
                     ) : (
                       <>
                         <div className="comment-list-frame-icon">
                           <FaPlus size={14} />
                         </div>
-                        <p className="comment-list-btn-text">
-                          {repliesCounts[comment.id] || 0} more replies
-                        </p>
+                        <p className="comment-list-btn-text">more replies</p>
                       </>
                     )}
                   </button>
@@ -430,17 +387,28 @@ const CommentsList = ({ postId, user, usersData, onCommentDeleted }) => {
             )}
           </div>
         ))}
-        <ModalDeleteComment
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          onConfirm={handleConfirmDelete}
-        />
-        <ModalEditComment
-          isOpen={isEditModalOpen}
-          currentText={commentToEdit?.text || ""}
-          onClose={() => setIsEditModalOpen(false)}
-          onSave={handleSaveEdit}
-        />
+
+        {isEditing && selectedComment && (
+          <ModalEdit
+            text={editedText}
+            onTextChange={setEditedText}
+            onSave={handleSaveEdit}
+            onCancel={() => {
+              setIsEditing(false);
+              setSelectedComment(null);
+            }}
+          />
+        )}
+
+        {isDeleting && selectedComment && (
+          <ModalDelete
+            onConfirm={handleConfirmDelete}
+            onCancel={() => {
+              setIsDeleting(false);
+              setSelectedComment(null);
+            }}
+          />
+        )}
       </div>
 
       <UnregisteredModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

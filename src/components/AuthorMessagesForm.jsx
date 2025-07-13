@@ -31,6 +31,7 @@ const AuthorMessagesForm = ({ authorId }) => {
   const [isGifModalOpen, setIsGifModalOpen] = useState(false);
   const [authorNickname, setAuthorNickname] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [error, setError] = useState("");
 
   const emojiPickerRef = useRef(null);
 
@@ -83,12 +84,12 @@ const AuthorMessagesForm = ({ authorId }) => {
 
   const handleSend = async () => {
     if (!text.trim() && !imageFile && !gif) {
-      toast.error("You can't send an empty message.");
+      setError("You can't send an empty message.");
       return;
     }
 
     if (text.trim() && !isEnglishOnly(text.trim())) {
-      toast.error("Only English characters are allowed.");
+      setError("Only English characters are allowed.");
       return;
     }
 
@@ -138,6 +139,7 @@ const AuthorMessagesForm = ({ authorId }) => {
       setImage(null);
       setImageFile(null);
       setGif(null);
+      setError("");
       toast.success("Message sent successfully!");
     } catch (error) {
       console.error("Error sending message or notification:", error);
@@ -198,6 +200,8 @@ const AuthorMessagesForm = ({ authorId }) => {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
+
+              {error && <p className="author-mes-error">{error}</p>}
 
               <div className="author-mes-options">
                 <div className="author-mes-wrapper">
@@ -270,6 +274,8 @@ const AuthorMessagesForm = ({ authorId }) => {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
+
+              {error && <p className="author-mes-error">{error}</p>}
 
               <div className="author-mes-options">
                 <div className="author-mes-wrapper">

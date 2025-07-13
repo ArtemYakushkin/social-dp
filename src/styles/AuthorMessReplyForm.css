@@ -1,44 +1,11 @@
-.author-mes-section {
-    padding: 30px 0px 0px 0px;
-    border-top: 1px solid var(--bg-blue);
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    gap: 13px;
-}
-
-.author-mes-author {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-blue);
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-}
-
-.author-mes-avatar-placeholder {
-    font-weight: 700;
-    font-size: 32px;
-    color: var(--text-white);
-}
-
-.author-mes-form {
+.reply-mes-form {
     position: relative;
     width: 100%;
     background-color: var(--bg-form-comment);
     border-radius: 20px;
 }
 
-.author-mes-preview {
+.reply-mes-preview {
     width: 200px;
     padding: 20px;
     display: flex;
@@ -52,7 +19,7 @@
     }
 }
 
-.author-mes-btn-close {
+.reply-mes-btn-close {
     width: 24px;
     height: 24px;
     display: flex;
@@ -61,9 +28,9 @@
     color: var(--text-black);
 }
 
-.author-mes-textarea {
+.reply-mes-textarea {
     width: 100%;
-    height: 100px;
+    height: 70px;
     padding: 18px 30px;
     background-color: transparent;
     font-weight: 400;
@@ -80,7 +47,7 @@
     }
 }
 
-.author-mes-error {
+.reply-mes-error {
     position: absolute;
     bottom: 45px;
     right: 17px;
@@ -90,7 +57,7 @@
     color: var(--text-error);
 }
 
-.author-mes-options {
+.reply-mes-options {
     width: 100%;
     height: 44px;
     padding: 0 17px;
@@ -102,14 +69,14 @@
     justify-content: space-between;
 }
 
-.author-mes-wrapper {
+.reply-mes-wrapper {
     position: relative;
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.author-mes-btn {
+.reply-mes-btn {
     width: 24px;
     height: 24px;
     color: var(--text-grey-dark);
@@ -118,7 +85,7 @@
     justify-content: center;
 }
 
-.author-mes-submit-btn {
+.reply-mes-submit-btn {
     width: 36px;
     height: 36px;
     color: var(--bg-accent-blue-color);
@@ -127,41 +94,23 @@
     justify-content: center;
 }
 
-.author-mes-emoji-picker {
+.reply-mes-emoji-picker {
     position: absolute;
-    bottom: 40px;
+    top: 130px;
     left: 0;
     z-index: 100;
 }
 
-.author-mes-not-register {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 28.8px;
-    color: var(--bg-accent-blue-color);
-    text-align: center;
-    text-decoration: underline;
-}
-
 @media (min-width: 768px) and (max-width: 1259px) {
 
-    .author-mes-section {
-        gap: 8px;
-    }
-
-    .author-mes-author {
-        width: 40px;
-        height: 40px;
-    }
-
-    .author-mes-preview {
+    .reply-mes-preview {
         width: 180px;
         padding: 15px;
     }
 
-    .author-mes-textarea {
-        height: 63px;
-        padding: 18px 21px;
+    .reply-mes-textarea {
+        height: 60px;
+        padding: 12px 21px;
         font-size: 16px;
         line-height: 25.6px;
 
@@ -171,23 +120,26 @@
         }
     }
 
-    .author-mes-error {
+    .reply-mes-error {
+        bottom: 0px;
+        right: 17px;
         top: -22px;
-        left: 20px;
         font-size: 16px;
         line-height: 25.6px;
     }
 
-    .author-mes-btn {
-        width: 24px;
-        height: 24px;
-        color: var(--text-grey-dark);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .reply-mes-options {
+        height: 36px;
     }
 
-    .author-mes-submit-btn {
+    .reply-mes-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .reply-mes-submit-btn {
         width: 24px;
         height: 24px;
     }
@@ -195,23 +147,14 @@
 
 @media (max-width: 767px) {
 
-    .author-mes-section {
-        gap: 8px;
-    }
-
-    .author-mes-author {
-        width: 40px;
-        height: 40px;
-    }
-
-    .author-mes-preview {
+    .reply-mes-preview {
         width: 150px;
-        padding: 12px;
+        padding: 15px;
     }
 
-    .author-mes-textarea {
-        height: 63px;
-        padding: 18px 21px;
+    .reply-mes-textarea {
+        height: 60px;
+        padding: 12px 15px;
         font-size: 16px;
         line-height: 25.6px;
 
@@ -221,27 +164,21 @@
         }
     }
 
-    .author-mes-error {
-        top: -18px;
-        left: -17px;
+    .reply-mes-error {
+        bottom: 0px;
+        right: 0px;
+        top: -13px;
         font-size: 12px;
         line-height: 12px;
     }
 
-    .author-mes-wrapper {
-        gap: 6px;
+    .reply-mes-options {
+        height: 38px;
+        padding: 0 10px;
     }
 
-    .author-mes-emoji-picker {
-        left: -60px;
-    }
-
-    .author-mes-not-register {
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 28.8px;
-        color: var(--bg-accent-blue-color);
-        text-align: center;
-        text-decoration: underline;
+    .reply-mes-emoji-picker {
+        top: 106px;
+        left: -56px;
     }
 }

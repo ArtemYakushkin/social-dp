@@ -152,6 +152,8 @@ const NotificationsPage = () => {
       navigate(`/post/${notification.postId}#reply-${notification.replyId}`);
     } else if (notification.type === "new_message") {
       navigate("/profile");
+    } else if (notification.type === "reply_to_message") {
+      navigate(`/author/${notification.sender.uid}`);
     }
   };
 

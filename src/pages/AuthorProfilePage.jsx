@@ -7,6 +7,7 @@ import { db } from "../firebase";
 import Loader from "../components/Loader";
 import PopularPosts from "../components/PopularPosts";
 import AuthorMessagesForm from "../components/AuthorMessagesForm";
+import AuthorMessagesList from "../components/AuthorMessagesList";
 
 import avatarPlaceholder from "../assets/avatar.png";
 import facebook from "../assets/facebook.png";
@@ -18,7 +19,7 @@ import { LiaIdCardSolid } from "react-icons/lia";
 
 import "../styles/AboutProfilePage.css";
 
-const AuthorProfile = () => {
+const AuthorProfilePage = () => {
   const { uid } = useParams();
   const [author, setAuthor] = useState(null);
   const [activeTab, setActiveTab] = useState("about");
@@ -190,6 +191,7 @@ const AuthorProfile = () => {
                           )}
                         </div>
                         <AuthorMessagesForm authorId={uid} />
+                        <AuthorMessagesList authorId={uid} showReplyForm={false} />
                       </>
                     )}
 
@@ -315,6 +317,7 @@ const AuthorProfile = () => {
                         </p>
                       )}
                       <AuthorMessagesForm authorId={uid} />
+                      <AuthorMessagesList authorId={uid} showReplyForm={false} />
                     </div>
                   )}
 
@@ -448,6 +451,7 @@ const AuthorProfile = () => {
                           </p>
                         )}
                         <AuthorMessagesForm authorId={uid} />
+                        <AuthorMessagesList authorId={uid} showReplyForm={false} />
                       </div>
                     )}
 
@@ -491,4 +495,4 @@ const AuthorProfile = () => {
   );
 };
 
-export default AuthorProfile;
+export default AuthorProfilePage;

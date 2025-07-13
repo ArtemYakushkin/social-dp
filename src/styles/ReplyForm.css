@@ -29,8 +29,8 @@
 
 .reply-error {
     position: absolute;
-    top: 50%;
-    right: 8%;
+    bottom: -40px;
+    right: 0;
     transform: translateY(-50%);
     font-weight: 400;
     font-size: 18px;
@@ -97,8 +97,10 @@
     }
 
     .reply-error {
-        font-size: 16px;
-        line-height: 25.6px;
+        bottom: -23px;
+        right: 0;
+        font-size: 12px;
+        line-height: 12px;
     }
 
     .reply-not-register {

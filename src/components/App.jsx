@@ -15,6 +15,7 @@ import CreatePostPage from "../pages/CreatePostPage";
 import PostDetailsPage from "../pages/PostDetailsPage";
 import EditPostPage from "../pages/EditPostPage";
 import NotificationsPage from "../pages/NotificationsPage";
+import Loader from "../components/Loader";
 import { AuthProvider } from "../auth/useAuth";
 
 const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(",") || [];
@@ -34,7 +35,7 @@ function App() {
   }, []);
 
   if (!authChecked) {
-    return <div>Loading...</div>; // Пока не проверили авторизацию
+    return <Loader />;
   }
 
   const isAllowed = user && allowedEmails.includes(user.email);

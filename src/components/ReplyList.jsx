@@ -13,15 +13,15 @@ import {
 import { useMediaQuery } from "react-responsive";
 
 import { db } from "../firebase";
-import ModalEditReply from "./ModalEditReply";
-import ModalDeleteReply from "./ModalDeleteReply";
+import ModalEdit from "./ModalEdit";
+import ModalDelete from "./ModalDelete";
 import Loader from "./Loader";
 
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 import "../styles/ReplyList.css";
 
-const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
+const ReplyList = ({ commentId, currentUser }) => {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -38,8 +38,7 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
       const repliesData = await Promise.all(
         snapshot.docs.map(async (docSnap) => {
           const reply = docSnap.data();
-          const userDocRef = doc(db, "users", reply.author.uid);
-          const userDoc = await getDoc(userDocRef);
+          const userDoc = await getDoc(doc(db, "users", reply.author.uid));
           const userData = userDoc.exists() ? userDoc.data() : {};
           return {
             id: docSnap.id,
@@ -47,19 +46,15 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
             author: {
               ...reply.author,
               nickname: userData.nickname || "Unknown User",
-              avatar: userData.avatar
-                ? userData.avatar
-                : userData.nickname
-                ? userData.nickname.charAt(0).toUpperCase()
-                : "U",
+              avatar: userData.avatar || null,
             },
           };
         })
       );
       setReplies(
         repliesData
-          .filter((reply) => reply.createdAt) // убедись, что есть createdAt
-          .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis()) // сортировка по убыванию
+          .filter((reply) => reply.createdAt)
+          .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis())
       );
       setLoading(false);
     });
@@ -70,41 +65,35 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
   const handleEditReply = async () => {
     if (!selectedReply || !editedText.trim()) return;
 
-    const replyDocRef = doc(db, "replys", selectedReply.id);
     try {
-      await updateDoc(replyDocRef, { text: editedText });
-      setReplies((prevReplies) =>
-        prevReplies.map((reply) =>
+      await updateDoc(doc(db, "replys", selectedReply.id), { text: editedText });
+      setReplies((prev) =>
+        prev.map((reply) =>
           reply.id === selectedReply.id ? { ...reply, text: editedText } : reply
         )
       );
       setIsEditing(false);
       setSelectedReply(null);
     } catch (error) {
-      console.error("Error editing reply:", error.message);
+      console.error("Error editing reply:", error);
     }
   };
 
   const handleDeleteReply = async (replyId) => {
     try {
       const replyRef = doc(db, "replys", replyId);
-      const replySnapshot = await getDoc(replyRef);
-      const replyData = replySnapshot.data();
+      const replySnap = await getDoc(replyRef);
+      const replyData = replySnap.data();
 
-      if (!replyData || !replyData.commentId) {
-        console.error("Ответ или commentId не найден.");
-        return;
-      }
-
-      const commentId = replyData.commentId;
+      if (!replyData?.commentId) return;
 
       await deleteDoc(replyRef);
 
-      const commentRef = doc(db, "comments", commentId);
-      const commentSnapshot = await getDoc(commentRef);
-      const commentData = commentSnapshot.data();
+      const commentRef = doc(db, "comments", replyData.commentId);
+      const commentSnap = await getDoc(commentRef);
+      const commentData = commentSnap.data();
 
-      if (commentData && commentData.replies) {
+      if (commentData?.replies) {
         const updatedReplies = commentData.replies.filter((id) => id !== replyId);
         await updateDoc(commentRef, {
           replies: updatedReplies,
@@ -112,23 +101,14 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
         });
       }
 
-      setReplies((prevReplies) => prevReplies.filter((reply) => reply.id !== replyId));
-
-      if (onReplyDeleted) {
-        onReplyDeleted(replyId);
-      }
+      setReplies((prev) => prev.filter((reply) => reply.id !== replyId));
     } catch (error) {
-      console.error("Ошибка при удалении ответа:", error.message);
+      console.error("Error deleting reply:", error);
     }
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (replies.length === 0) {
-    return <p className="reply-no-replys">No replies yet.</p>;
-  }
+  if (loading) return <Loader />;
+  if (replies.length === 0) return <p className="reply-no-replys">No replies yet.</p>;
 
   return (
     <div className="reply-list">
@@ -267,7 +247,7 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
       ))}
 
       {isEditing && (
-        <ModalEditReply
+        <ModalEdit
           text={editedText}
           onTextChange={setEditedText}
           onSave={handleEditReply}
@@ -279,7 +259,7 @@ const ReplyList = ({ commentId, currentUser, onReplyDeleted }) => {
       )}
 
       {isDeleting && (
-        <ModalDeleteReply
+        <ModalDelete
           onConfirm={() => {
             handleDeleteReply(selectedReply.id);
             setIsDeleting(false);

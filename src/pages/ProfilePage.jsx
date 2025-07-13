@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   doc,
   getDoc,
@@ -13,7 +13,6 @@ import {
 import { useMediaQuery } from "react-responsive";
 import { getAuth } from "firebase/auth";
 import ReactQuill from "react-quill";
-import Modal from "react-modal";
 
 import { useAuth } from "../auth/useAuth";
 import { db } from "../firebase";
@@ -22,7 +21,7 @@ import ModalProfileEdit from "../components/ModalProfileEdit";
 import ProfilePosts from "../components/ProfilePosts";
 import SavedPosts from "../components/SavedPosts";
 import ModalUpdateCredentials from "../components/ModalUpdateCredentials";
-import ModalImageBig from "../components/ModalImageBig";
+import AuthorMessagesList from "../components/AuthorMessagesList";
 
 import avatarPlaceholder from "../assets/avatar.png";
 import coverPlaceholder from "../assets/cover-img.png";
@@ -40,8 +39,6 @@ import { RiInformationLine } from "react-icons/ri";
 import "react-quill/dist/quill.snow.css";
 import "../styles/ProfilePage.css";
 
-Modal.setAppElement("#root");
-
 const ProfilePage = () => {
   const { user } = useAuth();
   const [nickname, setNickname] = useState(user?.displayName || "");
@@ -55,7 +52,6 @@ const ProfilePage = () => {
   const [telegramLink, setTelegramLink] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSetting, setIsModalSetting] = useState(false);
-  const [isModalImage, setIsModalImage] = useState(false);
   const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "about");
   const [postCount, setPostCount] = useState(0);
   const [author, setAuthor] = useState(null);
@@ -63,9 +59,6 @@ const ProfilePage = () => {
   const [errors, setErrors] = useState({});
   const [isEditingAbout, setIsEditingAbout] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [modalImageUrl, setModalImageUrl] = useState(null);
-
-  const navigate = useNavigate();
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
@@ -159,7 +152,7 @@ const ProfilePage = () => {
   };
 
   const handlePublishAboutMe = async () => {
-    const englishOnlyRegex = /^[\x00-\x7F\s.,!?'"()\-:;]+$/;
+    const englishOnlyRegex = /^[\u0020-\u007E]+$/;
 
     const plainText = stripHtml(tempAboutMe).trim();
 
@@ -201,9 +194,9 @@ const ProfilePage = () => {
 
               <div className="container profile-social-container">
                 <div className="profile-social">
-                  {(facebookLink || instagramLink || telegramLink) && (
+                  {/* {(facebookLink || instagramLink || telegramLink) && (
                     <p className="profile-contacts">Contacts:</p>
-                  )}
+                  )} */}
                   {facebookLink && (
                     <a href={facebookLink} target="_blank" rel="noopener noreferrer">
                       <img src={facebook} alt="facebook" />
@@ -347,72 +340,11 @@ const ProfilePage = () => {
                 {activeTab === "message" && (
                   <>
                     {messages.length > 0 ? (
-                      <div className="profile-message">
-                        <ul className="profile-message-list">
-                          {messages.map((msg) => (
-                            <li className="profile-message-item" key={msg.id}>
-                              <div
-                                className="profile-message-avatar"
-                                onClick={() => navigate(`/author/${msg.senderId}`)}
-                              >
-                                {msg.senderAvatar ? (
-                                  <img src={msg.senderAvatar} alt="Avatar" />
-                                ) : (
-                                  <div className="profile-message-avatar-initial">
-                                    {msg.senderNickname
-                                      ? msg.senderNickname.charAt(0).toUpperCase()
-                                      : "U"}
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="profile-message-content">
-                                <div className="profile-message-info">
-                                  <p className="profile-message-author">{msg.senderNickname}</p>
-                                  <p className="profile-message-date">
-                                    {msg.createdAt && msg.createdAt.toDate
-                                      ? msg.createdAt.toDate().toLocaleString("ru-RU", {
-                                          timeZone: "Europe/Moscow",
-                                          year: "numeric",
-                                          month: "2-digit",
-                                          day: "2-digit",
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                        })
-                                      : "Date not available"}
-                                  </p>
-                                </div>
-
-                                <p className="profile-message-text">{msg.message}</p>
-
-                                {msg.gif && (
-                                  <div
-                                    className="profile-message-media"
-                                    onClick={() => {
-                                      setModalImageUrl(msg.gif);
-                                      setIsModalImage(true);
-                                    }}
-                                  >
-                                    <img src={msg.gif} alt="gif" />
-                                  </div>
-                                )}
-
-                                {msg.image && (
-                                  <div
-                                    className="profile-message-media"
-                                    onClick={() => {
-                                      setModalImageUrl(msg.image);
-                                      setIsModalImage(true);
-                                    }}
-                                  >
-                                    <img src={msg.image} alt="message" />
-                                  </div>
-                                )}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <AuthorMessagesList
+                        authorId={user.uid}
+                        showReplyForm={true}
+                        isOwnerPage={true}
+                      />
                     ) : (
                       <div className="profile-message-noyet-box">
                         <RiInformationLine size={24} />
@@ -598,72 +530,11 @@ const ProfilePage = () => {
               {activeTab === "message" && (
                 <>
                   {messages.length > 0 ? (
-                    <div className="profile-message">
-                      <ul className="profile-message-list">
-                        {messages.map((msg) => (
-                          <li className="profile-message-item" key={msg.id}>
-                            <div
-                              className="profile-message-avatar"
-                              onClick={() => navigate(`/author/${msg.senderId}`)}
-                            >
-                              {msg.senderAvatar ? (
-                                <img src={msg.senderAvatar} alt="Avatar" />
-                              ) : (
-                                <div className="profile-message-avatar-initial">
-                                  {msg.senderNickname
-                                    ? msg.senderNickname.charAt(0).toUpperCase()
-                                    : "U"}
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="profile-message-content">
-                              <div className="profile-message-info">
-                                <p className="profile-message-author">{msg.senderNickname}</p>
-                                <p className="profile-message-date">
-                                  {msg.createdAt && msg.createdAt.toDate
-                                    ? msg.createdAt.toDate().toLocaleString("ru-RU", {
-                                        timeZone: "Europe/Moscow",
-                                        year: "numeric",
-                                        month: "2-digit",
-                                        day: "2-digit",
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                      })
-                                    : "Date not available"}
-                                </p>
-                              </div>
-
-                              <p className="profile-message-text">{msg.message}</p>
-
-                              {msg.gif && (
-                                <div
-                                  className="profile-message-media"
-                                  onClick={() => {
-                                    setModalImageUrl(msg.gif);
-                                    setIsModalImage(true);
-                                  }}
-                                >
-                                  <img src={msg.gif} alt="gif" />
-                                </div>
-                              )}
-
-                              {msg.image && (
-                                <div
-                                  className="profile-message-media"
-                                  onClick={() => {
-                                    setModalImageUrl(msg.image);
-                                    setIsModalImage(true);
-                                  }}
-                                >
-                                  <img src={msg.image} alt="message" />
-                                </div>
-                              )}
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <AuthorMessagesList
+                      authorId={user.uid}
+                      showReplyForm={true}
+                      isOwnerPage={true}
+                    />
                   ) : (
                     <div className="profile-message-noyet-box">
                       <RiInformationLine size={24} />
@@ -855,72 +726,11 @@ const ProfilePage = () => {
                 {activeTab === "message" && (
                   <>
                     {messages.length > 0 ? (
-                      <div className="profile-message">
-                        <ul className="profile-message-list">
-                          {messages.map((msg) => (
-                            <li className="profile-message-item" key={msg.id}>
-                              <div
-                                className="profile-message-avatar"
-                                onClick={() => navigate(`/author/${msg.senderId}`)}
-                              >
-                                {msg.senderAvatar ? (
-                                  <img src={msg.senderAvatar} alt="Avatar" />
-                                ) : (
-                                  <div className="profile-message-avatar-initial">
-                                    {msg.senderNickname
-                                      ? msg.senderNickname.charAt(0).toUpperCase()
-                                      : "U"}
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="profile-message-content">
-                                <div className="profile-message-info">
-                                  <p className="profile-message-author">{msg.senderNickname}</p>
-                                  <p className="profile-message-date">
-                                    {msg.createdAt && msg.createdAt.toDate
-                                      ? msg.createdAt.toDate().toLocaleString("ru-RU", {
-                                          timeZone: "Europe/Moscow",
-                                          year: "numeric",
-                                          month: "2-digit",
-                                          day: "2-digit",
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                        })
-                                      : "Date not available"}
-                                  </p>
-                                </div>
-
-                                <p className="profile-message-text">{msg.message}</p>
-
-                                {msg.gif && (
-                                  <div
-                                    className="profile-message-media"
-                                    onClick={() => {
-                                      setModalImageUrl(msg.gif);
-                                      setIsModalImage(true);
-                                    }}
-                                  >
-                                    <img src={msg.gif} alt="gif" />
-                                  </div>
-                                )}
-
-                                {msg.image && (
-                                  <div
-                                    className="profile-message-media"
-                                    onClick={() => {
-                                      setModalImageUrl(msg.image);
-                                      setIsModalImage(true);
-                                    }}
-                                  >
-                                    <img src={msg.image} alt="message" />
-                                  </div>
-                                )}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <AuthorMessagesList
+                        authorId={user.uid}
+                        showReplyForm={true}
+                        isOwnerPage={true}
+                      />
                     ) : (
                       <div className="profile-message-noyet-box">
                         <RiInformationLine size={24} />
@@ -974,14 +784,6 @@ const ProfilePage = () => {
         )}
 
         {isModalSetting && <ModalUpdateCredentials onClose={() => setIsModalSetting(false)} />}
-
-        {isModalImage && (
-          <ModalImageBig
-            imageUrl={modalImageUrl}
-            onClose={() => setIsModalImage(false)}
-            isOpen={isModalImage}
-          />
-        )}
       </div>
       <PopularPosts />
     </>
