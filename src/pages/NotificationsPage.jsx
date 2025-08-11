@@ -17,7 +17,7 @@ import {
 import { useAuth } from "../auth/useAuth";
 import { db } from "../firebase";
 
-import PopularPosts from "../components/PopularPosts";
+import PopularPosts from "../components/PopularPosts/PopularPosts";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoCheckmarkCircleOutline, IoCheckmarkCircleSharp } from "react-icons/io5";
@@ -37,8 +37,8 @@ const NotificationsPage = () => {
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
-  const options = ["All", "Only unread"];
-  const selectedOption = filter === "all" ? "All" : "Only unread";
+  const options = ["All", "New"];
+  const selectedOption = filter === "all" ? "All" : "New";
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 

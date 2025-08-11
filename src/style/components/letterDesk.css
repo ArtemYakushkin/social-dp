@@ -1,0 +1,85 @@
+.letDesk {
+    padding-bottom: 120px;
+}
+
+.letDesk-wrapper {
+    background-color: var(--bg-letter);
+    background-image: url(../../assets/vector-letter.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    backdrop-filter: blur(50px);
+    box-shadow: 0px 4px 20px 0px #094EBE33;
+    border-radius: 30px;
+    padding: 71px 97px 101px 81px;
+    display: flex;
+    gap: 41px;
+}
+
+.letDesk-img-brackets {
+    flex-shrink: 0;
+}
+
+.letDesk-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.letDesk-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.letDesk-text-box {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    margin-bottom: 29px;
+}
+
+.letDesk-frame {
+    position: relative;
+    background-image: url(../../assets/frame.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.letDesk-title {
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+.letDesk-btn {
+    margin-bottom: 20px;
+}
+
+.letDesk-attention {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 400px;
+}
+
+.letDesk-img {
+    position: absolute;
+    bottom: -30%;
+    left: 5%;
+    width: 166px;
+    height: auto;
+}

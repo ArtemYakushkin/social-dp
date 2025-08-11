@@ -70,10 +70,8 @@ const Quiz = ({ quizData, user, postId }) => {
             <img className="quiz-sad-img-hand" src="/image/robby-hand.svg" alt="robot hand" />
           </div>
           <div className="quiz-sad-content">
-            <h4 className="quiz-sad-title">Alas, not this time</h4>
-            <p className="quiz-sad-text">
-              The answer is wrong, but next time you will definitely be lucky!
-            </p>
+            <h4 className="quiz-sad-title">Oops!</h4>
+            <p className="quiz-sad-text">Not correct this time. Don’t worry — try again!</p>
           </div>
         </div>
       );

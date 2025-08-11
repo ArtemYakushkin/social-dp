@@ -1,0 +1,367 @@
+.team {
+    padding: 120px 0;
+}
+
+.team-wrapp {
+    display: flex;
+    gap: 24px;
+}
+
+.team-left {
+    margin-top: 69px;
+    max-width: 280px;
+}
+
+.team-title {
+    margin-bottom: 24px;
+}
+
+.team-right {
+    display: flex;
+    gap: 24px;
+}
+
+.team-item {
+    min-width: 282px;
+    height: 618px;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-item-anna {
+    position: relative;
+    width: 100%;
+    height: 355px;
+    background-color: var(--accent-green-color);
+    border-bottom-left-radius: 200px;
+    border-bottom-right-radius: 200px;
+    margin-top: 69px;
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 51px;
+        height: 51px;
+        border-radius: 50%;
+        background-color: var(--accent-green-color);
+        top: -69px;
+        right: 0;
+    }
+
+    img {
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        width: 100%;
+        height: 409px;
+        overflow: hidden;
+        border-bottom-left-radius: 200px;
+        border-bottom-right-radius: 200px;
+    }
+}
+
+.team-item-artem {
+    position: relative;
+    width: 100%;
+    height: 406px;
+    background-color: var(--accent-yellow-color);
+    border-top-left-radius: 200px;
+    border-top-right-radius: 200px;
+    border-bottom-left-radius: 200px;
+    margin-top: 18px;
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background-color: var(--accent-yellow-color);
+        bottom: 30px;
+        right: -17px;
+    }
+
+    img {
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        width: 100%;
+        height: 406px;
+        overflow: hidden;
+        border-top-left-radius: 200px;
+        border-top-right-radius: 200px;
+        border-bottom-left-radius: 200px;
+    }
+}
+
+.team-item-nastya {
+    position: relative;
+    width: 100%;
+    height: 354px;
+    background-color: var(--bg-blue);
+    border-bottom-left-radius: 200px;
+    border-bottom-right-radius: 200px;
+    margin-top: 70px;
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background-color: var(--bg-blue);
+        top: 77px;
+        right: -58px;
+    }
+
+    img {
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        width: 100%;
+        height: 423px;
+        overflow: hidden;
+        border-bottom-left-radius: 200px;
+        border-bottom-right-radius: 200px;
+    }
+}
+
+.team-name {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.team-description {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.team-contacts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .team {
+        padding: 90px 0;
+    }
+
+    .team-wrapp {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .team-left {
+        margin-top: 0px;
+        max-width: 100%;
+    }
+
+    .team-title {
+        font-size: 40px;
+        line-height: 46px;
+        margin-bottom: 16px;
+    }
+
+    .team-right {
+        gap: 22px;
+    }
+
+    .team-item {
+        min-width: 212px;
+        height: 538px;
+    }
+
+    .team-item-anna {
+        height: 267px;
+        background-color: var(--accent-green-color);
+        border-bottom-left-radius: 200px;
+        border-bottom-right-radius: 200px;
+        margin-top: 52px;
+
+        &::after {
+            width: 38px;
+            height: 38px;
+            top: -52px;
+            right: 0;
+        }
+
+        img {
+            position: absolute;
+            bottom: 0;
+            left: 0px;
+            width: 100%;
+            height: 321px;
+        }
+    }
+
+    .team-item-artem {
+        height: 305px;
+        margin-top: 16px;
+
+        &::after {
+            width: 25px;
+            height: 25px;
+            bottom: 30px;
+            right: -12px;
+        }
+
+        img {
+            height: 305px;
+        }
+    }
+
+    .team-item-nastya {
+        height: 265px;
+        margin-top: 56px;
+
+        &::after {
+            width: 25px;
+            height: 25px;
+            top: 57px;
+            right: -32px;
+        }
+
+        img {
+            height: 315px;
+        }
+    }
+
+    .team-name {
+        margin-top: 26px;
+    }
+
+    .team-contacts {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: auto;
+    }
+
+    .team-cont {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22.4px;
+        color: var(--text-grey-light);
+    }
+}
+
+
+
+@media (max-width: 767px) {
+    .team {
+        padding: 90px 0;
+    }
+
+    .team-wrapp {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .team-left {
+        margin-top: 0px;
+        max-width: 100%;
+    }
+
+    .team-title {
+        font-size: 40px;
+        line-height: 46px;
+        margin-bottom: 24px;
+    }
+
+    .team-text {
+        font-size: 18px;
+        line-height: 28.8px;
+    }
+
+    .team-right {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .team-item {
+        min-width: 327px;
+    }
+
+    .team-item-anna-height {
+        height: 662px;
+    }
+
+    .team-item-anna {
+        height: 411px;
+        margin-top: 81px;
+
+        &::after {
+            top: -81px;
+        }
+
+        img {
+            position: absolute;
+            bottom: 0;
+            left: 0px;
+            width: 100%;
+            height: 465px;
+            overflow: hidden;
+            border-bottom-left-radius: 200px;
+            border-bottom-right-radius: 200px;
+        }
+    }
+
+    .team-item-artem-height {
+        height: 640px;
+    }
+
+    .team-item-artem {
+        height: 471px;
+        margin-top: 0px;
+
+        &::after {
+            width: 40px;
+            height: 40px;
+            bottom: 35px;
+            right: -20px;
+        }
+
+        img {
+            height: 471px;
+        }
+    }
+
+    .team-item-nastya-height {
+        height: 644px;
+    }
+
+    .team-item-nastya {
+        height: 413px;
+
+        &::after {
+            position: absolute;
+            content: '';
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            background-color: var(--bg-blue);
+            top: 380px;
+            left: 0px;
+        }
+
+        img {
+            height: 482px;
+        }
+    }
+
+    .team-contacts {
+        margin-top: 20px;
+    }
+
+    .team-cont {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22.4px;
+        color: var(--text-grey-light);
+    }
+}

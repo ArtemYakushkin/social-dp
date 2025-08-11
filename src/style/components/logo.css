@@ -1,0 +1,64 @@
+.logo {
+    width: 79px;
+    height: 72px;
+    position: relative;
+
+    .logo-img-1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .logo-img-2 {
+        position: absolute;
+        top: 11px;
+        left: 31px;
+    }
+
+    div {
+        position: absolute;
+        bottom: 0;
+    }
+
+    p {
+        font-family: Unbounded;
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 13px;
+        letter-spacing: -1%;
+        color: var(--bg-accent-blue-color);
+    }
+}
+
+@media (max-width: 767px) {
+
+    .logo {
+        width: 55px;
+        height: 48px;
+        position: relative;
+
+        .logo-img-1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .logo-img-2 {
+            position: absolute;
+            top: 7px;
+            left: 21px;
+        }
+
+        div {
+            position: absolute;
+            bottom: 0;
+        }
+
+        p {
+            font-size: 9px;
+            line-height: 9px;
+            letter-spacing: -1%;
+        }
+    }
+
+}

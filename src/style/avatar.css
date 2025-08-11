@@ -1,0 +1,105 @@
+.avatarLarge {
+    width: 63px;
+    height: 63px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.avatarBig {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.avatarMedium {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.avatarSmall {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-blue);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+
+    .avatarLarge {
+        width: 40px;
+        height: 40px;
+    }
+
+    .avatarMedium {
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .avatarLarge {
+        width: 40px;
+        height: 40px;
+    }
+
+    .avatarBig {
+        width: 40px;
+        height: 40px;
+    }
+
+    .avatarMedium {
+        width: 40px;
+        height: 40px;
+    }
+
+}

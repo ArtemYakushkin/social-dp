@@ -1,0 +1,290 @@
+.btnMain {
+    display: inline-block;
+    padding: 20px 56px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-white);
+    background-color: var(--bg-accent-blue-color);
+    border-radius: 30px;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
+    }
+}
+
+.btnHighTransparent {
+    padding: 20px 56px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    border: 1px solid var(--text-accent-blue-color);
+    color: var(--text-accent-blue-color);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+}
+
+.btnHighFill {
+    padding: 20px 56px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    border: 1px solid var(--bg-accent-blue-color);
+    background-color: var(--bg-accent-blue-color);
+    color: var(--text-white);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+}
+
+.btnMediumFill {
+    padding: 16px 46px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-white);
+    background-color: var(--bg-accent-blue-color);
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
+    }
+}
+
+.btnModerateTransparent {
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-accent-blue-color);
+    border: 1px solid var(--text-accent-blue-color);
+    width: fit-content;
+    transition: all 0.25s ease;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        border: 1px solid var(--accent-dark-blue-color);
+        color: var(--accent-dark-blue-color);
+    }
+}
+
+.btnModerateFill {
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-white);
+    background-color: var(--bg-accent-blue-color);
+    width: fit-content;
+    transition: all 0.25s ease;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
+    }
+}
+
+.btnSmallFill {
+    padding: 10px 26px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    background-color: var(--bg-accent-blue-color);
+    color: var(--text-white);
+    transition: all 0.25s;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px #2F7BF640;
+    }
+
+    &:active {
+        background-color: var(--accent-dark-blue-color);
+    }
+}
+
+.btnNotShell {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--bg-accent-blue-color);
+}
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+
+    .btnSmallFill {
+        position: relative;
+        background-color: transparent;
+        border-radius: 0px;
+        padding: 0px;
+        font-family: "Nunito Sans", sans-serif;
+        color: var(--bg-accent-blue-color);
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--bg-accent-blue-color);
+        }
+
+        &:hover {
+            box-shadow: none;
+        }
+
+        &:active {
+            background-color: transparent;
+        }
+    }
+
+    .btnModerateTransparent {
+        padding: 10px 26px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--text-accent-blue-color);
+        border: 1px solid var(--text-accent-blue-color);
+        width: fit-content;
+        transition: all 0.25s ease;
+
+        &:hover {
+            box-shadow: 0px 4px 4px 0px #2F7BF640;
+        }
+
+        &:active {
+            border: 1px solid var(--accent-dark-blue-color);
+            color: var(--accent-dark-blue-color);
+        }
+    }
+
+    .btnModerateFill {
+        padding: 10px 26px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--text-white);
+        background-color: var(--bg-accent-blue-color);
+        width: fit-content;
+        transition: all 0.25s ease;
+
+        &:hover {
+            box-shadow: 0px 4px 4px 0px #2F7BF640;
+        }
+
+        &:active {
+            background-color: var(--accent-dark-blue-color);
+        }
+    }
+
+    .btnNotShell {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 16.8px;
+        color: var(--bg-accent-blue-color);
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .btnBigFill {
+        /* Only mobile version  */
+        padding: 14px 36px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: var(--text-white);
+        background-color: var(--bg-accent-blue-color);
+
+        &:hover {
+            box-shadow: 0px 4px 4px 0px #2F7BF640;
+        }
+
+        &:active {
+            background-color: var(--accent-dark-blue-color);
+        }
+    }
+
+    .btnHighTransparent {
+        padding: 10px 26px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .btnHighFill {
+        padding: 10px 26px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .btnModerateTransparent {
+        padding: 10px 26px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--text-accent-blue-color);
+        border: 1px solid var(--text-accent-blue-color);
+        width: fit-content;
+        transition: all 0.25s ease;
+
+        &:hover {
+            box-shadow: 0px 4px 4px 0px #2F7BF640;
+        }
+
+        &:active {
+            border: 1px solid var(--accent-dark-blue-color);
+            color: var(--accent-dark-blue-color);
+        }
+    }
+
+    .btnModerateFill {
+        padding: 10px 26px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--text-white);
+        background-color: var(--bg-accent-blue-color);
+        width: fit-content;
+        transition: all 0.25s ease;
+
+        &:hover {
+            box-shadow: 0px 4px 4px 0px #2F7BF640;
+        }
+
+        &:active {
+            background-color: var(--accent-dark-blue-color);
+        }
+    }
+
+}

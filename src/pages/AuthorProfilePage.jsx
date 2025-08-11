@@ -5,9 +5,9 @@ import { useMediaQuery } from "react-responsive";
 
 import { db } from "../firebase";
 import Loader from "../components/Loader";
-import PopularPosts from "../components/PopularPosts";
+import PopularPosts from "../components/PopularPosts/PopularPosts";
 import AuthorMessagesForm from "../components/AuthorMessagesForm";
-import AuthorMessagesList from "../components/AuthorMessagesList";
+import MessagesList from "../components/MessagesList/MessagesList";
 
 import avatarPlaceholder from "../assets/avatar.png";
 import facebook from "../assets/facebook.png";
@@ -191,7 +191,7 @@ const AuthorProfilePage = () => {
                           )}
                         </div>
                         <AuthorMessagesForm authorId={uid} />
-                        <AuthorMessagesList authorId={uid} showReplyForm={false} />
+                        <MessagesList authorId={uid} showReplyForm={false} />
                       </>
                     )}
 
@@ -317,7 +317,7 @@ const AuthorProfilePage = () => {
                         </p>
                       )}
                       <AuthorMessagesForm authorId={uid} />
-                      <AuthorMessagesList authorId={uid} showReplyForm={false} />
+                      <MessagesList authorId={uid} showReplyForm={false} />
                     </div>
                   )}
 
@@ -451,7 +451,7 @@ const AuthorProfilePage = () => {
                           </p>
                         )}
                         <AuthorMessagesForm authorId={uid} />
-                        <AuthorMessagesList authorId={uid} showReplyForm={false} />
+                        <MessagesList authorId={uid} showReplyForm={false} />
                       </div>
                     )}
 

@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "firebase/firestore";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,25 +10,24 @@ import "react-toastify/dist/ReactToastify.css";
 import { db } from "../firebase";
 import { useAuth } from "../auth/useAuth";
 import Loader from "../components/Loader";
+import MediaCarousel from "../components/MediaCarousel/MediaCarousel";
 import CommentsForm from "../components/CommentsForm";
 import CommentsList from "../components/CommentsList";
 import Quiz from "../components/Quiz";
 import Poll from "../components/Poll";
-import PopularPosts from "../components/PopularPosts";
-import ShareBlock from "../components/ShareBlok";
+import PopularPosts from "../components/PopularPosts/PopularPosts";
+import ShareBlock from "../components/ShareBlok/ShareBlok";
 import UnregisteredModal from "../components/UnregisteredModal";
 
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import { fetchSavedStatus, savePost } from "../utils/postUtils";
+
 import "../styles/PostDetailsPage.css";
 
 const PostDetailsPage = () => {
@@ -39,9 +36,6 @@ const PostDetailsPage = () => {
   const [post, setPost] = useState(null);
   const [author, setAuthor] = useState(null);
   const [error, setError] = useState(null);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [commentsCount, setCommentsCount] = useState(post?.comments?.length || 0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,13 +44,9 @@ const PostDetailsPage = () => {
   const [likesCount, setLikesCount] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
+
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-
-  const swiperRef = useRef(null);
-  const paginationRef = useRef(null);
-  const nextButtonRef = useRef(null);
-  const prevButtonRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -119,39 +109,14 @@ const PostDetailsPage = () => {
   }, [postId]);
 
   useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.params.pagination.el = paginationRef.current;
-      swiperRef.current.params.navigation.nextEl = nextButtonRef.current;
-      swiperRef.current.params.navigation.prevEl = prevButtonRef.current;
-      swiperRef.current.pagination.init();
-      swiperRef.current.pagination.update();
-      swiperRef.current.navigation.init();
-      swiperRef.current.navigation.update();
-    }
-  }, []);
-
-  useEffect(() => {
-    const checkIfSaved = async () => {
+    const checkSaved = async () => {
       const user = auth.currentUser;
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
-        const savedPosts = userSnap.data().savedPosts || [];
-
-        if (savedPosts.includes(postId)) {
-          setIsSaved(true);
-        }
-      }
+      const result = await fetchSavedStatus(user, postId);
+      setIsSaved(result);
     };
 
-    checkIfSaved();
+    checkSaved();
   }, [postId, auth.currentUser]);
-
-  const handleSlideChange = (swiper) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-    setActiveIndex(swiper.activeIndex);
-  };
 
   const handleLike = async () => {
     if (!user || !user.uid) {
@@ -206,9 +171,8 @@ const PostDetailsPage = () => {
     setCommentsCount((prevCount) => Math.max(prevCount - 1, 0));
   };
 
-  const handleSavePost = async () => {
+  const handleSavePost = () => {
     const user = auth.currentUser;
-
     if (!user) {
       toast.info("You must be registered to save posts.");
       return;
@@ -216,16 +180,7 @@ const PostDetailsPage = () => {
 
     if (isSaved) return;
 
-    try {
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
-        savedPosts: arrayUnion(postId),
-      });
-      setIsSaved(true);
-    } catch (error) {
-      console.error("Ошибка при сохранении поста: ", error);
-      toast.error(error);
-    }
+    savePost(user, postId, setIsSaved);
   };
 
   const handleEditPost = () => {
@@ -282,88 +237,7 @@ const PostDetailsPage = () => {
 
                   <div className="details-post-img">
                     {post.media.length > 1 ? (
-                      <Swiper
-                        onSwiper={(swiper) => (swiperRef.current = swiper)}
-                        onSlideChange={(swiper) => handleSlideChange(swiper)}
-                        spaceBetween={10}
-                        slidesPerView={1}
-                        pagination={{
-                          clickable: true,
-                          el: paginationRef.current,
-                          bulletClass: "expanded-bullet",
-                          bulletActiveClass: "expanded-bullet-active",
-                        }}
-                        navigation={{
-                          nextEl: nextButtonRef.current,
-                          prevEl: prevButtonRef.current,
-                        }}
-                        modules={[Pagination, Navigation]}
-                        className="swiper-container"
-                        onInit={(swiper) => {
-                          swiper.params.navigation.nextEl = nextButtonRef.current;
-                          swiper.params.navigation.prevEl = prevButtonRef.current;
-                          swiper.params.pagination.el = paginationRef.current;
-                          swiper.navigation.init();
-                          swiper.navigation.update();
-                          swiper.pagination.init();
-                          swiper.pagination.update();
-                        }}
-                      >
-                        {post.media.map((url, index) => (
-                          <SwiperSlide key={index}>
-                            {url.includes(".mp4") ? (
-                              <video controls>
-                                <source src={url} type="video/mp4" />
-                                Your browser does not support video.
-                              </video>
-                            ) : (
-                              <img src={url} alt={`Post media ${index}`} />
-                            )}
-                          </SwiperSlide>
-                        ))}
-                        <button
-                          ref={prevButtonRef}
-                          className={`${
-                            isBeginning
-                              ? "expanded-swiper-button in-activ"
-                              : "expanded-swiper-button"
-                          } expanded-swiper-button-prev ${
-                            isBeginning ? "expanded-button-disabled" : ""
-                          }`}
-                          disabled={isBeginning}
-                        >
-                          {isBeginning ? (
-                            <MdOutlineArrowBackIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)", opacity: "0.3" }}
-                            />
-                          ) : (
-                            <MdOutlineArrowBackIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)" }}
-                            />
-                          )}
-                        </button>
-                        <button
-                          ref={nextButtonRef}
-                          className={`${
-                            isEnd ? "expanded-swiper-button in-activ" : "expanded-swiper-button"
-                          } expanded-swiper-button-next ${isEnd ? "expanded-button-disabled" : ""}`}
-                          disabled={isEnd}
-                        >
-                          {isEnd ? (
-                            <MdOutlineArrowForwardIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)", opacity: "0.3" }}
-                            />
-                          ) : (
-                            <MdOutlineArrowForwardIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)" }}
-                            />
-                          )}
-                        </button>
-                      </Swiper>
+                      <MediaCarousel media={post.media} />
                     ) : post.media[0].includes(".mp4") ? (
                       <video controls>
                         <source src={post.media[0]} type="video/mp4" />
@@ -373,7 +247,7 @@ const PostDetailsPage = () => {
                       <img src={post.media[0]} alt="Post media" />
                     )}
 
-                    {post.media.length > 1 && (
+                    {/* {post.media.length > 1 && (
                       <div ref={paginationRef} className="expanded-swiper-pagination">
                         {post.media.map((_, index) => (
                           <div
@@ -385,7 +259,7 @@ const PostDetailsPage = () => {
                           ></div>
                         ))}
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="container">
@@ -449,7 +323,7 @@ const PostDetailsPage = () => {
 
                 <div className="details-btn-return-box">
                   <button className="details-btn-return" onClick={handleBack}>
-                    Return to home page
+                    Back to homepage
                   </button>
                 </div>
               </>
@@ -499,88 +373,7 @@ const PostDetailsPage = () => {
 
                   <div className="details-post-img">
                     {post.media.length > 1 ? (
-                      <Swiper
-                        onSwiper={(swiper) => (swiperRef.current = swiper)}
-                        onSlideChange={(swiper) => handleSlideChange(swiper)}
-                        spaceBetween={10}
-                        slidesPerView={1}
-                        pagination={{
-                          clickable: true,
-                          el: paginationRef.current,
-                          bulletClass: "expanded-bullet",
-                          bulletActiveClass: "expanded-bullet-active",
-                        }}
-                        navigation={{
-                          nextEl: nextButtonRef.current,
-                          prevEl: prevButtonRef.current,
-                        }}
-                        modules={[Pagination, Navigation]}
-                        className="swiper-container"
-                        onInit={(swiper) => {
-                          swiper.params.navigation.nextEl = nextButtonRef.current;
-                          swiper.params.navigation.prevEl = prevButtonRef.current;
-                          swiper.params.pagination.el = paginationRef.current;
-                          swiper.navigation.init();
-                          swiper.navigation.update();
-                          swiper.pagination.init();
-                          swiper.pagination.update();
-                        }}
-                      >
-                        {post.media.map((url, index) => (
-                          <SwiperSlide key={index}>
-                            {url.includes(".mp4") ? (
-                              <video controls>
-                                <source src={url} type="video/mp4" />
-                                Your browser does not support video.
-                              </video>
-                            ) : (
-                              <img src={url} alt={`Post media ${index}`} />
-                            )}
-                          </SwiperSlide>
-                        ))}
-                        <button
-                          ref={prevButtonRef}
-                          className={`${
-                            isBeginning
-                              ? "expanded-swiper-button in-activ"
-                              : "expanded-swiper-button"
-                          } expanded-swiper-button-prev ${
-                            isBeginning ? "expanded-button-disabled" : ""
-                          }`}
-                          disabled={isBeginning}
-                        >
-                          {isBeginning ? (
-                            <MdOutlineArrowBackIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)", opacity: "0.3" }}
-                            />
-                          ) : (
-                            <MdOutlineArrowBackIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)" }}
-                            />
-                          )}
-                        </button>
-                        <button
-                          ref={nextButtonRef}
-                          className={`${
-                            isEnd ? "expanded-swiper-button in-activ" : "expanded-swiper-button"
-                          } expanded-swiper-button-next ${isEnd ? "expanded-button-disabled" : ""}`}
-                          disabled={isEnd}
-                        >
-                          {isEnd ? (
-                            <MdOutlineArrowForwardIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)", opacity: "0.3" }}
-                            />
-                          ) : (
-                            <MdOutlineArrowForwardIos
-                              size={isTablet ? "20" : "28"}
-                              style={{ color: "var(--text-white)" }}
-                            />
-                          )}
-                        </button>
-                      </Swiper>
+                      <MediaCarousel media={post.media} />
                     ) : post.media[0].includes(".mp4") ? (
                       <video controls>
                         <source src={post.media[0]} type="video/mp4" />
@@ -588,20 +381,6 @@ const PostDetailsPage = () => {
                       </video>
                     ) : (
                       <img src={post.media[0]} alt="Post media" />
-                    )}
-
-                    {post.media.length > 1 && (
-                      <div ref={paginationRef} className="expanded-swiper-pagination">
-                        {post.media.map((_, index) => (
-                          <div
-                            key={index}
-                            className={`expanded-bullet ${
-                              activeIndex === index ? "expanded-bullet-active" : ""
-                            }`}
-                            onClick={() => swiperRef.current?.slideTo(index)}
-                          ></div>
-                        ))}
-                      </div>
                     )}
                   </div>
 
@@ -692,7 +471,7 @@ const PostDetailsPage = () => {
 
                 <div className="details-btn-return-box">
                   <button className="details-btn-return" onClick={handleBack}>
-                    Return to home page
+                    Back to homepage
                   </button>
                 </div>
               </>

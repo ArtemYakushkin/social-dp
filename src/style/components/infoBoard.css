@@ -1,0 +1,20 @@
+.board-box {
+    width: 330px;
+    padding: 20px 10px 20px 13px;
+    background-color: var(--bg-blue-inactive);
+    border-radius: 10px;
+    border-left: 7px solid var(--bg-accent-blue-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bg-accent-blue-color);
+    box-shadow: var(--shadow-dropdown);
+}
+
+.board-message {
+    margin-top: 2px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--text-black);
+}

@@ -1,0 +1,151 @@
+.slider {
+    position: relative;
+    padding: 120px 0 120px 0;
+    background-color: var(--bg-about);
+    background-image: url(../../assets/vector.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.slider-container {
+    position: relative;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    z-index: 2;
+}
+
+.slider-slides {
+    position: relative;
+    width: 100%;
+    min-height: 529px;
+}
+
+.slider-prev,
+.slider-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #2F7BF64D;
+    z-index: 10;
+
+    &:hover {
+        background-color: #2F7BF659;
+    }
+}
+
+.slider-prev {
+    left: -67px;
+}
+
+.slider-next {
+    right: -67px;
+}
+
+.slider-pagination {
+    position: absolute;
+    right: 290px;
+    bottom: -20px;
+    display: flex;
+    gap: 16px;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2F7BF64D;
+}
+
+.slider-dot-active {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bg-accent-blue-color);
+}
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+
+    .slider {
+        padding: 90px 0 114px 0;
+        background-image: url(../../assets/tablet/vector-2-tablet.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .slider-slides {
+        min-height: 570px;
+    }
+
+    .slider-pagination {
+        position: absolute;
+        right: 0;
+        left: 50%;
+        bottom: -20px;
+        display: flex;
+        gap: 16px;
+    }
+
+    .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #2F7BF64D;
+    }
+
+    .slider-dot-active {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--bg-accent-blue-color);
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .slider {
+        padding: 60px 0 60px 0;
+        background-image: none;
+        margin-top: 81px;
+    }
+
+    .slider-slides {
+        min-height: 740px;
+    }
+
+    .slider-pagination {
+        position: absolute;
+        right: 130px;
+        top: 422px;
+        bottom: 0px;
+        display: flex;
+        gap: 16px;
+    }
+
+    .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #2F7BF64D;
+    }
+
+    .slider-dot-active {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--bg-accent-blue-color);
+    }
+
+}

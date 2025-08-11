@@ -1,0 +1,27 @@
+.privacy {
+    padding: 120px 0;
+}
+
+.privacy-box:nth-child(1) {
+    margin-bottom: 48px;
+}
+
+.privacy-title-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+
+    img {
+        width: 40px;
+        height: auto;
+    }
+}
+
+.privacy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 32px;
+    margin-bottom: 24px;
+}

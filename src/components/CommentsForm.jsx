@@ -227,7 +227,7 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
               </form>
             ) : (
               <p className="comments-not-register" onClick={handleRegisterClick}>
-                Login to leave a comment
+                Log in to comment
               </p>
             )}
           </div>
@@ -265,7 +265,7 @@ const CommentsForm = ({ postId, onCommentAdded }) => {
             </form>
           ) : (
             <p className="comments-not-register" onClick={handleRegisterClick}>
-              Login to leave a comment
+              Log in to comment
             </p>
           )}
         </>

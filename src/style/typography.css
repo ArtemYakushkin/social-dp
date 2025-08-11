@@ -1,0 +1,378 @@
+.titleMain {
+    font-weight: 700;
+    font-size: 85px;
+    line-height: 93.5px;
+    color: var(--text-accent-blue-color);
+
+
+    span {
+        display: inline-block;
+        width: 260px;
+        height: 92px;
+        border: 3px solid var(--accent-yellow-color);
+        border-radius: 100px;
+        color: var(--accent-yellow-color);
+        text-align: center;
+    }
+}
+
+.textMain {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-black);
+
+    span {
+        color: var(--bg-accent-blue-color);
+        text-decoration: underline;
+    }
+}
+
+.sortTitle {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-grey-light);
+}
+
+.sortSelect {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--text-black);
+}
+
+.sortItemText {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-black);
+}
+
+.sectionTitle {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 57.6px;
+    color: var(--text-black);
+}
+
+.nicknameText {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.dateText {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-grey-light);
+}
+
+.postTitle {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38.4px;
+    color: var(--text-black);
+}
+
+.letterNick {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--text-black);
+}
+
+.letterInspirer {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.4px;
+    color: var(--text-grey-light);
+    text-transform: uppercase;
+}
+
+.letterSubtitle {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 31.2px;
+    color: var(--text-black);
+}
+
+.attentionText {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16.8px;
+    color: var(--text-not-change);
+}
+
+.navbarLink {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-accent-blue-color);
+}
+
+.dropText {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-grey-dark);
+}
+
+.linkFooter {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-white);
+}
+
+.policyFooter {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-white);
+}
+
+.titleFooter {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-black);
+}
+
+.jobFooter {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: var(--text-black);
+}
+
+.cardStatus {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-author-country);
+}
+
+.tabsTitle {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 33.6px;
+    color: var(--text-black);
+}
+
+.aboutMeText {
+    /* Не меняется */
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+.errorText {
+    /* Не меняется */
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16.8px;
+    color: var(--text-error);
+}
+
+.entryUser {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: var(--text-black);
+}
+
+.mesText {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+}
+
+
+@media (min-width: 768px) and (max-width: 1259px) {
+    .titleMain {
+        font-size: 50px;
+        line-height: 60px;
+
+        span {
+            width: 156px;
+            height: 55px;
+            border: 2px solid var(--accent-yellow-color);
+            border-radius: 60px;
+        }
+    }
+
+    .textMain {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .sectionTitle {
+        font-size: 40px;
+        line-height: 46px;
+    }
+
+    .nicknameText {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 25.6px;
+    }
+
+    .dateText {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14.4px;
+    }
+
+    .postTitle {
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .sliderText {
+        /* Only Tab version */
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 25px;
+        color: var(--text-white);
+    }
+
+    .letterSubtitle {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 22.8px;
+        color: var(--text-black);
+    }
+
+    .navbarLink {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--text-accent-blue-color);
+    }
+
+    .tabsTitle {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26.4px;
+        color: var(--text-black);
+    }
+
+    .entryUser {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 19.6px;
+        color: var(--text-black);
+    }
+
+    .mesText {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16.8px;
+        color: var(--text-black);
+    }
+
+}
+
+
+@media (max-width: 767px) {
+    .titleMain {
+        font-size: 50px;
+        line-height: 60px;
+
+        span {
+            width: 156px;
+            height: 55px;
+            border: 2px solid var(--accent-yellow-color);
+            border-radius: 60px;
+        }
+    }
+
+    .textMain {
+        font-size: 20px;
+        line-height: 25px;
+    }
+
+    .sectionTitle {
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .sectionTitleMobile {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 46px;
+        color: var(--text-black);
+    }
+
+    .nicknameText {
+        font-size: 16px;
+        line-height: 25.6px;
+    }
+
+    .dateText {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14.4px;
+    }
+
+    .postTitle {
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+
+    .SliderTitleMob {
+        /* Only mobile version */
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 46px;
+        color: var(--text-black);
+    }
+
+    .sliderTextMob {
+        /* Only mobile version */
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 25px;
+        color: var(--text-white);
+    }
+
+    .letterSubtitle {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26.4px;
+        color: var(--text-black);
+    }
+
+    .attentionText {
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 12px;
+        color: var(--text-not-change);
+    }
+
+    .tabsTitle {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26.4px;
+        color: var(--text-black);
+    }
+
+    .entryUser {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 19.6px;
+        color: var(--text-black);
+    }
+
+    .mesText {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16.8px;
+        color: var(--text-black);
+    }
+}

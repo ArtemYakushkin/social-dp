@@ -166,7 +166,7 @@ const ReplyForm = ({ commentId, postId, user, onReplyAdded }) => {
         </form>
       ) : (
         <p className="reply-not-register" onClick={handleRegisterClick}>
-          Log in to leave a reply
+          Log in to reply
         </p>
       )}
 
