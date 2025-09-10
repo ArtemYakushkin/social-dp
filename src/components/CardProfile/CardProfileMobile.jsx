@@ -1,13 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import avatarPlaceholder from "../../assets/avatar.png";
-import coverPlaceholder from "../../assets/cover-img.png";
-import facebook from "../../assets/facebook.png";
-import instagram from "../../assets/instagram.png";
-import telegram from "../../assets/telegram.png";
+import avatarPlaceholder from '../../assets/avatar.png';
+import coverPlaceholder from '../../assets/cover-img.png';
+import facebook from '../../assets/facebook.png';
+import instagram from '../../assets/instagram.png';
+import telegram from '../../assets/telegram.png';
 
-import { FiSettings } from "react-icons/fi";
+import { FiSettings } from 'react-icons/fi';
 
 const CardProfileMobile = ({
   avatar,
@@ -21,6 +21,7 @@ const CardProfileMobile = ({
   setIsModalOpen,
   setIsModalSetting,
   isAllowed,
+  showSettings,
 }) => {
   return (
     <div className="cardMob-info">
@@ -28,11 +29,13 @@ const CardProfileMobile = ({
         <img src={avatar || avatarPlaceholder} alt={`${nickname}'s avatar`} />
       </div>
 
-      <div className="cardMob-settings">
-        <button className="cardMob-set" onClick={() => setIsModalSetting(true)}>
-          <FiSettings size={28} />
-        </button>
-      </div>
+      {showSettings && (
+        <div className="cardMob-settings">
+          <button className="cardMob-set" onClick={() => setIsModalSetting(true)}>
+            <FiSettings size={28} />
+          </button>
+        </div>
+      )}
 
       <img className="cardMob-cover" src={cover || coverPlaceholder} alt="Profile Cover" />
 
@@ -74,16 +77,20 @@ const CardProfileMobile = ({
           </li>
         </ul>
 
-        <button
-          className="cardMob-edit btnModerateTransparent"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Edit profile information
-        </button>
-        {isAllowed && (
-          <Link to="/create-post">
-            <button className="cardMob-create btnModerateFill">Create a post</button>
-          </Link>
+        {showSettings && (
+          <>
+            <button
+              className="cardMob-edit btnModerateTransparent"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Edit profile information
+            </button>
+            {isAllowed && (
+              <Link to="/create-post">
+                <button className="cardMob-create btnModerateFill">Create a post</button>
+              </Link>
+            )}
+          </>
         )}
       </div>
     </div>

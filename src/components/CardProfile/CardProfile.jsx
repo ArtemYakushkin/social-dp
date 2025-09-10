@@ -1,9 +1,9 @@
-import React from "react";
-import { useMediaQuery } from "react-responsive";
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 
-import CardProfileDesk from "./CardProfileDesk";
-import CardProfileTab from "./CardProfileTab";
-import CardProfileMobile from "./CardProfileMobile";
+import CardProfileDesk from './CardProfileDesk';
+import CardProfileTab from './CardProfileTab';
+import CardProfileMobile from './CardProfileMobile';
 
 const CardProfile = ({
   avatar,
@@ -17,9 +17,10 @@ const CardProfile = ({
   setIsModalOpen,
   setIsModalSetting,
   isAllowed,
+  showSettings,
 }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1259px)' });
 
   return (
     <>
@@ -36,6 +37,7 @@ const CardProfile = ({
           setIsModalOpen={setIsModalOpen}
           setIsModalSetting={setIsModalSetting}
           isAllowed={isAllowed}
+          showSettings={showSettings}
         />
       ) : isTablet ? (
         <CardProfileTab
@@ -50,6 +52,7 @@ const CardProfile = ({
           setIsModalOpen={setIsModalOpen}
           setIsModalSetting={setIsModalSetting}
           isAllowed={isAllowed}
+          showSettings={showSettings}
         />
       ) : (
         <CardProfileDesk
@@ -64,6 +67,7 @@ const CardProfile = ({
           setIsModalOpen={setIsModalOpen}
           setIsModalSetting={setIsModalSetting}
           isAllowed={isAllowed}
+          showSettings={showSettings}
         />
       )}
     </>

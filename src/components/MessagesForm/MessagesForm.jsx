@@ -1,42 +1,42 @@
-import React, { useState, useRef, useEffect } from "react";
-import { addDoc, collection, serverTimestamp, doc, getDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import Modal from "react-modal";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
-import { toast } from "react-toastify";
-import { useMediaQuery } from "react-responsive";
+import React, { useState, useRef, useEffect } from 'react';
+import { addDoc, collection, serverTimestamp, doc, getDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import Modal from 'react-modal';
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
+import { toast } from 'react-toastify';
+import { useMediaQuery } from 'react-responsive';
 
-import { db } from "../firebase";
-import { useAuth } from "../auth/useAuth";
+import { db } from '../../firebase';
+import { useAuth } from '../../auth/useAuth';
 
-import ModalGifSearch from "./ModalGifSearch";
+import ModalGifSearch from '../ModalGifSearch';
 
-import { BsEmojiSmile } from "react-icons/bs";
-import { HiOutlineGif } from "react-icons/hi2";
-import { IoIosCloseCircleOutline } from "react-icons/io";
-import { GoImage } from "react-icons/go";
-import { IoSend } from "react-icons/io5";
+import { BsEmojiSmile } from 'react-icons/bs';
+import { HiOutlineGif } from 'react-icons/hi2';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
+import { GoImage } from 'react-icons/go';
+import { IoSend } from 'react-icons/io5';
 
-import "../styles/AuthorMessagesForm.css";
+import '../../styles/AuthorMessagesForm.css';
 
-Modal.setAppElement("#root");
+Modal.setAppElement('#root');
 
-const AuthorMessagesForm = ({ authorId }) => {
+const MessagesForm = ({ authorId }) => {
   const { user } = useAuth();
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [image, setImage] = useState(null);
   const [gif, setGif] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isGifModalOpen, setIsGifModalOpen] = useState(false);
-  const [authorNickname, setAuthorNickname] = useState("");
+  const [authorNickname, setAuthorNickname] = useState('');
   const [imageFile, setImageFile] = useState(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const emojiPickerRef = useRef(null);
 
-  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1259px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -46,28 +46,28 @@ const AuthorMessagesForm = ({ authorId }) => {
     };
 
     if (showEmojiPicker) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showEmojiPicker]);
 
   useEffect(() => {
     const fetchAuthorNickname = async () => {
       try {
-        const docRef = doc(db, "users", authorId);
+        const docRef = doc(db, 'users', authorId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setAuthorNickname(data.nickname || "Unknown Author");
+          setAuthorNickname(data.nickname || 'Unknown Author');
         } else {
-          setAuthorNickname("Unknown Author");
+          setAuthorNickname('Unknown Author');
         }
       } catch (error) {
-        console.error("Failed to fetch author nickname:", error);
-        setAuthorNickname("Unknown Author");
+        console.error('Failed to fetch author nickname:', error);
+        setAuthorNickname('Unknown Author');
       }
     };
 
@@ -89,7 +89,7 @@ const AuthorMessagesForm = ({ authorId }) => {
     }
 
     if (text.trim() && !isEnglishOnly(text.trim())) {
-      setError("Only English characters are allowed.");
+      setError('Only English characters are allowed.');
       return;
     }
 
@@ -102,8 +102,8 @@ const AuthorMessagesForm = ({ authorId }) => {
         await uploadBytes(storageRef, imageFile);
         uploadedImageURL = await getDownloadURL(storageRef);
       } catch (err) {
-        console.error("Image upload error:", err);
-        toast.error("Failed to upload image.");
+        console.error('Image upload error:', err);
+        toast.error('Failed to upload image.');
         return;
       }
     }
@@ -120,11 +120,11 @@ const AuthorMessagesForm = ({ authorId }) => {
     };
 
     try {
-      await addDoc(collection(db, "authorMessages"), messageData);
+      await addDoc(collection(db, 'authorMessages'), messageData);
 
-      await addDoc(collection(db, "notifications"), {
+      await addDoc(collection(db, 'notifications'), {
         recipientId: authorId,
-        type: "new_message",
+        type: 'new_message',
         sender: {
           uid: user.uid,
           nickname: user.displayName,
@@ -135,15 +135,15 @@ const AuthorMessagesForm = ({ authorId }) => {
         read: false,
       });
 
-      setText("");
+      setText('');
       setImage(null);
       setImageFile(null);
       setGif(null);
-      setError("");
-      toast.success("Message sent successfully!");
+      setError('');
+      toast.success('Message sent successfully!');
     } catch (error) {
-      console.error("Error sending message or notification:", error);
-      toast.error("Failed to send message.");
+      console.error('Error sending message or notification:', error);
+      toast.error('Failed to send message.');
     }
   };
 
@@ -167,7 +167,7 @@ const AuthorMessagesForm = ({ authorId }) => {
           <img src={user.photoURL} alt="Post author" />
         ) : (
           <div className="author-mes-avatar-placeholder">
-            {user?.displayName ? user.displayName.charAt(0).toUpperCase() : "U"}
+            {user?.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
           </div>
         )}
       </div>
@@ -217,14 +217,14 @@ const AuthorMessagesForm = ({ authorId }) => {
                     className="author-mes-btn"
                     type="button"
                     onClick={() => setIsGifModalOpen(true)}
-                    style={{ width: "34px", height: "34px" }}
+                    style={{ width: '34px', height: '34px' }}
                   >
                     <HiOutlineGif size={34} />
                   </button>
 
                   <label
                     className="author-mes-btn"
-                    style={{ width: "34px", height: "34px", cursor: "pointer" }}
+                    style={{ width: '34px', height: '34px', cursor: 'pointer' }}
                   >
                     <GoImage size={32} />
                     <input type="file" accept="image/*" onChange={handleImageChange} hidden />
@@ -232,7 +232,7 @@ const AuthorMessagesForm = ({ authorId }) => {
                 </div>
 
                 <button className="author-mes-submit-btn" onClick={handleSend}>
-                  <IoSend size={isTablet ? "24" : "36"} />
+                  <IoSend size={isTablet ? '24' : '36'} />
                 </button>
               </div>
 
@@ -291,14 +291,14 @@ const AuthorMessagesForm = ({ authorId }) => {
                     className="author-mes-btn"
                     type="button"
                     onClick={() => setIsGifModalOpen(true)}
-                    style={{ width: "34px", height: "34px" }}
+                    style={{ width: '34px', height: '34px' }}
                   >
                     <HiOutlineGif size={34} />
                   </button>
 
                   <label
                     className="author-mes-btn"
-                    style={{ width: "34px", height: "34px", cursor: "pointer" }}
+                    style={{ width: '34px', height: '34px', cursor: 'pointer' }}
                   >
                     <GoImage size={32} />
                     <input type="file" accept="image/*" onChange={handleImageChange} hidden />
@@ -306,7 +306,7 @@ const AuthorMessagesForm = ({ authorId }) => {
                 </div>
 
                 <button className="author-mes-submit-btn" onClick={handleSend}>
-                  <IoSend size={isTablet ? "24" : "36"} />
+                  <IoSend size={isTablet ? '24' : '36'} />
                 </button>
               </div>
 
@@ -334,4 +334,4 @@ const AuthorMessagesForm = ({ authorId }) => {
   );
 };
 
-export default AuthorMessagesForm;
+export default MessagesForm;

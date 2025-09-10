@@ -1,13 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import avatarPlaceholder from "../../assets/avatar.png";
-import coverPlaceholder from "../../assets/cover-img.png";
-import facebook from "../../assets/facebook.png";
-import instagram from "../../assets/instagram.png";
-import telegram from "../../assets/telegram.png";
+import avatarPlaceholder from '../../assets/avatar.png';
+import coverPlaceholder from '../../assets/cover-img.png';
+import facebook from '../../assets/facebook.png';
+import instagram from '../../assets/instagram.png';
+import telegram from '../../assets/telegram.png';
 
-import { FiSettings } from "react-icons/fi";
+import { FiSettings } from 'react-icons/fi';
 
 const CardProfileDesk = ({
   avatar,
@@ -21,6 +21,7 @@ const CardProfileDesk = ({
   setIsModalOpen,
   setIsModalSetting,
   isAllowed,
+  showSettings,
 }) => {
   return (
     <div className="cardDesk-container">
@@ -72,19 +73,22 @@ const CardProfileDesk = ({
               </p>
             </li>
           </ul>
-          <div className="cardDesk-settings">
-            <button className="btnModerateTransparent" onClick={() => setIsModalOpen(true)}>
-              Edit profile information
-            </button>
-            {isAllowed && (
-              <Link to="/create-post">
-                <button className="btnModerateFill">Create a post</button>
-              </Link>
-            )}
-            <button className="cardDesk-set" onClick={() => setIsModalSetting(true)}>
-              <FiSettings size={28} />
-            </button>
-          </div>
+
+          {showSettings && (
+            <div className="cardDesk-settings">
+              <button className="btnModerateTransparent" onClick={() => setIsModalOpen(true)}>
+                Edit profile information
+              </button>
+              {isAllowed && (
+                <Link to="/create-post">
+                  <button className="btnModerateFill">Create a post</button>
+                </Link>
+              )}
+              <button className="cardDesk-set" onClick={() => setIsModalSetting(true)}>
+                <FiSettings size={28} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

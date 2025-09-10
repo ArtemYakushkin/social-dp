@@ -1,51 +1,51 @@
-import { useState, useEffect } from "react";
-import { getAuth } from "firebase/auth";
+import { useState, useEffect } from 'react';
+import { getAuth } from 'firebase/auth';
 
 import {
   fetchUserProfileData,
   getUserPostCount,
   subscribeToMessages,
   publishAboutMe,
-} from "../../utils/profileUtils";
-import { useAuth } from "../../auth/useAuth";
+} from '../../utils/profileUtils';
+import { useAuth } from '../../auth/useAuth';
 
-import PopularPosts from "../../components/PopularPosts/PopularPosts";
-import ModalProfileEdit from "../../components/ModalProfileEdit";
-import ProfilePosts from "../../components/ProfilePosts/ProfilePosts";
-import SavedPosts from "../../components/SavedPosts/SavedPosts";
-import ModalUpdateCredentials from "../../components/ModalUpdateCredentials";
-import MessagesList from "../../components/MessagesList/MessagesList";
-import AboutMe from "../../components/AboutMe/AboutMe";
-import Tabs from "../../components/Tabs/Tabs";
-import CardProfile from "../../components/CardProfile/CardProfile";
-import InfoBoard from "../../components/InfoBoard/InfoBoard";
+import PopularPosts from '../../components/PopularPosts/PopularPosts';
+import ModalProfileEdit from '../../components/ModalProfileEdit';
+import ProfilePosts from '../../components/ProfilePosts/ProfilePosts';
+import SavedPosts from '../../components/SavedPosts/SavedPosts';
+import ModalUpdateCredentials from '../../components/ModalUpdateCredentials';
+import MessagesList from '../../components/MessagesList/MessagesList';
+import AboutMe from '../../components/AboutMe/AboutMe';
+import Tabs from '../../components/Tabs/Tabs';
+import CardProfile from '../../components/CardProfile/CardProfile';
+import InfoBoard from '../../components/InfoBoard/InfoBoard';
 
-import avatarPlaceholder from "../../assets/avatar.png";
+import avatarPlaceholder from '../../assets/avatar.png';
 
-import "react-quill/dist/quill.snow.css";
+import 'react-quill/dist/quill.snow.css';
 
 const ProfilePage = () => {
   const { user } = useAuth();
-  const [nickname, setNickname] = useState(user?.displayName || "");
-  const [country, setCountry] = useState("");
-  const [profession, setProfession] = useState("");
+  const [nickname, setNickname] = useState(user?.displayName || '');
+  const [country, setCountry] = useState('');
+  const [profession, setProfession] = useState('');
   const [avatar, setAvatar] = useState(user?.photoURL || avatarPlaceholder);
-  const [cover, setCover] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
-  const [facebookLink, setFacebookLink] = useState("");
-  const [instagramLink, setInstagramLink] = useState("");
-  const [telegramLink, setTelegramLink] = useState("");
+  const [cover, setCover] = useState('');
+  const [aboutMe, setAboutMe] = useState('');
+  const [facebookLink, setFacebookLink] = useState('');
+  const [instagramLink, setInstagramLink] = useState('');
+  const [telegramLink, setTelegramLink] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSetting, setIsModalSetting] = useState(false);
-  const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "about");
+  const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'about');
   const [postCount, setPostCount] = useState(0);
   const [author, setAuthor] = useState(null);
-  const [tempAboutMe, setTempAboutMe] = useState("");
+  const [tempAboutMe, setTempAboutMe] = useState('');
   const [errors, setErrors] = useState({});
   const [isEditingAbout, setIsEditingAbout] = useState(false);
   const [messages, setMessages] = useState([]);
 
-  const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(",") || [];
+  const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(',') || [];
 
   useEffect(() => {
     const auth = getAuth();
@@ -56,7 +56,7 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("activeTab", activeTab);
+    localStorage.setItem('activeTab', activeTab);
   }, [activeTab]);
 
   useEffect(() => {
@@ -64,13 +64,13 @@ const ProfilePage = () => {
       setNickname(user.displayName);
       setAvatar(user.photoURL || avatarPlaceholder);
       fetchUserProfileData(user.uid, (data) => {
-        setCountry(data.country || "");
-        setProfession(data.profession || "");
-        setCover(data.cover || "");
-        setAboutMe(data.aboutMe || "");
-        setFacebookLink(data.facebook || "");
-        setInstagramLink(data.instagram || "");
-        setTelegramLink(data.telegram || "");
+        setCountry(data.country || '');
+        setProfession(data.profession || '');
+        setCover(data.cover || '');
+        setAboutMe(data.aboutMe || '');
+        setFacebookLink(data.facebook || '');
+        setInstagramLink(data.instagram || '');
+        setTelegramLink(data.telegram || '');
       });
     }
   }, [user]);
@@ -108,12 +108,13 @@ const ProfilePage = () => {
           setIsModalOpen={setIsModalOpen}
           setIsModalSetting={setIsModalSetting}
           isAllowed={isAllowed}
+          showSettings={true}
         />
 
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} postCount={postCount} />
 
         <>
-          {activeTab === "about" && (
+          {activeTab === 'about' && (
             <AboutMe
               aboutMe={aboutMe}
               tempAboutMe={tempAboutMe}
@@ -125,19 +126,19 @@ const ProfilePage = () => {
             />
           )}
 
-          {activeTab === "message" && (
+          {activeTab === 'message' && (
             <>
               {messages.length > 0 ? (
                 <MessagesList authorId={user.uid} showReplyForm={true} isOwnerPage={true} />
               ) : (
-                <InfoBoard message={"No messages."} />
+                <InfoBoard message={'No messages.'} />
               )}
             </>
           )}
 
-          {activeTab === "posts" && <ProfilePosts />}
+          {activeTab === 'posts' && <ProfilePosts />}
 
-          {activeTab === "saved" && <SavedPosts />}
+          {activeTab === 'saved' && <SavedPosts />}
         </>
 
         {isModalOpen && (

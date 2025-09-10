@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import HomePage from "./pages/HomePage/HomePage";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import AboutPage from "./pages/AboutPage/AboutPage";
-import AuthorProfilePage from "./pages/AuthorProfilePage";
-import CreatePostPage from "./pages/CreatePostPage";
-import PostDetailsPage from "./pages/PostDetailsPage";
-import EditPostPage from "./pages/EditPostPage";
-import NotificationsPage from "./pages/NotificationsPage";
-import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
-import Loader from "./components/Loader";
-import { AuthProvider } from "./auth/useAuth";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import HomePage from './pages/HomePage/HomePage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
+import AboutPage from './pages/AboutPage/AboutPage';
+import AuthorProfilePage from './pages/AuthorProfilePage/AuthorProfilePage';
+import CreatePostPage from './pages/CreatePostPage';
+import PostDetailsPage from './pages/PostDetailsPage';
+import EditPostPage from './pages/EditPostPage';
+import NotificationsPage from './pages/NotificationsPage';
+import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
+import Loader from './components/Loader';
+import { AuthProvider } from './auth/useAuth';
 
-const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(",") || [];
+const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS?.split(',') || [];
 
 function App() {
   const [user, setUser] = useState(null);
