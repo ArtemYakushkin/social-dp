@@ -127,13 +127,13 @@ const ProfilePage = () => {
           )}
 
           {activeTab === 'message' && (
-            <>
+            <div className="container">
               {messages.length > 0 ? (
                 <MessagesList authorId={user.uid} showReplyForm={true} isOwnerPage={true} />
               ) : (
                 <InfoBoard message={'No messages.'} />
               )}
-            </>
+            </div>
           )}
 
           {activeTab === 'posts' && <ProfilePosts />}

@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from 'react';
+import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 
-import { db } from "../../firebase";
-import { useAuth } from "../../auth/useAuth";
-import { deleteMessageById, updateMessageText } from "../../utils/messageUtils";
+import { db } from '../../firebase';
+import { useAuth } from '../../auth/useAuth';
+import { deleteMessageById, updateMessageText } from '../../utils/messageUtils';
 
-import MessageItem from "./MessageItem";
-import ModalImageBig from "../ModalImageBig";
-import ModalEdit from "../ModalEdit";
-import ModalDelete from "../ModalDelete";
+import MessageItem from './MessageItem';
+import ModalImageBig from '../ModalImageBig';
+import ModalEdit from '../ModalEdit';
+import ModalDelete from '../ModalDelete';
 
 const MessagesList = ({ authorId, showReplyForm = false, isOwnerPage = false }) => {
   const { user } = useAuth();
@@ -18,16 +18,16 @@ const MessagesList = ({ authorId, showReplyForm = false, isOwnerPage = false }) 
   const [activeMessageId, setActiveMessageId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [editedText, setEditedText] = useState("");
+  const [editedText, setEditedText] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
 
   useEffect(() => {
     if (!authorId) return;
 
     const q = query(
-      collection(db, "authorMessages"),
-      where("authorId", "==", authorId),
-      orderBy("createdAt", "desc")
+      collection(db, 'authorMessages'),
+      where('authorId', '==', authorId),
+      orderBy('createdAt', 'desc')
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -54,13 +54,13 @@ const MessagesList = ({ authorId, showReplyForm = false, isOwnerPage = false }) 
     await updateMessageText(messageId, editedText);
     setIsEditing(false);
     setSelectedMessage(null);
-    setEditedText("");
+    setEditedText('');
   };
 
   return (
     <>
       {user && messages.length > 0 ? (
-        <div className="container">
+        <>
           <div className="entry">
             <div className="entry-scroll">
               <div className="entry-list">
@@ -98,7 +98,7 @@ const MessagesList = ({ authorId, showReplyForm = false, isOwnerPage = false }) 
               onCancel={() => {
                 setIsEditing(false);
                 setSelectedMessage(null);
-                setEditedText("");
+                setEditedText('');
               }}
             />
           )}
@@ -124,7 +124,7 @@ const MessagesList = ({ authorId, showReplyForm = false, isOwnerPage = false }) 
               isOpen={isModalImage}
             />
           )}
-        </div>
+        </>
       ) : (
         <></>
       )}

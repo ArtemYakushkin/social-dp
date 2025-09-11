@@ -18,7 +18,7 @@ import { db } from "../firebase";
 
 import { IoSend } from "react-icons/io5";
 
-import "../styles/ReplyForm.css";
+// import "../styles/ReplyForm.css";
 
 const notifyNewReply = async (postId, commentId, replyId, sender) => {
   const commentRef = doc(db, "comments", commentId);

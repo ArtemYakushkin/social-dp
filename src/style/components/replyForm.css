@@ -1,0 +1,164 @@
+.replyForm {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-form-comment);
+  border-radius: 20px;
+}
+
+.replyForm-preview {
+  width: 200px;
+  padding: 20px;
+  display: flex;
+  align-items: start;
+  gap: 8px;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+}
+
+.replyForm-btn-close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-black);
+}
+
+.replyForm-textarea {
+  width: 100%;
+  height: 70px;
+  padding: 18px 30px;
+  background-color: transparent;
+  resize: none;
+
+  &::placeholder {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    color: var(--text-black);
+  }
+}
+
+.replyForm-error {
+  position: absolute;
+  top: -25px;
+  left: 110px;
+}
+
+.replyForm-options {
+  width: 100%;
+  height: 44px;
+  padding: 0 17px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: var(--bg-form-comment-options);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.replyForm-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.replyForm-btn {
+  width: 24px;
+  height: 24px;
+  color: var(--text-grey-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.replyForm-submit {
+  width: 36px;
+  height: 36px;
+  color: var(--bg-accent-blue-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.replyForm-emoji {
+  position: absolute;
+  top: 130px;
+  left: 0;
+  z-index: 100;
+}
+
+@media (min-width: 768px) and (max-width: 1259px) {
+  .replyForm-preview {
+    width: 180px;
+    padding: 15px;
+  }
+
+  .replyForm-textarea {
+    height: 60px;
+    padding: 12px 21px;
+
+    &::placeholder {
+      font-size: 16px;
+      line-height: 25.6px;
+    }
+  }
+
+  .replyForm-error {
+    top: -26px;
+    left: 105px;
+  }
+
+  .replyForm-options {
+    height: 36px;
+  }
+
+  .replyForm-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .replyForm-submit {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .replyForm-preview {
+    width: 150px;
+    padding: 15px;
+  }
+
+  .replyForm-textarea {
+    height: 60px;
+    padding: 12px 15px;
+
+    &::placeholder {
+      font-size: 16px;
+      line-height: 25.6px;
+    }
+  }
+
+  .replyForm-error {
+    top: 48px;
+    left: 15px;
+  }
+
+  .replyForm-options {
+    height: 38px;
+    padding: 0 10px;
+  }
+
+  .replyForm-emoji {
+    top: 106px;
+    left: -56px;
+  }
+}

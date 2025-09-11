@@ -6,7 +6,7 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
-  "files.autoSave": "onWindowChange",
+  "files.autoSave": "afterDelay",
   "errorLens.enabled": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

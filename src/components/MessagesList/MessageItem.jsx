@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
-import AuthorMessReplyForm from "../AuthorMessReplyForm";
-import AuthorMessReplyList from "../AuthorMessReplyList";
+import MessageReplyForm from '../MessageReplyForm/MessageReplyForm';
+import AuthorMessReplyList from '../AuthorMessReplyList';
 
-import { FaPlus, FaMinus } from "react-icons/fa6";
-import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { FaPlus, FaMinus } from 'react-icons/fa6';
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 
 const MessageItem = ({
   msg,
@@ -21,7 +21,7 @@ const MessageItem = ({
 }) => {
   const navigate = useNavigate();
 
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   return (
     <li className="entry-item">
@@ -34,7 +34,7 @@ const MessageItem = ({
             <img src={msg.senderAvatar} alt="Avatar" />
           ) : (
             <div className="entry-placeholder">
-              {msg.senderNickname ? msg.senderNickname.charAt(0).toUpperCase() : "U"}
+              {msg.senderNickname ? msg.senderNickname.charAt(0).toUpperCase() : 'U'}
             </div>
           )}
         </div>
@@ -46,15 +46,15 @@ const MessageItem = ({
                 <p className="entryUser">{msg.senderNickname}</p>
                 <p className="dateText">
                   {msg.createdAt?.toDate
-                    ? msg.createdAt.toDate().toLocaleString("ru-RU", {
-                        timeZone: "Europe/Moscow",
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
+                    ? msg.createdAt.toDate().toLocaleString('ru-RU', {
+                        timeZone: 'Europe/Moscow',
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
                       })
-                    : "Date not available"}
+                    : 'Date not available'}
                 </p>
               </div>
 
@@ -117,7 +117,7 @@ const MessageItem = ({
       {isOwnerPage && (
         <div className="entry-center">
           <button className="btnNotShell" onClick={() => toggleReplyList(msg.id)}>
-            {activeMessageId === msg.id ? "Cancel reply" : "Reply to message"}
+            {activeMessageId === msg.id ? 'Cancel reply' : 'Reply to message'}
           </button>
         </div>
       )}
@@ -125,7 +125,7 @@ const MessageItem = ({
       {activeMessageId === msg.id && (
         <div className="entry-reply-box">
           {showReplyForm && (
-            <AuthorMessReplyForm
+            <MessageReplyForm
               replyToMessage={msg}
               currentUser={{
                 uid: user.uid,

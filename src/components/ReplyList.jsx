@@ -19,7 +19,7 @@ import Loader from "./Loader";
 
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
-import "../styles/ReplyList.css";
+// import "../styles/ReplyList.css";
 
 const ReplyList = ({ commentId, currentUser }) => {
   const [replies, setReplies] = useState([]);

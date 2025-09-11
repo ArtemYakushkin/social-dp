@@ -1,4 +1,5 @@
 import MessagesForm from '../MessagesForm/MessagesForm';
+import MessagesList from '../MessagesList/MessagesList';
 
 const AboutAuthor = ({ stripHtml, author, authorId }) => {
   return (
@@ -22,7 +23,7 @@ const AboutAuthor = ({ stripHtml, author, authorId }) => {
       </div>
 
       <MessagesForm authorId={authorId} />
-      {/* <MessagesList authorId={authorId} showReplyForm={false} /> */}
+      <MessagesList authorId={authorId} showReplyForm={false} />
     </div>
   );
 };
