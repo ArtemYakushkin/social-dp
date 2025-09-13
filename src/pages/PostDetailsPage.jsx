@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-import { getAuth } from "firebase/auth";
-import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from "firebase/firestore";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { db } from "../firebase";
-import { useAuth } from "../auth/useAuth";
-import Loader from "../components/Loader";
-import MediaCarousel from "../components/MediaCarousel/MediaCarousel";
-import CommentsForm from "../components/CommentsForm";
-import CommentsList from "../components/CommentsList";
-import Quiz from "../components/Quiz";
-import Poll from "../components/Poll";
-import PopularPosts from "../components/PopularPosts/PopularPosts";
-import ShareBlock from "../components/ShareBlok/ShareBlok";
-import UnregisteredModal from "../components/UnregisteredModal";
+import { db } from '../firebase';
+import { useAuth } from '../auth/useAuth';
+import Loader from '../components/Loader';
+import MediaCarousel from '../components/MediaCarousel/MediaCarousel';
+import CommentsForm from '../components/CommentsForm/CommentsForm';
+import CommentsList from '../components/CommentsList/CommentsList';
+import Quiz from '../components/Quiz';
+import Poll from '../components/Poll';
+import PopularPosts from '../components/PopularPosts/PopularPosts';
+import ShareBlock from '../components/ShareBlok/ShareBlok';
+import UnregisteredModal from '../components/UnregisteredModal';
 
-import { HiArrowLongLeft } from "react-icons/hi2";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { FiEye } from "react-icons/fi";
-import { BiComment } from "react-icons/bi";
-import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
+import { HiArrowLongLeft } from 'react-icons/hi2';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { FiEye } from 'react-icons/fi';
+import { BiComment } from 'react-icons/bi';
+import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa6';
 
-import { fetchSavedStatus, savePost } from "../utils/postUtils";
+import { fetchSavedStatus, savePost } from '../utils/postUtils';
 
-import "../styles/PostDetailsPage.css";
+import '../styles/PostDetailsPage.css';
 
 const PostDetailsPage = () => {
   const auth = getAuth();
@@ -45,8 +45,8 @@ const PostDetailsPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
 
-  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1259px)" });
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1259px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,10 +54,10 @@ const PostDetailsPage = () => {
     const fetchPost = async () => {
       try {
         if (!postId) {
-          throw new Error("Invalid post ID.");
+          throw new Error('Invalid post ID.');
         }
 
-        const postRef = doc(db, "posts", postId);
+        const postRef = doc(db, 'posts', postId);
         const postSnap = await getDoc(postRef);
 
         if (postSnap.exists()) {
@@ -71,19 +71,19 @@ const PostDetailsPage = () => {
             await updateDoc(postRef, { views: (postData.views || 0) + 1 });
           }
 
-          const authorRef = doc(db, "users", postData.author.uid);
+          const authorRef = doc(db, 'users', postData.author.uid);
           const authorSnap = await getDoc(authorRef);
 
           if (authorSnap.exists()) {
             setAuthor(authorSnap.data());
           } else {
-            console.warn("Author not found.");
+            console.warn('Author not found.');
           }
         } else {
-          throw new Error("Post not found.");
+          throw new Error('Post not found.');
         }
       } catch (error) {
-        console.error("Error fetching post:", error);
+        console.error('Error fetching post:', error);
         setError(error.message);
       }
     };
@@ -93,7 +93,7 @@ const PostDetailsPage = () => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      doc(db, "posts", postId),
+      doc(db, 'posts', postId),
       (docSnapshot) => {
         if (docSnapshot.exists()) {
           const updatedPost = docSnapshot.data();
@@ -101,7 +101,7 @@ const PostDetailsPage = () => {
         }
       },
       (error) => {
-        console.error("Ошибка при получении данных из Firestore:", error);
+        console.error('Ошибка при получении данных из Firestore:', error);
       }
     );
 
@@ -124,12 +124,12 @@ const PostDetailsPage = () => {
       return;
     }
 
-    const postRef = doc(db, "posts", postId);
+    const postRef = doc(db, 'posts', postId);
 
     try {
       const postSnap = await getDoc(postRef);
       if (!postSnap.exists()) {
-        throw new Error("Post not found.");
+        throw new Error('Post not found.');
       }
 
       const postData = postSnap.data();
@@ -142,13 +142,13 @@ const PostDetailsPage = () => {
       setLiked(!isLiked);
       setLikesCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
     } catch (error) {
-      console.error("Error updating like:", error);
+      console.error('Error updating like:', error);
     }
   };
 
   const handleBack = () => {
-    navigate("/", { replace: true });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate('/', { replace: true });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleGoBack = () => {
@@ -174,7 +174,7 @@ const PostDetailsPage = () => {
   const handleSavePost = () => {
     const user = auth.currentUser;
     if (!user) {
-      toast.info("You must be registered to save posts.");
+      toast.info('You must be registered to save posts.');
       return;
     }
 
@@ -218,13 +218,13 @@ const PostDetailsPage = () => {
                             <img src={author.avatar} alt="Post author" />
                           ) : (
                             <div className="details-avatar-placeholder">
-                              {author?.nickname ? author.nickname.charAt(0).toUpperCase() : "U"}
+                              {author?.nickname ? author.nickname.charAt(0).toUpperCase() : 'U'}
                             </div>
                           )}
                         </div>
                         <div className="details-author-nickname-box">
                           <p className="details-author-nickname" onClick={handleAvatarClick}>
-                            {author?.nickname || "Unknown Author"}
+                            {author?.nickname || 'Unknown Author'}
                           </p>
                           <p className="details-author-date">
                             {new Date(post.createdAt).toLocaleDateString()}
@@ -238,7 +238,7 @@ const PostDetailsPage = () => {
                   <div className="details-post-img">
                     {post.media.length > 1 ? (
                       <MediaCarousel media={post.media} />
-                    ) : post.media[0].includes(".mp4") ? (
+                    ) : post.media[0].includes('.mp4') ? (
                       <video controls>
                         <source src={post.media[0]} type="video/mp4" />
                         Your browser does not support video.
@@ -286,18 +286,18 @@ const PostDetailsPage = () => {
                       <div className="details-icons">
                         <button className="details-icon" onClick={handleLike}>
                           {liked ? (
-                            <FaHeart size={24} style={{ color: "var(--text-error)" }} />
+                            <FaHeart size={24} style={{ color: 'var(--text-error)' }} />
                           ) : (
-                            <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
+                            <FaRegHeart size={24} style={{ color: 'var(--text-black)' }} />
                           )}
                           <span>{likesCount}</span>
                         </button>
                         <div className="details-icon">
-                          <FiEye size={24} style={{ color: "var(--text-black)" }} />
+                          <FiEye size={24} style={{ color: 'var(--text-black)' }} />
                           <span>{post.views}</span>
                         </div>
                         <div className="details-icon">
-                          <BiComment size={24} style={{ color: "var(--text-black)" }} />
+                          <BiComment size={24} style={{ color: 'var(--text-black)' }} />
                           <span>{commentsCount}</span>
                         </div>
                         <button className="details-btn-saved" onClick={handleSavePost}>
@@ -343,13 +343,13 @@ const PostDetailsPage = () => {
                           <img src={author.avatar} alt="Post author" />
                         ) : (
                           <div className="details-avatar-placeholder">
-                            {author?.nickname ? author.nickname.charAt(0).toUpperCase() : "U"}
+                            {author?.nickname ? author.nickname.charAt(0).toUpperCase() : 'U'}
                           </div>
                         )}
                       </div>
                       <div className="details-author-nickname-box">
                         <p className="details-author-nickname" onClick={handleAvatarClick}>
-                          {author?.nickname || "Unknown Author"}
+                          {author?.nickname || 'Unknown Author'}
                         </p>
                         <p className="details-author-date">
                           {new Date(post.createdAt).toLocaleDateString()}
@@ -374,7 +374,7 @@ const PostDetailsPage = () => {
                   <div className="details-post-img">
                     {post.media.length > 1 ? (
                       <MediaCarousel media={post.media} />
-                    ) : post.media[0].includes(".mp4") ? (
+                    ) : post.media[0].includes('.mp4') ? (
                       <video controls>
                         <source src={post.media[0]} type="video/mp4" />
                         Your browser does not support video.
@@ -401,25 +401,25 @@ const PostDetailsPage = () => {
                     <div className="details-icons">
                       <button className="details-icon" onClick={handleLike}>
                         {liked ? (
-                          <FaHeart size={24} style={{ color: "var(--text-error)" }} />
+                          <FaHeart size={24} style={{ color: 'var(--text-error)' }} />
                         ) : (
-                          <FaRegHeart size={24} style={{ color: "var(--text-black)" }} />
+                          <FaRegHeart size={24} style={{ color: 'var(--text-black)' }} />
                         )}
                         <span>{likesCount}</span>
                       </button>
                       <div className="details-icon">
-                        <FiEye size={24} style={{ color: "var(--text-black)" }} />
+                        <FiEye size={24} style={{ color: 'var(--text-black)' }} />
                         <span>{post.views}</span>
                       </div>
                       <div className="details-icon">
-                        <BiComment size={24} style={{ color: "var(--text-black)" }} />
+                        <BiComment size={24} style={{ color: 'var(--text-black)' }} />
                         <span>{commentsCount}</span>
                       </div>
                     </div>
 
                     <div className="details-btn-viewComm-box">
                       <button className="details-btn-viewComm" onClick={toggleCommentsVisibility}>
-                        {commentsVisible ? "Hide comments" : "View comments"}
+                        {commentsVisible ? 'Hide comments' : 'View comments'}
                         {commentsVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
                       </button>
                     </div>
@@ -429,7 +429,7 @@ const PostDetailsPage = () => {
                       onClick={handleSavePost}
                       disabled={!auth.currentUser || isSaved}
                       style={{
-                        cursor: !auth.currentUser || isSaved ? "not-allowed" : "pointer",
+                        cursor: !auth.currentUser || isSaved ? 'not-allowed' : 'pointer',
                       }}
                     >
                       {!auth.currentUser || isSaved ? (
@@ -445,6 +445,7 @@ const PostDetailsPage = () => {
                       {commentsVisible && (
                         <div className="details-comments-box">
                           <CommentsForm postId={postId} onCommentAdded={handleCommentAdded} />
+
                           <div className="details-comments-scroll">
                             <CommentsList
                               postId={postId}
@@ -464,7 +465,9 @@ const PostDetailsPage = () => {
                           onCommentDeleted={handleCommentDeleted}
                         />
                       </div>
-                      <CommentsForm postId={postId} onCommentAdded={handleCommentAdded} />
+                      <div className="comments-section">
+                        <CommentsForm postId={postId} onCommentAdded={handleCommentAdded} />
+                      </div>
                     </div>
                   )}
                 </div>

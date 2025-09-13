@@ -1,10 +1,4 @@
-.comments-section {
-    padding: 30px 42px 30px 40px;
-    border-top: 1px solid var(--bg-blue);
-    margin-top: 30px;
-    display: flex;
-    gap: 13px;
-}
+
 
 .comments-author {
     width: 48px;

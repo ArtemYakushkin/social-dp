@@ -1,268 +1,286 @@
 .entry-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-    &::before {
-        content: "";
-        position: absolute;
-        left: 24px;
-        top: 55px;
-        bottom: 15px;
-        width: 2px;
-        background-color: var(--text-inactive-grey);
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 55px;
+    bottom: 15px;
+    width: 2px;
+    background-color: var(--text-inactive-grey);
+  }
 }
 
 .entry-top {
-    display: flex;
-    gap: 13px;
+  display: flex;
+  gap: 13px;
 }
 
 .entry-avatar {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .entry-placeholder {
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 28px;
-    color: var(--text-white);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 28px;
+  color: var(--text-white);
 }
 
 .entry-content {
-    flex-grow: 1;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  flex-grow: 1;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .entry-info {
-    padding: 15px;
-    background-color: var(--bg-form-comment);
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+  padding: 15px;
+  background-color: var(--bg-form-comment);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 
 .entry-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .entry-user {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .entry-media {
-    width: 326px;
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
+  width: 326px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
 
-    img {
-        width: 100%;
-        height: auto;
-    }
-}
-
-.entry-actions {
-    display: flex;
-    gap: 20px;
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .entry-center {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 61px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 61px;
+}
+
+.entry-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.entry-btn-like {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background-color: var(--bg-icon-wrapp);
+
+  span {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.59px;
+    color: var(--text-black);
+  }
 }
 
 .entry-reply-box {
-    margin-left: 61px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  margin-left: 61px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .entry-bottom {
-    position: relative;
-    margin-left: 61px;
+  position: relative;
+  margin-left: 61px;
 
-    span {
-        position: absolute;
-        background-color: var(--bg-post-wrapp);
-        width: 12px;
-        height: 12px;
-        border-bottom-left-radius: 6px;
-        top: 0px;
-        left: -35px;
-    }
+  span {
+    position: absolute;
+    background-color: var(--bg-post-wrapp);
+    width: 12px;
+    height: 12px;
+    border-bottom-left-radius: 6px;
+    top: 0px;
+    left: -35px;
+  }
 
-    &::after {
-        content: "";
-        position: absolute;
-        top: 12px;
-        left: -30px;
-        width: 23px;
-        height: 2px;
-        background-color: var(--text-inactive-grey);
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: -30px;
+    width: 23px;
+    height: 2px;
+    background-color: var(--text-inactive-grey);
+  }
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: 2px;
-        left: -37px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background-color: transparent;
-        border: 2px solid var(--text-inactive-grey);
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -37px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid var(--text-inactive-grey);
+  }
 }
 
 .entry-more-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  div {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--text-more-reply);
+    color: var(--text-more-reply);
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    padding-right: 1px;
+  }
 
-    div {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 2px solid var(--text-more-reply);
-        color: var(--text-more-reply);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-right: 1px;
-    }
-
-    p {
-        font-weight: 400;
-        font-size: 14px;
-        color: var(--text-more-reply);
-    }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-more-reply);
+  }
 }
-
 
 @media (min-width: 768px) and (max-width: 1259px) {
-    .entry-item {
-        &::before {
-            left: 20px;
-            top: 49px;
-            bottom: 18px;
-        }
+  .entry-item {
+    &::before {
+      left: 20px;
+      top: 49px;
+      bottom: 18px;
+    }
+  }
+
+  .entry-top {
+    display: flex;
+    gap: 8px;
+  }
+
+  .entry-info {
+    padding: 13px;
+  }
+
+  .entry-media {
+    width: 226px;
+  }
+
+  .entry-center {
+    margin-left: 48px;
+  }
+
+  .entry-reply-box {
+    margin-left: 48px;
+  }
+
+  .entry-bottom {
+    margin-left: 48px;
+
+    span {
+      left: -26px;
     }
 
-    .entry-top {
-        display: flex;
-        gap: 8px;
+    &::after {
+      left: -23px;
+      width: 14px;
     }
 
-    .entry-info {
-        padding: 13px;
+    &::before {
+      left: -28px;
     }
-
-    .entry-media {
-        width: 226px;
-    }
-
-    .entry-center {
-        margin-left: 48px;
-    }
-
-    .entry-reply-box {
-        margin-left: 48px;
-    }
-
-    .entry-bottom {
-        margin-left: 48px;
-
-        span {
-            left: -26px;
-        }
-
-        &::after {
-            left: -23px;
-            width: 14px;
-        }
-
-        &::before {
-            left: -28px;
-        }
-    }
+  }
 }
 
-
 @media (max-width: 767px) {
-    .entry-item {
-        &::before {
-            content: "";
-            position: absolute;
-            left: 20px;
-            top: 45px;
-            bottom: 12px;
-        }
+  .entry-item {
+    &::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 45px;
+      bottom: 12px;
+    }
+  }
+
+  .entry-top {
+    gap: 8px;
+  }
+
+  .entry-info {
+    padding: 13px;
+  }
+
+  .entry-user {
+    flex-direction: column;
+    align-items: start;
+    gap: 0px;
+  }
+
+  .entry-actions-mob {
+    display: flex;
+    gap: 20px;
+  }
+
+  .entry-btn {
+    color: var(--bg-accent-blue-color);
+  }
+
+  .entry-media {
+    width: 200px;
+  }
+
+  .entry-actions {
+    display: none;
+  }
+
+  .entry-center {
+    margin-left: 48px;
+  }
+
+  .entry-reply-box {
+    margin-left: 48px;
+  }
+
+  .entry-bottom {
+    margin-left: 48px;
+
+    span {
+      display: none;
     }
 
-    .entry-top {
-        gap: 8px;
+    &::after {
+      top: 10px;
+      left: -26px;
+      width: 17px;
     }
 
-    .entry-info {
-        padding: 13px;
+    &::before {
+      display: none;
     }
-
-    .entry-user {
-        flex-direction: column;
-        align-items: start;
-        gap: 0px;
-    }
-
-    .entry-actions-mob {
-        display: flex;
-        gap: 20px;
-    }
-
-    .entry-media {
-        width: 200px;
-    }
-
-    .entry-actions {
-        display: none;
-    }
-
-    .entry-center {
-        margin-left: 48px;
-    }
-
-    .entry-reply-box {
-        margin-left: 48px;
-    }
-
-    .entry-bottom {
-        margin-left: 48px;
-
-        span {
-            display: none;
-        }
-
-        &::after {
-            top: 10px;
-            left: -26px;
-            width: 17px;
-        }
-
-        &::before {
-            display: none;
-        }
-    }
+  }
 }

@@ -45,8 +45,8 @@
 
 .replyForm-error {
   position: absolute;
-  top: -25px;
-  left: 110px;
+  bottom: 13px;
+  right: 70px;
 }
 
 .replyForm-options {
@@ -110,8 +110,8 @@
   }
 
   .replyForm-error {
-    top: -26px;
-    left: 105px;
+    bottom: 10px;
+    right: 60px;
   }
 
   .replyForm-options {
@@ -148,7 +148,7 @@
   }
 
   .replyForm-error {
-    top: 48px;
+    top: 43px;
     left: 15px;
   }
 

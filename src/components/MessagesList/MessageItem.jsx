@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 
 import MessageReplyForm from '../MessageReplyForm/MessageReplyForm';
-import AuthorMessReplyList from '../AuthorMessReplyList';
+import MessageReplyList from '../MessageReplyList/MessageReplyList';
 
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
@@ -134,7 +134,7 @@ const MessageItem = ({
               }}
             />
           )}
-          <AuthorMessReplyList messageId={msg.id} />
+          <MessageReplyList messageId={msg.id} />
         </div>
       )}
 

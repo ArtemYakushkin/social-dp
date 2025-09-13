@@ -67,7 +67,10 @@
 @import './style/components/popularPosts.css';
 
 @import './style/components/form.css';
+
 @import './style/components/replyForm.css';
+
+@import './style/components/reply.css';
 
 :root {
   --background: url('./assets/background.png') center / cover no-repeat;

@@ -65,8 +65,8 @@
 
 .form-error {
   position: absolute;
-  top: -23px;
-  left: 0px;
+  bottom: 0px;
+  right: 0px;
 }
 
 .form-options {
@@ -134,8 +134,8 @@
   }
 
   .form-error {
-    top: -22px;
-    left: 0px;
+    bottom: 12px;
+    right: 60px;
   }
 
   .form-btn {
@@ -174,8 +174,8 @@
   }
 
   .form-error {
-    top: -22px;
-    left: 0px;
+    top: 43px;
+    left: 15px;
   }
 
   .form-wrapper {
