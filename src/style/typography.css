@@ -184,6 +184,14 @@
   color: var(--text-black);
 }
 
+.dateTextUnchanging {
+  /* Не меняется */
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  color: var(--text-grey-light);
+}
+
 .mesText {
   font-weight: 400;
   font-size: 18px;

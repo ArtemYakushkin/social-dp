@@ -72,6 +72,9 @@
 
 @import './style/components/reply.css';
 
+@import './style/components/detailsDesk.css';
+@import './style/components/detailsMob.css';
+
 :root {
   --background: url('./assets/background.png') center / cover no-repeat;
   --bg-blue: #bcd8ff;

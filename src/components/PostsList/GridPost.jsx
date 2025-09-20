@@ -74,7 +74,7 @@ const GridPost = ({ post, liked, likesCount, viewsCount, handleLike, author }) =
           {post.media.length > 1 ? (
             <MediaCarousel media={post.media} />
           ) : Array.isArray(post.media) && post.media[0]?.includes(".mp4") ? (
-            <video autoPlay loop>
+            <video autoPlay loop muted playsInline>
               <source src={post.media[0]} type="video/mp4" />
               Your browser does not support video.
             </video>

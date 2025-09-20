@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import CommentsReplyForm from '../CommentsReplyForm/CommentsReplyForm';
-import ReplyList from '../ReplyList';
+import CommentsReplyList from '../CommentsReplyList/CommentsReplyList';
 
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
@@ -136,7 +136,7 @@ const CommentsItem = ({
         {activeCommentId === comment.id && (
           <div className="entry-reply-box">
             <CommentsReplyForm commentId={comment.id} postId={postId} user={user} />
-            <ReplyList commentId={comment.id} currentUser={user} />
+            <CommentsReplyList commentId={comment.id} currentUser={user} />
           </div>
         )}
 

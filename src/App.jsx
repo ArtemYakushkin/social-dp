@@ -12,7 +12,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import AuthorProfilePage from './pages/AuthorProfilePage/AuthorProfilePage';
 import CreatePostPage from './pages/CreatePostPage';
-import PostDetailsPage from './pages/PostDetailsPage';
+import PostDetailsPage from './pages/PostDetailsPage/PostDetailsPage';
 import EditPostPage from './pages/EditPostPage';
 import NotificationsPage from './pages/NotificationsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';

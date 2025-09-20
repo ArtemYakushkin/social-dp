@@ -1,31 +1,34 @@
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
-const MessageReplyItem = ({
+const CommentsReplyItem = ({
   reply,
-  isMobile,
   currentUser,
   setIsEditing,
+  setIsDeleting,
   setSelectedReply,
   setEditedText,
-  setIsDeleting,
-  setModalImageUrl,
-  setIsModalImage,
 }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const navigate = useNavigate();
+
   return (
     <div className="reply-item">
       <span></span>
 
       <div className="reply-top">
-        <div className="reply-avatar avatarSmallMedium">
-          {reply.from.avatar ||
-          (reply.from.nickname && reply.from.nickname.charAt(0).toUpperCase()) ? (
-            typeof reply.from.avatar === 'string' && reply.from.avatar.length > 1 ? (
-              <img src={reply.from.avatar} alt="Avatar" />
-            ) : (
-              <div className="reply-avatar-initial">{reply.from.avatar}</div>
-            )
+        <div
+          className="reply-avatar avatarSmallMedium"
+          onClick={() => navigate(`/author/${reply.author.uid}`)}
+        >
+          {reply.author.avatar ? (
+            <img src={reply.author.avatar} alt="Avatar" />
           ) : (
-            <div className="reply-avatar-initial">U</div>
+            <div className="reply-avatar-initial">
+              {reply.author.nickname ? reply.author.nickname.charAt(0).toUpperCase() : 'U'}
+            </div>
           )}
         </div>
 
@@ -33,7 +36,7 @@ const MessageReplyItem = ({
           <div className="reply-info">
             <div className="reply-header">
               <div className="reply-user">
-                <p className="entryUser">{reply.from.nickname}</p>
+                <p className="entryUser">{reply.author.nickname}</p>
                 <p className="dateText">
                   {reply.createdAt && reply.createdAt.toDate
                     ? reply.createdAt.toDate().toLocaleString('ru-RU', {
@@ -50,7 +53,7 @@ const MessageReplyItem = ({
 
               {isMobile && (
                 <>
-                  {reply.from.uid === currentUser?.uid && (
+                  {reply.author.uid === currentUser?.uid && (
                     <div className="reply-actions-mob">
                       <button
                         className="reply-btn"
@@ -78,33 +81,9 @@ const MessageReplyItem = ({
             </div>
 
             <p className="mesText">{reply.text}</p>
-
-            {reply.gif && (
-              <div
-                className="reply-media"
-                onClick={() => {
-                  setModalImageUrl(reply.gif);
-                  setIsModalImage(true);
-                }}
-              >
-                <img src={reply.gif} alt="gif" />
-              </div>
-            )}
-
-            {reply.image && (
-              <div
-                className="reply-media"
-                onClick={() => {
-                  setModalImageUrl(reply.image);
-                  setIsModalImage(true);
-                }}
-              >
-                <img src={reply.image} alt="reply" />
-              </div>
-            )}
           </div>
 
-          {reply.from.uid === currentUser?.uid && (
+          {reply.author.uid === currentUser?.uid && (
             <div className="reply-actions">
               <button
                 className="btnNotShell"
@@ -133,4 +112,4 @@ const MessageReplyItem = ({
   );
 };
 
-export default MessageReplyItem;
+export default CommentsReplyItem;
