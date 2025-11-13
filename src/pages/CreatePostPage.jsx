@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
-import { db, storage } from "../firebase";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/useAuth';
+import { db, storage } from '../firebase';
 import {
   collection,
   addDoc,
@@ -11,29 +11,29 @@ import {
   doc,
   getDocs,
   serverTimestamp,
-} from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { toast } from "react-toastify";
-import { useMediaQuery } from "react-responsive";
+} from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { toast } from 'react-toastify';
+import { useMediaQuery } from 'react-responsive';
 
-import "../styles/CreatePostPage.css";
+import '../styles/CreatePostPage.css';
 
 const CreatePostPage = () => {
   const { user } = useAuth();
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
-  const [activeTab, setActiveTab] = useState("Quiz");
+  const [activeTab, setActiveTab] = useState('Quiz');
   const [quiz, setQuiz] = useState({
-    question: "",
+    question: '',
     answers: [],
     correctAnswer: null,
   });
-  const [poll, setPoll] = useState({ question: "", answers: ["Yes", "No"] });
+  const [poll, setPoll] = useState({ question: '', answers: ['Yes', 'No'] });
   const navigate = useNavigate();
 
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -64,7 +64,7 @@ const CreatePostPage = () => {
   };
 
   const addQuizAnswer = () => {
-    setQuiz({ ...quiz, answers: [...quiz.answers, ""] });
+    setQuiz({ ...quiz, answers: [...quiz.answers, ''] });
   };
 
   const handleQuizAnswerChange = (index, value) => {
@@ -81,11 +81,11 @@ const CreatePostPage = () => {
     e.preventDefault();
 
     if (!user) {
-      alert("You must be logged in to create a post.");
+      alert('You must be logged in to create a post.');
       return;
     }
 
-    const senderNickname = user.displayName || "Anonymous";
+    const senderNickname = user.displayName || 'Anonymous';
 
     try {
       const mediaUrls = await Promise.all(
@@ -110,13 +110,13 @@ const CreatePostPage = () => {
         },
       };
 
-      if (activeTab === "Quiz") {
+      if (activeTab === 'Quiz') {
         postData.quiz = quiz;
-      } else if (activeTab === "Poll") {
+      } else if (activeTab === 'Poll') {
         postData.poll = poll;
       }
 
-      const postRef = await addDoc(collection(db, "posts"), postData);
+      const postRef = await addDoc(collection(db, 'posts'), postData);
 
       const senderData = {
         uid: user.uid,
@@ -126,33 +126,33 @@ const CreatePostPage = () => {
 
       await notifyNewPost(postRef.id, senderData);
 
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(db, 'users', user.uid);
       await updateDoc(userRef, {
         createdPosts: arrayUnion({
           id: postRef.id,
         }),
       });
 
-      toast.success("Post created successfully");
-      setTitle("");
-      setText("");
+      toast.success('Post created successfully');
+      setTitle('');
+      setText('');
       setSelectedFiles([]);
       setPreviewImages([]);
-      setQuiz({ question: "", answers: [], correctAnswer: null });
-      setPoll({ question: "", answers: ["Yes", "No"] });
-      navigate("/");
+      setQuiz({ question: '', answers: [], correctAnswer: null });
+      setPoll({ question: '', answers: ['Yes', 'No'] });
+      navigate('/');
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error('Error creating post:', error);
     }
   };
 
   const notifyNewPost = async (postId, senderData) => {
-    const usersSnapshot = await getDocs(collection(db, "users"));
+    const usersSnapshot = await getDocs(collection(db, 'users'));
     usersSnapshot.forEach(async (doc) => {
       if (doc.id !== senderData.uid) {
-        await addDoc(collection(db, "notifications"), {
+        await addDoc(collection(db, 'notifications'), {
           recipientId: doc.id,
-          type: "new_post",
+          type: 'new_post',
           postId,
           postTitle: title,
           sender: senderData,
@@ -192,25 +192,25 @@ const CreatePostPage = () => {
               <div className="create-tabs">
                 <button
                   className={`create-tabs-btn ${
-                    activeTab === "Quiz" ? "create-tabs-btn-active" : ""
+                    activeTab === 'Quiz' ? 'create-tabs-btn-active' : ''
                   }`}
                   type="button"
-                  onClick={() => setActiveTab("Quiz")}
+                  onClick={() => setActiveTab('Quiz')}
                 >
                   Quiz
                 </button>
                 <button
                   className={`create-tabs-btn ${
-                    activeTab === "Poll" ? "create-tabs-btn-active" : ""
+                    activeTab === 'Poll' ? 'create-tabs-btn-active' : ''
                   }`}
                   type="button"
-                  onClick={() => setActiveTab("Poll")}
+                  onClick={() => setActiveTab('Poll')}
                 >
                   Poll
                 </button>
               </div>
 
-              {activeTab === "Quiz" && (
+              {activeTab === 'Quiz' && (
                 <div className="create-quiz-section">
                   <div className="create-input-container">
                     <input
@@ -247,8 +247,8 @@ const CreatePostPage = () => {
                           style={{
                             color:
                               quiz.correctAnswer === index
-                                ? "var(--accent-blue-color)"
-                                : "var(--text-black)",
+                                ? 'var(--accent-blue-color)'
+                                : 'var(--text-black)',
                           }}
                         >
                           Correct
@@ -262,7 +262,7 @@ const CreatePostPage = () => {
                 </div>
               )}
 
-              {activeTab === "Poll" && (
+              {activeTab === 'Poll' && (
                 <div className="create-poll-section">
                   <div className="create-input-container">
                     <input
@@ -357,25 +357,25 @@ const CreatePostPage = () => {
               <div className="create-tabs">
                 <button
                   className={`create-tabs-btn ${
-                    activeTab === "Quiz" ? "create-tabs-btn-active" : ""
+                    activeTab === 'Quiz' ? 'create-tabs-btn-active' : ''
                   }`}
                   type="button"
-                  onClick={() => setActiveTab("Quiz")}
+                  onClick={() => setActiveTab('Quiz')}
                 >
                   Quiz
                 </button>
                 <button
                   className={`create-tabs-btn ${
-                    activeTab === "Poll" ? "create-tabs-btn-active" : ""
+                    activeTab === 'Poll' ? 'create-tabs-btn-active' : ''
                   }`}
                   type="button"
-                  onClick={() => setActiveTab("Poll")}
+                  onClick={() => setActiveTab('Poll')}
                 >
                   Poll
                 </button>
               </div>
 
-              {activeTab === "Quiz" && (
+              {activeTab === 'Quiz' && (
                 <div className="create-quiz-section">
                   <div className="create-input-container">
                     <input
@@ -411,8 +411,8 @@ const CreatePostPage = () => {
                         style={{
                           color:
                             quiz.correctAnswer === index
-                              ? "var(--accent-blue-color)"
-                              : "var(--text-black)",
+                              ? 'var(--accent-blue-color)'
+                              : 'var(--text-black)',
                         }}
                       >
                         Correct
@@ -425,7 +425,7 @@ const CreatePostPage = () => {
                 </div>
               )}
 
-              {activeTab === "Poll" && (
+              {activeTab === 'Poll' && (
                 <div className="create-poll-section">
                   <div className="create-input-container">
                     <input

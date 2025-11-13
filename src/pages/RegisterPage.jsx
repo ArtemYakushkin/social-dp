@@ -1,396 +1,580 @@
-import React, { useState, useRef } from "react";
-import validator from "validator";
-import countryList from "react-select-country-list";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import React, { useState, useRef } from 'react';
+import validator from 'validator';
+import countryList from 'react-select-country-list';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-import { auth, db, storage } from "../firebase";
-import Loader from "../components/Loader";
+import { auth, db, storage } from '../firebase';
+import Loader from '../components/Loader';
 
-import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
-import { PiEyeClosed, PiEye } from "react-icons/pi";
-import { FiUpload } from "react-icons/fi";
-import { VscError } from "react-icons/vsc";
+import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from 'react-icons/io';
+import { PiEyeClosed, PiEye } from 'react-icons/pi';
+import { FiUpload } from 'react-icons/fi';
+import { VscError } from 'react-icons/vsc';
 
-import "../styles/RegisterPage.css";
+import '../styles/RegisterPage.css';
 
 const RegisterPage = ({ onClose, isVisible, openLogin, onCloseUnreg }) => {
-  const [nickname, setNickname] = useState("");
-  const [country, setCountry] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [selectedProfession, setSelectedProfession] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [errorMessage, setErrorMessage] = useState({});
-  const [error, setError] = useState({});
-  const [successMessage, setSuccessMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const countries = countryList().getData();
-  const professions = ["Teacher", "Student"];
-  const dropdownHeaderRef = useRef(null);
+	const [nickname, setNickname] = useState('');
+	const [country, setCountry] = useState('');
+	const [filteredCountries, setFilteredCountries] = useState([]);
+	const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [selectedProfession, setSelectedProfession] = useState('');
+	const [showDropdown, setShowDropdown] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	const [imagePreview, setImagePreview] = useState(null);
+	const [avatarFile, setAvatarFile] = useState(null);
+	const [errorMessage, setErrorMessage] = useState({});
+	const [error, setError] = useState({});
+	const [successMessage, setSuccessMessage] = useState('');
+	const [loading, setLoading] = useState(false);
+	const countries = countryList().getData();
+	const professions = ['Teacher', 'Student'];
+	const dropdownHeaderRef = useRef(null);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+	const togglePasswordVisibility = () => {
+		setShowPassword(!showPassword);
+	};
 
-  const handleProfessionChange = (profession) => {
-    setSelectedProfession(profession);
-    setShowDropdown(false);
+	const handleProfessionChange = (profession) => {
+		setSelectedProfession(profession);
+		setShowDropdown(false);
 
-    if (dropdownHeaderRef.current) {
-      dropdownHeaderRef.current.blur();
-    }
-  };
+		if (dropdownHeaderRef.current) {
+			dropdownHeaderRef.current.blur();
+		}
+	};
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-      setAvatarFile(file);
-    }
-  };
+	const handleImageChange = (event) => {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setImagePreview(reader.result);
+			};
+			reader.readAsDataURL(file);
+			setAvatarFile(file);
+		}
+	};
 
-  const validateFields = () => {
-    const errors = {};
-    if (!nickname.trim()) {
-      errors.nickname = "Nickname cannot be empty";
-    } else if (!/^[a-zA-Z0-9\s.,'-]+$/.test(nickname)) {
-      errors.nickname = "Please write your nickname in English";
-    }
-    if (!validator.isEmail(email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    if (!validator.isLength(password, { min: 6 })) {
-      errors.password = "Your password must be more than 6 characters long";
-    }
-    if (password !== confirmPassword) {
-      errors.confirmPassword = "The entered passwords are not the same";
-    }
-    if (!selectedProfession) {
-      errors.profession = "Please choose one of the options";
-    }
-    if (!countries.find((c) => c.label === country)) {
-      errors.country = "Please write your сountry in English";
-    }
+	const handleCountryChange = (e) => {
+		const value = e.target.value;
+		setCountry(value);
 
-    setErrorMessage(errors);
-    return Object.keys(errors).length === 0;
-  };
+		if (value.trim() === '') {
+			setFilteredCountries([]);
+			setShowCountryDropdown(false);
+			return;
+		}
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setErrorMessage({});
-    setError({});
-    setSuccessMessage("");
-    if (!validateFields()) return;
+		const filtered = countries.filter((c) =>
+			c.label.toLowerCase().startsWith(value.toLowerCase()),
+		);
 
-    setLoading(true);
+		setFilteredCountries(filtered.slice(0, 8));
+		setShowCountryDropdown(true);
+	};
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+	const validateFields = () => {
+		const errors = {};
+		if (!nickname.trim()) {
+			errors.nickname = 'Nickname cannot be empty';
+		} else if (!/^[a-zA-Z0-9\s.,'-]+$/.test(nickname)) {
+			errors.nickname = 'Please write your nickname in English';
+		}
+		if (!validator.isEmail(email)) {
+			errors.email = 'Please enter a valid email address';
+		}
+		if (!validator.isLength(password, { min: 6 })) {
+			errors.password =
+				'Your password must be more than 6 characters long';
+		}
+		if (password !== confirmPassword) {
+			errors.confirmPassword = 'The entered passwords are not the same';
+		}
+		if (!selectedProfession) {
+			errors.profession = 'Please choose one of the options';
+		}
+		if (!countries.find((c) => c.label === country)) {
+			errors.country = 'Please write your сountry in English';
+		}
 
-      let avatarURL = "";
-      if (avatarFile) {
-        const avatarRef = ref(storage, `avatars/${user.uid}`);
-        await uploadBytes(avatarRef, avatarFile);
-        avatarURL = await getDownloadURL(avatarRef);
-      }
+		setErrorMessage(errors);
+		return Object.keys(errors).length === 0;
+	};
 
-      await updateProfile(user, {
-        displayName: nickname,
-        photoURL: avatarURL,
-      });
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		setErrorMessage({});
+		setError({});
+		setSuccessMessage('');
+		if (!validateFields()) return;
 
-      const userData = {
-        nickname,
-        avatar: avatarURL || "",
-        country,
-        profession: selectedProfession,
-        cover: "",
-        aboutMe: "",
-        createdPosts: [],
-        createdComments: [],
-        createdReplys: [],
-        likedPosts: [],
-        likedComments: [],
-        facebook: "",
-        instagram: "",
-        telegram: "",
-        savedPosts: [],
-      };
+		setLoading(true);
 
-      const userRef = doc(collection(db, "users"), user.uid);
-      await setDoc(userRef, userData, { merge: true });
+		try {
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password,
+			);
+			const user = userCredential.user;
 
-      setSuccessMessage("Registration successful!");
+			let avatarURL = '';
+			if (avatarFile) {
+				const avatarRef = ref(storage, `avatars/${user.uid}`);
+				await uploadBytes(avatarRef, avatarFile);
+				avatarURL = await getDownloadURL(avatarRef);
+			}
 
-      if (onClose) {
-        onClose();
-        onCloseUnreg();
-      }
-    } catch (error) {
-      console.error("Registration error:", error);
-      if (error.code === "auth/email-already-in-use") {
-        setError({ general: "User with this email already exists." });
-      } else if (error.message.includes("Error saving user data")) {
-        setError({ general: "Failed to save user data." });
-      } else {
-        setError({ general: "Error during registration." });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+			await updateProfile(user, {
+				displayName: nickname,
+				photoURL: avatarURL,
+			});
 
-  return (
-    <div className={`register ${isVisible ? "register-active" : ""}`}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <form
-          className="register-form"
-          onSubmit={handleSubmit}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button className="modal-btn-close" onClick={onClose}>
-            <IoIosClose size={30} color="var(--text-grey-dark)" />
-          </button>
+			const userData = {
+				nickname,
+				avatar: avatarURL || '',
+				country,
+				profession: selectedProfession,
+				cover: '',
+				aboutMe: '',
+				createdPosts: [],
+				createdComments: [],
+				createdReplys: [],
+				likedPosts: [],
+				likedComments: [],
+				facebook: '',
+				instagram: '',
+				telegram: '',
+				savedPosts: [],
+			};
 
-          <div className="register-form-scroll">
-            <h3 className="register-title title-h3">Register</h3>
-            <div className="register-fields">
-              <div className="register-fields-basic">
-                <div className="register-input-group">
-                  <div className="register-input-container">
-                    <input
-                      className={`register-input ${
-                        errorMessage.nickname ? "register-input-error" : ""
-                      }`}
-                      type="text"
-                      placeholder="Nickname"
-                      value={nickname}
-                      onChange={(e) => setNickname(e.target.value)}
-                    />
-                    <span className="register-placeholder">Nickname</span>
-                  </div>
-                  {errorMessage.nickname && (
-                    <p className="register-error">
-                      <span>
-                        <VscError size={16} />
-                      </span>
-                      {errorMessage.nickname}
-                    </p>
-                  )}
-                </div>
+			const userRef = doc(collection(db, 'users'), user.uid);
+			await setDoc(userRef, userData, { merge: true });
 
-                <div className="register-input-group">
-                  <div className="register-input-container">
-                    <input
-                      className={`register-input ${
-                        errorMessage.country ? "register-input-error" : ""
-                      }`}
-                      type="text"
-                      placeholder="Country"
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                    />
-                    <span className="register-placeholder">Country</span>
-                  </div>
-                  {errorMessage.country && (
-                    <p className="register-error">
-                      <span>
-                        <VscError size={16} />
-                      </span>
-                      {errorMessage.country}
-                    </p>
-                  )}
-                </div>
+			setSuccessMessage('Registration successful!');
 
-                <div className="register-input-group">
-                  <div className="register-input-container">
-                    <div
-                      ref={dropdownHeaderRef}
-                      className={`register-dropdown-header ${
-                        errorMessage.profession ? "register-input-error" : ""
-                      } ${showDropdown || selectedProfession ? "is-focused" : ""}`}
-                      tabIndex="0"
-                      onClick={() => setShowDropdown(!showDropdown)}
-                    >
-                      <span className="register-dropdown-placeholder">Your status</span>
-                      <span className="register-dropdown-text">{selectedProfession || ""}</span>
-                      <span className="register-dropdown-icon-arrow">
-                        {showDropdown ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />}
-                      </span>
-                    </div>
-                    {showDropdown && (
-                      <div className="register-dropdown-list">
-                        {professions.map((profession) => (
-                          <div
-                            key={profession}
-                            className="register-dropdown-item"
-                            onClick={() => handleProfessionChange(profession)}
-                          >
-                            {profession}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  {errorMessage.profession && (
-                    <p className="register-error">
-                      <span>
-                        <VscError size={16} />
-                      </span>
-                      {errorMessage.profession}
-                    </p>
-                  )}
-                </div>
+			if (onClose) {
+				onClose();
+				onCloseUnreg();
+			}
+		} catch (error) {
+			console.error('Registration error:', error);
+			if (error.code === 'auth/email-already-in-use') {
+				setError({ general: 'User with this email already exists.' });
+			} else if (error.message.includes('Error saving user data')) {
+				setError({ general: 'Failed to save user data.' });
+			} else {
+				setError({ general: 'Error during registration.' });
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
 
-                <div className="register-input-group">
-                  <div className="register-input-container">
-                    <input
-                      className={`register-input ${
-                        errorMessage.email ? "register-input-error" : ""
-                      }`}
-                      type="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <span className="register-placeholder">Email</span>
-                  </div>
-                  {errorMessage.email && (
-                    <p className="register-error">
-                      <span>
-                        <VscError size={16} />
-                      </span>
-                      {errorMessage.email}
-                    </p>
-                  )}
-                </div>
+	return (
+		<div className={`register ${isVisible ? 'register-active' : ''}`}>
+			{loading ? (
+				<Loader />
+			) : (
+				<form
+					className="register-form"
+					onSubmit={handleSubmit}
+					onClick={(e) => e.stopPropagation()}
+				>
+					<button className="modal-btn-close" onClick={onClose}>
+						<IoIosClose size={30} color="var(--text-grey-dark)" />
+					</button>
 
-                <div className="register-input-group">
-                  <div className="register-input-container register-password">
-                    <input
-                      className={`register-input ${
-                        errorMessage.password ? "register-input-error" : ""
-                      }`}
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password (min. 6 characters)"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <span className="register-placeholder">Password (min. 6 characters)</span>
-                    <span className="register-pass-eye" onClick={togglePasswordVisibility}>
-                      {showPassword ? <PiEye size={24} /> : <PiEyeClosed size={24} />}
-                    </span>
-                    <p className="register-show-text">Show password</p>
-                  </div>
-                  {errorMessage.password && (
-                    <p className="register-error register-error-fix">
-                      <span>
-                        <VscError size={16} />
-                      </span>
-                      {errorMessage.password}
-                    </p>
-                  )}
-                </div>
+					<div className="register-form-scroll">
+						<h3 className="register-title title-h3">Register</h3>
+						<div className="register-fields">
+							<div className="register-fields-basic">
+								<div className="register-input-group">
+									<div className="register-input-container">
+										<input
+											className={`register-input ${
+												errorMessage.nickname
+													? 'register-input-error'
+													: ''
+											}`}
+											type="text"
+											placeholder="Nickname"
+											value={nickname}
+											onChange={(e) =>
+												setNickname(e.target.value)
+											}
+										/>
+										<span className="register-placeholder">
+											Nickname
+										</span>
+									</div>
+									{errorMessage.nickname && (
+										<p className="register-error">
+											<span>
+												<VscError size={16} />
+											</span>
+											{errorMessage.nickname}
+										</p>
+									)}
+								</div>
 
-                <div className="register-input-group">
-                  <div className="register-input-container register-password">
-                    <input
-                      className={`register-input ${
-                        errorMessage.confirmPassword ? "register-input-error" : ""
-                      }`}
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Confirm password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <span className="register-placeholder">Confirm password</span>
-                    <span className="register-pass-eye" onClick={togglePasswordVisibility}>
-                      {showPassword ? <PiEye size={24} /> : <PiEyeClosed size={24} />}
-                    </span>
-                    <p className="register-show-text">Show password</p>
-                  </div>
-                  {errorMessage.confirmPassword && (
-                    <p className="register-error register-error-fix">
-                      <span>
-                        <VscError size={16} />
-                      </span>
-                      {errorMessage.confirmPassword}
-                    </p>
-                  )}
-                </div>
-              </div>
+								<div className="register-input-group">
+									<div className="register-input-container">
+										<div className="register-country-container">
+											<input
+												className={`register-input ${
+													errorMessage.country
+														? 'register-input-error'
+														: ''
+												}`}
+												type="text"
+												placeholder="Country"
+												value={country}
+												onChange={handleCountryChange}
+												onFocus={() =>
+													setShowCountryDropdown(true)
+												}
+												onBlur={() =>
+													setTimeout(
+														() =>
+															setShowCountryDropdown(
+																false,
+															),
+														200,
+													)
+												}
+											/>
+											<span className="register-placeholder">
+												Country
+											</span>
 
-              <div className="register-fields-secondary">
-                <div className="register-upload-container">
-                  <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="image-input"
-                  />
-                  {imagePreview ? (
-                    <div className="register-image-preview">
-                      <img src={imagePreview} alt="Preview" />
-                      <label htmlFor="imageInput">
-                        <div className="register-change-box">
-                          <span className="register-change-text">Change Photo</span>
-                        </div>
-                      </label>
-                    </div>
-                  ) : (
-                    <label htmlFor="imageInput" className="register-upload-screen">
-                      <div className="register-upload">
-                        <span>
-                          <FiUpload size={24} />
-                        </span>
-                        <p>Select file</p>
-                      </div>
-                    </label>
-                  )}
-                </div>
+											{showCountryDropdown &&
+												filteredCountries.length >
+													0 && (
+													<ul className="register-dropdown-list">
+														{filteredCountries.map(
+															(c) => (
+																<li
+																	key={
+																		c.value
+																	}
+																	className="register-dropdown-item"
+																	onClick={() => {
+																		setCountry(
+																			c.label,
+																		);
+																		setShowCountryDropdown(
+																			false,
+																		);
+																	}}
+																>
+																	{c.label}
+																</li>
+															),
+														)}
+													</ul>
+												)}
+										</div>
+										{/* <input
+											className={`register-input ${
+												errorMessage.country
+													? 'register-input-error'
+													: ''
+											}`}
+											type="text"
+											placeholder="Country"
+											value={country}
+											onChange={(e) =>
+												setCountry(e.target.value)
+											}
+										/>
+										<span className="register-placeholder">
+											Country
+										</span> */}
+									</div>
+									{errorMessage.country && (
+										<p className="register-error">
+											<span>
+												<VscError size={16} />
+											</span>
+											{errorMessage.country}
+										</p>
+									)}
+								</div>
 
-                <p className="register-upload-text">Your avatar</p>
-                <p className="register-upload-subtext">*optional (you can add an avatar later)</p>
-              </div>
-            </div>
+								<div className="register-input-group">
+									<div className="register-input-container">
+										<div
+											ref={dropdownHeaderRef}
+											className={`register-dropdown-header ${
+												errorMessage.profession
+													? 'register-input-error'
+													: ''
+											} ${
+												showDropdown ||
+												selectedProfession
+													? 'is-focused'
+													: ''
+											}`}
+											tabIndex="0"
+											onClick={() =>
+												setShowDropdown(!showDropdown)
+											}
+										>
+											<span className="register-dropdown-placeholder">
+												Your status
+											</span>
+											<span className="register-dropdown-text">
+												{selectedProfession || ''}
+											</span>
+											<span className="register-dropdown-icon-arrow">
+												{showDropdown ? (
+													<IoIosArrowUp size={24} />
+												) : (
+													<IoIosArrowDown size={24} />
+												)}
+											</span>
+										</div>
+										{showDropdown && (
+											<div className="register-dropdown-list">
+												{professions.map(
+													(profession) => (
+														<div
+															key={profession}
+															className="register-dropdown-item"
+															onClick={() =>
+																handleProfessionChange(
+																	profession,
+																)
+															}
+														>
+															{profession}
+														</div>
+													),
+												)}
+											</div>
+										)}
+									</div>
+									{errorMessage.profession && (
+										<p className="register-error">
+											<span>
+												<VscError size={16} />
+											</span>
+											{errorMessage.profession}
+										</p>
+									)}
+								</div>
 
-            {successMessage && <p className="register-success-message">{successMessage}</p>}
-            {error.general && <p className="register-error-message">{error.general}</p>}
+								<div className="register-input-group">
+									<div className="register-input-container">
+										<input
+											className={`register-input ${
+												errorMessage.email
+													? 'register-input-error'
+													: ''
+											}`}
+											type="email"
+											placeholder="Email"
+											value={email}
+											onChange={(e) =>
+												setEmail(e.target.value)
+											}
+										/>
+										<span className="register-placeholder">
+											Email
+										</span>
+									</div>
+									{errorMessage.email && (
+										<p className="register-error">
+											<span>
+												<VscError size={16} />
+											</span>
+											{errorMessage.email}
+										</p>
+									)}
+								</div>
 
-            <button className="register-btn" type="submit">
-              Register
-            </button>
+								<div className="register-input-group">
+									<div className="register-input-container register-password">
+										<input
+											className={`register-input ${
+												errorMessage.password
+													? 'register-input-error'
+													: ''
+											}`}
+											type={
+												showPassword
+													? 'text'
+													: 'password'
+											}
+											placeholder="Password (min. 6 characters)"
+											value={password}
+											onChange={(e) =>
+												setPassword(e.target.value)
+											}
+										/>
+										<span className="register-placeholder">
+											Password (min. 6 characters)
+										</span>
+										<span
+											className="register-pass-eye"
+											onClick={togglePasswordVisibility}
+										>
+											{showPassword ? (
+												<PiEye size={24} />
+											) : (
+												<PiEyeClosed size={24} />
+											)}
+										</span>
+										<p className="register-show-text">
+											Show password
+										</p>
+									</div>
+									{errorMessage.password && (
+										<p className="register-error register-error-fix">
+											<span>
+												<VscError size={16} />
+											</span>
+											{errorMessage.password}
+										</p>
+									)}
+								</div>
 
-            <div className="register-link-box">
-              <p className="register-link-text">Already have an account?</p>
-              <p className="register-link" onClick={openLogin}>
-                Sign in
-              </p>
-            </div>
-            <p className="register-privacy-text">
-              Cookies are used for the operation of the service. By clicking register, I agree to{" "}
-              <span>Privacy Policy</span>
-            </p>
-          </div>
-        </form>
-      )}
-    </div>
-  );
+								<div className="register-input-group">
+									<div className="register-input-container register-password">
+										<input
+											className={`register-input ${
+												errorMessage.confirmPassword
+													? 'register-input-error'
+													: ''
+											}`}
+											type={
+												showPassword
+													? 'text'
+													: 'password'
+											}
+											placeholder="Confirm password"
+											value={confirmPassword}
+											onChange={(e) =>
+												setConfirmPassword(
+													e.target.value,
+												)
+											}
+										/>
+										<span className="register-placeholder">
+											Confirm password
+										</span>
+										<span
+											className="register-pass-eye"
+											onClick={togglePasswordVisibility}
+										>
+											{showPassword ? (
+												<PiEye size={24} />
+											) : (
+												<PiEyeClosed size={24} />
+											)}
+										</span>
+										<p className="register-show-text">
+											Show password
+										</p>
+									</div>
+									{errorMessage.confirmPassword && (
+										<p className="register-error register-error-fix">
+											<span>
+												<VscError size={16} />
+											</span>
+											{errorMessage.confirmPassword}
+										</p>
+									)}
+								</div>
+							</div>
+
+							<div className="register-fields-secondary">
+								<div className="register-upload-container">
+									<input
+										type="file"
+										id="imageInput"
+										accept="image/*"
+										onChange={handleImageChange}
+										className="image-input"
+									/>
+									{imagePreview ? (
+										<div className="register-image-preview">
+											<img
+												src={imagePreview}
+												alt="Preview"
+											/>
+											<label htmlFor="imageInput">
+												<div className="register-change-box">
+													<span className="register-change-text">
+														Change Photo
+													</span>
+												</div>
+											</label>
+										</div>
+									) : (
+										<label
+											htmlFor="imageInput"
+											className="register-upload-screen"
+										>
+											<div className="register-upload">
+												<span>
+													<FiUpload size={24} />
+												</span>
+												<p>Select file</p>
+											</div>
+										</label>
+									)}
+								</div>
+
+								<p className="register-upload-text">
+									Your avatar
+								</p>
+								<p className="register-upload-subtext">
+									*optional (you can add an avatar later)
+								</p>
+							</div>
+						</div>
+
+						{successMessage && (
+							<p className="register-success-message">
+								{successMessage}
+							</p>
+						)}
+						{error.general && (
+							<p className="register-error-message">
+								{error.general}
+							</p>
+						)}
+
+						<button className="register-btn" type="submit">
+							Register
+						</button>
+
+						<div className="register-link-box">
+							<p className="register-link-text">
+								Already have an account?
+							</p>
+							<p className="register-link" onClick={openLogin}>
+								Sign in
+							</p>
+						</div>
+						<p className="register-privacy-text">
+							Cookies are used for the operation of the service.
+							By clicking register, I agree to{' '}
+							<span>Privacy Policy</span>
+						</p>
+					</div>
+				</form>
+			)}
+		</div>
+	);
 };
 
 export default RegisterPage;

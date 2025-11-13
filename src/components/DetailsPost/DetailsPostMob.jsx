@@ -1,3 +1,6 @@
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 import MediaCarousel from '../MediaCarousel/MediaCarousel';
 import Quiz from '../Quiz';
 import Poll from '../Poll';
@@ -82,7 +85,19 @@ const DetailsPostMob = ({
         </div>
 
         <div className="container">
-          <p className="details-text nicknameText">{post.text}</p>
+          <p className="details-text nicknameText">
+            {/* {post.text} */}
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                p: ({ node, ...props }) => (
+                  <p style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6' }} {...props} />
+                ),
+              }}
+            >
+              {post.text || ''}
+            </ReactMarkdown>
+          </p>
         </div>
 
         <div className="details-exam-box">
